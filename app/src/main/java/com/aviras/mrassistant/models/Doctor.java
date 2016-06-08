@@ -3,6 +3,8 @@ package com.aviras.mrassistant.models;
 import io.realm.annotations.PrimaryKey;
 
 /**
+ * Represent doctor
+ * <p/>
  * Created by ashish on 8/6/16.
  */
 public class Doctor {
