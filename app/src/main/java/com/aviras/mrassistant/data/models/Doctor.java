@@ -1,4 +1,4 @@
-package com.aviras.mrassistant.models;
+package com.aviras.mrassistant.data.models;
 
 import io.realm.annotations.PrimaryKey;
 
