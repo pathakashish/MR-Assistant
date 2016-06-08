@@ -1,8 +1,6 @@
 package com.aviras.mrassistant.models;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import io.realm.RealmList;
 import io.realm.annotations.PrimaryKey;
 
 /**
@@ -17,7 +15,7 @@ public class Order {
 
     private Doctor doctor;
 
-    private List<OrderItem> items = new ArrayList<>();
+    private RealmList<OrderItem> items = new RealmList<>();
 
     private long createdDate;
     private long expectedDeliveryDate;
@@ -39,11 +37,11 @@ public class Order {
         this.doctor = doctor;
     }
 
-    public List<OrderItem> getItems() {
+    public RealmList<OrderItem> getItems() {
         return items;
     }
 
-    public void setItems(List<OrderItem> items) {
+    public void setItems(RealmList<OrderItem> items) {
         this.items = items;
     }
 

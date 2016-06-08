@@ -1,8 +1,6 @@
 package com.aviras.mrassistant.models;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
@@ -18,7 +16,7 @@ public class Medicine extends RealmObject {
 
     private String name;
 
-    private List<Unit> supportedUnits = new ArrayList<>();
+    private RealmList<Unit> supportedUnits = new RealmList<>();
 
     public int getId() {
         return id;
@@ -36,11 +34,11 @@ public class Medicine extends RealmObject {
         this.name = name;
     }
 
-    public List<Unit> getSupportedUnits() {
+    public RealmList<Unit> getSupportedUnits() {
         return supportedUnits;
     }
 
-    public void setSupportedUnits(List<Unit> supportedUnits) {
+    public void setSupportedUnits(RealmList<Unit> supportedUnits) {
         this.supportedUnits = supportedUnits;
     }
 }
