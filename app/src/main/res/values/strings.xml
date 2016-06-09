@@ -2,6 +2,15 @@
     <string name="app_name">MR Assistant</string>
     <string name="message_welcome_to_mrassistant">Welcome to MR Assistant</string>
 
-<!-- TODO: Remove or change this placeholder text -->
+    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="name">Name</string>
+    <string name="doctors_name_here">Doctor\'s name here</string>
+    <string name="mob_phone_etc">Mobile or Phone</string>
+    <string name="contact_number">Contact number</string>
+    <string name="address">Address</string>
+    <string name="delivery_address">Where to deliver?</string>
+    <string name="note">Note</string>
+    <string name="any_other_info">Any other info?</string>
+    <string name="error_name_required">You must enter the name</string>
 </resources>
