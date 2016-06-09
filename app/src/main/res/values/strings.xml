@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">MR Assistant</string>
+    <string name="message_welcome_to_mrassistant">Welcome to MR Assistant</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
