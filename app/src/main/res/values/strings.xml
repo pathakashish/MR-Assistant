@@ -13,4 +13,12 @@
     <string name="note">Note</string>
     <string name="any_other_info">Any other info?</string>
     <string name="error_name_required">You must enter the name</string>
+    <string name="unit_name">Unit</string>
+    <string name="error_unit_name_required">Unit name must be entered</string>
+    <string name="medicine_name_here">Medicine name here</string>
+    <string name="no_editing_for_specified">Editing for extra is not provided</string>
+    <string name="title_activity_add_unit">Add Unit</string>
+    <string name="title_activity_add_medicine">Add Medicine</string>
+    <string name="title_activity_add_doctor">Add Doctor</string>
+    <string name="menu_done">Done</string>
 </resources>

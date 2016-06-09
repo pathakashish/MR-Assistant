@@ -6,15 +6,12 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
 
 import com.aviras.mrassistant.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,17 +24,17 @@ import java.util.List;
  */
 public class EditorFragment extends Fragment {
 
-    private static final String ARG_EDITING_FOR = "editing_for";
     public static final String TAG = "EditorFragment";
 
     private String mEditingFor;
 
     private OnFragmentInteractionListener mListener;
+    private EditorPresenter mPresenter;
 
     public static EditorFragment newInstance(String editingFor) {
         EditorFragment fragment = new EditorFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_EDITING_FOR, editingFor);
+        args.putString(EditorActivity.EXTRA_EDITING_FOR, editingFor);
         fragment.setArguments(args);
         return fragment;
     }
@@ -50,7 +47,14 @@ public class EditorFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mEditingFor = getArguments().getString(ARG_EDITING_FOR);
+            mEditingFor = getArguments().getString(EditorActivity.EXTRA_EDITING_FOR);
+            if (EditorActivity.UNIT.equals(mEditingFor)) {
+                mPresenter = UnitPresenter.sharedInstance();
+            } else if (EditorActivity.MEDICINE.equals(mEditingFor)) {
+                mPresenter = MedicinePresenter.sharedInstance();
+            } else if (EditorActivity.DOCTOR.equals(mEditingFor)) {
+                mPresenter = DoctorPresenter.sharedInstance();
+            }
         }
     }
 
@@ -64,46 +68,10 @@ public class EditorFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapter);
 
-        List<Editor> editors = new ArrayList<>();
-
-        TextFieldEditor name = EditorFactory.newTextFieldEditor(inflater.getContext(), R.string.doctors_name_here, "", 1);
-        name.setRequired(true);
-        name.setValidator(new Editor.Validator<TextFieldEditor>(name) {
-
-            @Override
-            public boolean validate() {
-                TextFieldEditor text = getField();
-                return text.isRequired() && !TextUtils.isEmpty(text.getValue());
-            }
-        }, inflater.getContext().getString(R.string.error_name_required));
-        name.setInputType(EditorInfo.TYPE_TEXT_VARIATION_PERSON_NAME);
-        name.setImeOption(EditorInfo.IME_ACTION_NEXT);
-        editors.add(name);
-
-        TextFieldEditor contactNumber = EditorFactory.newTextFieldEditor(inflater.getContext(), R.string.mob_phone_etc, "", 1);
-        contactNumber.setInputType(EditorInfo.TYPE_CLASS_PHONE);
-        contactNumber.setImeOption(EditorInfo.IME_ACTION_NEXT);
-        editors.add(contactNumber);
-
-        TextFieldEditor address = EditorFactory.newTextFieldEditor(inflater.getContext(), R.string.delivery_address, "", 5);
-        address.setInputType(EditorInfo.TYPE_CLASS_TEXT | EditorInfo.TYPE_TEXT_VARIATION_POSTAL_ADDRESS | EditorInfo.TYPE_TEXT_FLAG_MULTI_LINE);
-        address.setImeOption(EditorInfo.IME_ACTION_NONE);
-        editors.add(address);
-
-        TextFieldEditor note = EditorFactory.newTextFieldEditor(inflater.getContext(), R.string.any_other_info, "", 3);
-        note.setInputType(EditorInfo.TYPE_CLASS_TEXT | EditorInfo.TYPE_TEXT_VARIATION_LONG_MESSAGE | EditorInfo.TYPE_TEXT_FLAG_MULTI_LINE);
-        note.setImeOption(EditorInfo.IME_ACTION_NONE);
-        editors.add(note);
+        List<Editor> editors = mPresenter.getEditors(inflater.getContext());
 
         adapter.setEditors(editors);
         return view;
-    }
-
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
     }
 
     @Override
@@ -123,16 +91,6 @@ public class EditorFragment extends Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(Uri uri);
     }

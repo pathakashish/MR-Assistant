@@ -62,7 +62,9 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void moveToNextActivity() {
-        startActivity(new Intent(this, EditorActivity.class));
+        Intent intent = new Intent(this, EditorActivity.class);
+        intent.putExtra(EditorActivity.EXTRA_EDITING_FOR, EditorActivity.DOCTOR);
+        startActivity(intent);
         finish();
     }
 }
