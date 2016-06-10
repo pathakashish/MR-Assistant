@@ -13,7 +13,7 @@ public class Unit extends RealmObject {
     @PrimaryKey
     private int id;
 
-    private CharSequence name;
+    private String name;
 
     public int getId() {
         return id;
@@ -23,11 +23,11 @@ public class Unit extends RealmObject {
         this.id = id;
     }
 
-    public CharSequence getName() {
+    public String getName() {
         return name;
     }
 
-    public void setName(CharSequence name) {
+    public void setName(String name) {
         this.name = name;
     }
 }

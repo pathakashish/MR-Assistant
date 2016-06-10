@@ -13,13 +13,13 @@ public class Doctor extends RealmObject {
     @PrimaryKey
     private int id;
 
-    private CharSequence name;
+    private String name;
 
-    private CharSequence contactNumber;
+    private String contactNumber;
 
-    private CharSequence address;
+    private String address;
 
-    private CharSequence notes;
+    private String notes;
 
     public int getId() {
         return id;
@@ -29,35 +29,35 @@ public class Doctor extends RealmObject {
         this.id = id;
     }
 
-    public CharSequence getName() {
+    public String getName() {
         return name;
     }
 
-    public void setName(CharSequence name) {
+    public void setName(String name) {
         this.name = name;
     }
 
-    public CharSequence getContactNumber() {
+    public String getContactNumber() {
         return contactNumber;
     }
 
-    public void setContactNumber(CharSequence contactNumber) {
+    public void setContactNumber(String contactNumber) {
         this.contactNumber = contactNumber;
     }
 
-    public CharSequence getAddress() {
+    public String getAddress() {
         return address;
     }
 
-    public void setAddress(CharSequence address) {
+    public void setAddress(String address) {
         this.address = address;
     }
 
-    public CharSequence getNotes() {
+    public String getNotes() {
         return notes;
     }
 
-    public void setNotes(CharSequence notes) {
+    public void setNotes(String notes) {
         this.notes = notes;
     }
 }

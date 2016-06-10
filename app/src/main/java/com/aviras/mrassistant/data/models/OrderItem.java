@@ -11,7 +11,7 @@ public class OrderItem extends RealmObject {
 
     private int medicineId;
 
-    private CharSequence medicineName;
+    private String medicineName;
 
     private Unit unit;
 
@@ -25,11 +25,11 @@ public class OrderItem extends RealmObject {
         this.medicineId = medicineId;
     }
 
-    public CharSequence getMedicineName() {
+    public String getMedicineName() {
         return medicineName;
     }
 
-    public void setMedicineName(CharSequence medicineName) {
+    public void setMedicineName(String medicineName) {
         this.medicineName = medicineName;
     }
 
