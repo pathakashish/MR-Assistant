@@ -1,5 +1,6 @@
 package com.aviras.mrassistant.data.models;
 
+import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
 /**
@@ -7,16 +8,16 @@ import io.realm.annotations.PrimaryKey;
  * <p/>
  * Created by ashish on 8/6/16.
  */
-public class Doctor {
+public class Doctor extends RealmObject{
 
     @PrimaryKey
     private int id;
 
-    private String name;
+    private CharSequence name;
 
-    private String address;
+    private CharSequence address;
 
-    private String notes;
+    private CharSequence notes;
 
     public int getId() {
         return id;
@@ -26,27 +27,27 @@ public class Doctor {
         this.id = id;
     }
 
-    public String getName() {
+    public CharSequence getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(CharSequence name) {
         this.name = name;
     }
 
-    public String getAddress() {
+    public CharSequence getAddress() {
         return address;
     }
 
-    public void setAddress(String address) {
+    public void setAddress(CharSequence address) {
         this.address = address;
     }
 
-    public String getNotes() {
+    public CharSequence getNotes() {
         return notes;
     }
 
-    public void setNotes(String notes) {
+    public void setNotes(CharSequence notes) {
         this.notes = notes;
     }
 }
