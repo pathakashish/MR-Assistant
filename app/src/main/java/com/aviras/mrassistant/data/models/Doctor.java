@@ -8,12 +8,14 @@ import io.realm.annotations.PrimaryKey;
  * <p/>
  * Created by ashish on 8/6/16.
  */
-public class Doctor extends RealmObject{
+public class Doctor extends RealmObject {
 
     @PrimaryKey
     private int id;
 
     private CharSequence name;
+
+    private CharSequence contactNumber;
 
     private CharSequence address;
 
@@ -33,6 +35,14 @@ public class Doctor extends RealmObject{
 
     public void setName(CharSequence name) {
         this.name = name;
+    }
+
+    public CharSequence getContactNumber() {
+        return contactNumber;
+    }
+
+    public void setContactNumber(CharSequence contactNumber) {
+        this.contactNumber = contactNumber;
     }
 
     public CharSequence getAddress() {
