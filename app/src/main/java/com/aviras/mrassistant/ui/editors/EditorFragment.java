@@ -33,6 +33,7 @@ public class EditorFragment extends Fragment implements EditorView {
     private OnFragmentInteractionListener mListener;
     private EditorPresenter mPresenter;
     private EditorAdapter mAdapter;
+    private LinearLayoutManager mLayoutManager;
 
     public static EditorFragment newInstance(String editingFor, int id) {
         EditorFragment fragment = new EditorFragment();
@@ -69,8 +70,8 @@ public class EditorFragment extends Fragment implements EditorView {
         View view = inflater.inflate(R.layout.fragment_editor, container, false);
         initToolbar(view);
         final RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerview);
-        final LinearLayoutManager layoutManager = new LinearLayoutManager(inflater.getContext(), LinearLayoutManager.VERTICAL, false);
-        recyclerView.setLayoutManager(layoutManager);
+        mLayoutManager = new LinearLayoutManager(inflater.getContext(), LinearLayoutManager.VERTICAL, false);
+        recyclerView.setLayoutManager(mLayoutManager);
         mAdapter = new EditorAdapter();
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(mAdapter);
@@ -91,6 +92,11 @@ public class EditorFragment extends Fragment implements EditorView {
     @Override
     public void showEditors(List<Editor> editors) {
         mAdapter.setEditors(editors);
+        if (null != mLayoutManager) {
+            int positionStart = mLayoutManager.findFirstVisibleItemPosition();
+            int itemCount = mLayoutManager.findLastVisibleItemPosition() - positionStart;
+            mAdapter.notifyItemRangeChanged(positionStart, itemCount);
+        }
     }
 
     private void initToolbar(View view) {

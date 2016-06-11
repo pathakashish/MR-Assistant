@@ -27,7 +27,6 @@ public class EditorAdapter extends RecyclerView.Adapter<EditorAdapter.EditorView
 
     public void setEditors(List<Editor> editors) {
         mEditors = editors;
-        notifyDataSetChanged();
     }
 
     @Override
