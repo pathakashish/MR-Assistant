@@ -130,8 +130,9 @@ public class DoctorPresenter implements EditorPresenter<Doctor> {
     }
 
     @Override
-    public void saveOrUpdateObject(List<Editor> editors) {
+    public void saveOrUpdateObject(List<Editor> editors, int id) {
         Doctor doctor = new Doctor();
+        doctor.setId(id);
         for (Editor editor : editors) {
             CharSequence val = ((TextFieldEditor) editor).getValue();
             String valStr = null == val ? null : val.toString();

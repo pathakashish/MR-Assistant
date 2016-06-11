@@ -154,8 +154,9 @@ public class MedicinePresenter implements EditorPresenter<Medicine> {
     }
 
     @Override
-    public void saveOrUpdateObject(List<Editor> editors) {
+    public void saveOrUpdateObject(List<Editor> editors, int id) {
         Medicine medicine = new Medicine();
+        medicine.setId(id);
         for (Editor editor : editors) {
             switch (editor.getId()) {
                 case ID_NAME:

@@ -32,8 +32,9 @@ public interface EditorPresenter<T extends RealmObject> {
      * Save {@link List<Editor>} to persistent storage
      *
      * @param editors editors to be persisted
+     * @param id id of the object shown in editor
      */
-    void saveOrUpdateObject(List<Editor> editors);
+    void saveOrUpdateObject(List<Editor> editors, int id);
 
     Class<? extends T> getRealmClass();
 

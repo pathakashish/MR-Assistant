@@ -37,6 +37,7 @@ public class EditorFragment extends Fragment implements EditorView {
     private EditorPresenter mPresenter;
     private EditorAdapter mAdapter;
     private LinearLayoutManager mLayoutManager;
+    private int mId;
 
     public static EditorFragment newInstance(String editingFor, int id) {
         EditorFragment fragment = new EditorFragment();
@@ -80,10 +81,10 @@ public class EditorFragment extends Fragment implements EditorView {
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(mAdapter);
 
-        int id = getArguments().getInt(EditorActivity.EXTRA_ID, 0);
+        mId = getArguments().getInt(EditorActivity.EXTRA_ID, 0);
 
         mPresenter.setView(this);
-        mPresenter.load(inflater.getContext(), id);
+        mPresenter.load(inflater.getContext(), mId);
         return view;
     }
 
@@ -156,7 +157,7 @@ public class EditorFragment extends Fragment implements EditorView {
                         return false;
                     }
                 }
-                mPresenter.saveOrUpdateObject(mAdapter.getEditors());
+                mPresenter.saveOrUpdateObject(mAdapter.getEditors(), mId);
                 getActivity().finish();
                 return true;
         }

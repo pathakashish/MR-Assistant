@@ -103,8 +103,9 @@ public class UnitPresenter implements EditorPresenter<Unit> {
     }
 
     @Override
-    public void saveOrUpdateObject(List<Editor> editors) {
+    public void saveOrUpdateObject(List<Editor> editors, int id) {
         Unit unit = new Unit();
+        unit.setId(id);
         for (Editor editor : editors) {
             switch (editor.getId()) {
                 case ID_NAME:
