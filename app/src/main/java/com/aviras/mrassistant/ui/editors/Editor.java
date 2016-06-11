@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
  */
 public abstract class Editor {
 
+    private int id;
     private int type;
     @Nullable
     private CharSequence name;
@@ -18,9 +19,18 @@ public abstract class Editor {
     private boolean enabled;
     private Validator<? extends Editor> validator;
 
-    public Editor(int type, @Nullable CharSequence name) {
+    public Editor(int id, int type, @Nullable CharSequence name) {
+        this.id = id;
         this.type = type;
         this.name = name;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getType() {

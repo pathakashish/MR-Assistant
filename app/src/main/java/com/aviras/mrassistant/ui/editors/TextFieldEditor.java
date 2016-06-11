@@ -30,8 +30,8 @@ public class TextFieldEditor extends Editor {
     @NonNull
     private TextUtils.TruncateAt ellipsize = TextUtils.TruncateAt.END;
 
-    public TextFieldEditor(int type, @Nullable CharSequence name) {
-        super(type, name);
+    public TextFieldEditor(int id, int type, @Nullable CharSequence name) {
+        super(id, type, name);
     }
 
     public int getLineCount() {

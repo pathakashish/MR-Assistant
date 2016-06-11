@@ -21,4 +21,5 @@
     <string name="title_activity_add_medicine">Add Medicine</string>
     <string name="title_activity_add_doctor">Add Doctor</string>
     <string name="menu_done">Done</string>
+    <string name="please_correct_errors">Please correct the erros first</string>
 </resources>

@@ -21,6 +21,10 @@ public class EditorAdapter extends RecyclerView.Adapter<EditorAdapter.EditorView
 
     private List<Editor> mEditors;
 
+    public List<Editor> getEditors() {
+        return mEditors;
+    }
+
     public void setEditors(List<Editor> editors) {
         mEditors = editors;
         notifyDataSetChanged();

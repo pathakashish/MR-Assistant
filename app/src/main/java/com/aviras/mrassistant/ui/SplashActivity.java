@@ -7,6 +7,9 @@ import android.support.v7.app.AppCompatActivity;
 import com.aviras.mrassistant.R;
 import com.aviras.mrassistant.ui.editors.EditorActivity;
 
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
+
 public class SplashActivity extends AppCompatActivity {
 
     private static final long SPLASH_DELAY = 2000;
@@ -21,6 +24,7 @@ public class SplashActivity extends AppCompatActivity {
             mMoveToNext = savedInstanceState.getBoolean(KEY_MOVE_TO_NEXT);
         }
         setContentView(R.layout.activity_splash);
+        Realm.setDefaultConfiguration(new RealmConfiguration.Builder(this).build());
     }
 
     @Override
@@ -63,7 +67,8 @@ public class SplashActivity extends AppCompatActivity {
 
     private void moveToNextActivity() {
         Intent intent = new Intent(this, EditorActivity.class);
-        intent.putExtra(EditorActivity.EXTRA_EDITING_FOR, EditorActivity.DOCTOR);
+        intent.putExtra(EditorActivity.EXTRA_EDITING_FOR, EditorActivity.UNIT);
+        intent.putExtra(EditorActivity.EXTRA_ID, 1);
         startActivity(intent);
         finish();
     }

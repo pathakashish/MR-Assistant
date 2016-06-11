@@ -17,8 +17,8 @@ public class SelectableListEditor extends Editor {
     private boolean allowMultiSelect;
     private List<SelectableListEditorItem> items;
 
-    public SelectableListEditor(int type, @Nullable CharSequence name) {
-        super(type, name);
+    public SelectableListEditor(int id, int type, @Nullable CharSequence name) {
+        super(id, type, name);
     }
 
     public boolean isAllowMultiSelect() {
