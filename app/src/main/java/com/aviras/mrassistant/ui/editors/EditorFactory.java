@@ -3,8 +3,7 @@ package com.aviras.mrassistant.ui.editors;
 import android.content.Context;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
-
-import java.util.List;
+import android.support.v7.widget.RecyclerView;
 
 /**
  * Created by ashish on 8/6/16.
@@ -12,7 +11,7 @@ import java.util.List;
 public class EditorFactory {
 
     public static final int VIEW_TYPE_TEXT_FIELD_EDITOR = 0;
-    public static final int VIEW_TYPE_SELECTABLE_LIST_EDITOR = 1;
+    public static final int VIEW_TYPE_LIST_EDITOR = 1;
 
     public static TextFieldEditor newTextFieldEditor(Context context,
                                                      int id,
@@ -34,13 +33,12 @@ public class EditorFactory {
         return editor;
     }
 
-    public static SelectableListEditor newSelectableListEditor(int id,
-                                                               boolean allowMultiSelect,
-                                                               @Nullable CharSequence name,
-                                                               List<SelectableListEditor.SelectableListEditorItem> items) {
-        SelectableListEditor editor = new SelectableListEditor(id, VIEW_TYPE_SELECTABLE_LIST_EDITOR, name);
-        editor.setAllowMultiSelect(allowMultiSelect);
-        editor.setItems(items);
+    public static ListEditor newListEditor(int id,
+                                           @Nullable CharSequence name,
+                                           RecyclerView.Adapter adapter,
+                                           RecyclerView.LayoutManager layoutManager) {
+        ListEditor editor = new ListEditor(id, VIEW_TYPE_LIST_EDITOR, name, adapter,
+                layoutManager, true);
         return editor;
     }
 }

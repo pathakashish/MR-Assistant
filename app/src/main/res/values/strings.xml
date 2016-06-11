@@ -22,4 +22,7 @@
     <string name="title_activity_add_doctor">Add Doctor</string>
     <string name="menu_done">Done</string>
     <string name="please_correct_errors">Please correct the erros first</string>
+    <string name="any_medicine_info">Description</string>
+    <string name="units">Units</string>
+    <string name="error_please_select_atlease_one_unit">Please select at least one unit</string>
 </resources>

@@ -1,12 +1,17 @@
-package com.aviras.mrassistant.ui.editors;
+package com.aviras.mrassistant.ui.units;
 
 import android.content.Context;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.inputmethod.EditorInfo;
 
 import com.aviras.mrassistant.R;
 import com.aviras.mrassistant.data.models.Unit;
+import com.aviras.mrassistant.ui.editors.Editor;
+import com.aviras.mrassistant.ui.editors.EditorFactory;
+import com.aviras.mrassistant.ui.editors.EditorFragment;
+import com.aviras.mrassistant.ui.editors.EditorPresenter;
+import com.aviras.mrassistant.ui.editors.EditorView;
+import com.aviras.mrassistant.ui.editors.TextFieldEditor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +38,18 @@ public class UnitPresenter implements EditorPresenter<Unit> {
 
     private EditorView mEditView;
 
+    private Realm mRealm;
+
+    @Override
+    public void closeDatabase() {
+        mRealm.close();
+    }
+
+    @Override
+    public void openDatabase() {
+        mRealm = Realm.getDefaultInstance();
+    }
+
     @Override
     public void setView(EditorView editorView) {
         mEditView = editorView;
@@ -40,8 +57,7 @@ public class UnitPresenter implements EditorPresenter<Unit> {
 
     @Override
     public void load(final Context context, int id) {
-        final Realm realm = Realm.getDefaultInstance();
-        RealmResults<Unit> query = realm.where(Unit.class).equalTo("id", id).findAllAsync();
+        RealmResults<Unit> query = mRealm.where(Unit.class).equalTo("id", id).findAllAsync();
         query.addChangeListener(new RealmChangeListener<RealmResults<Unit>>() {
             @Override
             public void onChange(RealmResults<Unit> element) {
@@ -53,7 +69,6 @@ public class UnitPresenter implements EditorPresenter<Unit> {
                 } else {
                     mEditView.showEditors(getEditors(context, null));
                 }
-                realm.close();
             }
         });
     }
@@ -108,10 +123,8 @@ public class UnitPresenter implements EditorPresenter<Unit> {
     }
 
     private void saveOrUpdate(Unit object) {
-        long startTime = System.currentTimeMillis();
-        Realm realm = Realm.getDefaultInstance();
         if (object.getId() == 0) {
-            Number id = realm.where(object.getClass()).max("id");
+            Number id = mRealm.where(object.getClass()).max("id");
             if (null == id) {
                 id = 1;
             } else {
@@ -119,10 +132,8 @@ public class UnitPresenter implements EditorPresenter<Unit> {
             }
             object.setId(id.intValue());
         }
-        realm.beginTransaction();
-        realm.copyToRealmOrUpdate(object);
-        realm.commitTransaction();
-        realm.close();
-        Log.v(LOG_TAG, "time taken for realm open > commit transaction > close realm is " + (System.currentTimeMillis() - startTime) + "ms");
+        mRealm.beginTransaction();
+        mRealm.copyToRealmOrUpdate(object);
+        mRealm.commitTransaction();
     }
 }

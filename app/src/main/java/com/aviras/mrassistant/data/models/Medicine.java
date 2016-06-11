@@ -16,6 +16,8 @@ public class Medicine extends RealmObject {
 
     private String name;
 
+    private String description;
+
     private RealmList<Unit> supportedUnits = new RealmList<>();
 
     public int getId() {
@@ -32,6 +34,14 @@ public class Medicine extends RealmObject {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public RealmList<Unit> getSupportedUnits() {

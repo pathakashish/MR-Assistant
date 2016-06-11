@@ -19,6 +19,9 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.aviras.mrassistant.R;
+import com.aviras.mrassistant.ui.doctors.DoctorPresenter;
+import com.aviras.mrassistant.ui.medicines.MedicinePresenter;
+import com.aviras.mrassistant.ui.units.UnitPresenter;
 
 import java.util.List;
 
@@ -67,6 +70,7 @@ public class EditorFragment extends Fragment implements EditorView {
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        mPresenter.openDatabase();
         View view = inflater.inflate(R.layout.fragment_editor, container, false);
         initToolbar(view);
         final RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerview);
@@ -86,6 +90,7 @@ public class EditorFragment extends Fragment implements EditorView {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        mPresenter.closeDatabase();
         mPresenter.setView(null);
     }
 

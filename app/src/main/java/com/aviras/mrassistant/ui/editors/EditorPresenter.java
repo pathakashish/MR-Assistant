@@ -48,7 +48,17 @@ public interface EditorPresenter<T extends RealmObject> {
      * Load single item with given id and notify view about this
      *
      * @param context
-     * @param id id of single item to be loaded
+     * @param id      id of single item to be loaded
      */
     void load(Context context, int id);
+
+    /**
+     * Opens the underlying database
+     */
+    void openDatabase();
+
+    /**
+     * Opens the underlying database
+     */
+    void closeDatabase();
 }
