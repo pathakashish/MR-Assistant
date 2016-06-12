@@ -14,7 +14,7 @@ import android.widget.CompoundButton;
 
 import com.aviras.mrassistant.R;
 import com.aviras.mrassistant.data.models.Unit;
-import com.aviras.mrassistant.ui.doctors.OnItemSelectedListener;
+import com.aviras.mrassistant.ui.OnItemSelectedListener;
 import com.aviras.mrassistant.ui.editors.EditorActivity;
 
 import java.lang.annotation.Retention;

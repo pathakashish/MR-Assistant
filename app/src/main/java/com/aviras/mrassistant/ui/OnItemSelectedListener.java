@@ -1,4 +1,4 @@
-package com.aviras.mrassistant.ui.doctors;
+package com.aviras.mrassistant.ui;
 
 /**
  * Listener for {@link android.support.v7.widget.RecyclerView.Adapter}
