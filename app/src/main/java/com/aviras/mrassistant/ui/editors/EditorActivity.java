@@ -5,9 +5,11 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.widget.Toast;
 
 import com.aviras.mrassistant.R;
+import com.aviras.mrassistant.ui.utils.UiUtil;
 
 public class EditorActivity extends AppCompatActivity
         implements EditorFragment.OnFragmentInteractionListener {
@@ -24,7 +26,7 @@ public class EditorActivity extends AppCompatActivity
 
         String editingFor = getIntent().getStringExtra(EXTRA_EDITING_FOR);
         if (TextUtils.isEmpty(editingFor)) {
-            Toast.makeText(this, R.string.no_editing_for_specified, Toast.LENGTH_SHORT).show();
+            UiUtil.showToast(this, R.string.no_editing_for_specified, true);
             finish();
             return;
         }

@@ -10,19 +10,18 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.aviras.mrassistant.R;
 import com.aviras.mrassistant.ui.doctors.DoctorPresenter;
 import com.aviras.mrassistant.ui.medicines.MedicinePresenter;
 import com.aviras.mrassistant.ui.units.UnitPresenter;
+import com.aviras.mrassistant.ui.utils.UiUtil;
 
 import java.util.List;
 
@@ -154,9 +153,7 @@ public class EditorFragment extends Fragment implements EditorView {
             case R.id.action_menu_done:
                 for (Editor editor : mAdapter.getEditors()) {
                     if (null != editor.getValidator() && !editor.getValidator().validate()) {
-                        Toast toast = Toast.makeText(getActivity(), R.string.please_correct_errors, Toast.LENGTH_LONG);
-                        toast.setGravity(Gravity.CENTER, 0, 0);
-                        toast.show();
+                        UiUtil.showToast(getActivity(), R.string.please_correct_errors, true);
                         return false;
                     }
                 }
