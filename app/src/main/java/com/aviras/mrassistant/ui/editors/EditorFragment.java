@@ -10,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -153,7 +154,9 @@ public class EditorFragment extends Fragment implements EditorView {
             case R.id.action_menu_done:
                 for (Editor editor : mAdapter.getEditors()) {
                     if (null != editor.getValidator() && !editor.getValidator().validate()) {
-                        Toast.makeText(getActivity(), R.string.please_correct_errors, Toast.LENGTH_LONG).show();
+                        Toast toast = Toast.makeText(getActivity(), R.string.please_correct_errors, Toast.LENGTH_LONG);
+                        toast.setGravity(Gravity.CENTER, 0, 0);
+                        toast.show();
                         return false;
                     }
                 }
