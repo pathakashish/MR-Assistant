@@ -1,6 +1,7 @@
 package com.aviras.mrassistant.data.models;
 
 import io.realm.RealmList;
+import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
 /**
@@ -8,7 +9,7 @@ import io.realm.annotations.PrimaryKey;
  * <p/>
  * Created by ashish on 8/6/16.
  */
-public class Order {
+public class Order extends RealmObject {
 
     @PrimaryKey
     private int id;
