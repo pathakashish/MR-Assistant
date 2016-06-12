@@ -9,28 +9,18 @@ import io.realm.RealmObject;
  */
 public class OrderItem extends RealmObject {
 
-    private int medicineId;
-
-    private String medicineName;
+    private Medicine medicine;
 
     private Unit unit;
 
     private float quantity;
 
-    public int getMedicineId() {
-        return medicineId;
+    public Medicine getMedicine() {
+        return medicine;
     }
 
-    public void setMedicineId(int medicineId) {
-        this.medicineId = medicineId;
-    }
-
-    public String getMedicineName() {
-        return medicineName;
-    }
-
-    public void setMedicineName(String medicineName) {
-        this.medicineName = medicineName;
+    public void setMedicine(Medicine medicine) {
+        this.medicine = medicine;
     }
 
     public Unit getUnit() {
