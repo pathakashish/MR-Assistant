@@ -25,4 +25,5 @@
     <string name="any_medicine_info">Description</string>
     <string name="units">Units</string>
     <string name="error_please_select_atlease_one_unit">Please select at least one unit</string>
+    <string name="add_unit">Add Unit</string>
 </resources>

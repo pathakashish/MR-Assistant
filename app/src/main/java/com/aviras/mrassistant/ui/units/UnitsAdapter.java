@@ -3,6 +3,7 @@ package com.aviras.mrassistant.ui.units;
 import android.content.Intent;
 import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.AppCompatImageButton;
 import android.support.v7.widget.AppCompatTextView;
@@ -32,6 +33,9 @@ public class UnitsAdapter extends RecyclerView.Adapter<UnitsAdapter.ViewHolder>
 
     public static final int MODE_SELECTION = 1;
     public static final int MODE_EDIT = 2;
+    private static final int TYPE_ADD_BUTTON = 35146854;
+    private static final int TYPE_EDIT = 161;
+    private static final int TYPE_SELECT = 547587;
     private RealmList<Unit> mSupportedUnits = new RealmList<>();
 
     public RealmList<Unit> getSelectedUnits() {
@@ -87,21 +91,23 @@ public class UnitsAdapter extends RecyclerView.Adapter<UnitsAdapter.ViewHolder>
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         ViewHolder holder;
-        if (MODE_EDIT == mMode) {
+        if (TYPE_EDIT == viewType) {
             holder = new EditViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_edit_mode_item, parent, false));
-        } else if (MODE_SELECTION == mMode) {
+        } else if (TYPE_SELECT == viewType) {
             holder = new SelectViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_select_mode_item, parent, false));
         } else {
-            throw new IllegalStateException("Unknown mode " + mMode);
+            holder = new ButtonViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_add_button, parent, false));
         }
         return holder;
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+        if (null == mUnits || mUnits.isEmpty()) {
+            return;
+        }
         holder.unit = mUnits.get(position);
         holder.nameTextView.setText(holder.unit.getName());
-
         if (MODE_EDIT == mMode) {
             onBindViewHolder((EditViewHolder) holder);
         } else if (MODE_SELECTION == mMode) {
@@ -127,7 +133,18 @@ public class UnitsAdapter extends RecyclerView.Adapter<UnitsAdapter.ViewHolder>
 
     @Override
     public int getItemCount() {
-        return null == mUnits ? 0 : mUnits.size();
+        return null == mUnits || mUnits.size() == 0 ? 1 : mUnits.size();
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        if (null == mUnits || mUnits.isEmpty()) {
+            return TYPE_ADD_BUTTON;
+        } else if (MODE_EDIT == mMode) {
+            return TYPE_EDIT;
+        } else {
+            return TYPE_SELECT;
+        }
     }
 
     public abstract static class ViewHolder extends RecyclerView.ViewHolder {
@@ -141,6 +158,23 @@ public class UnitsAdapter extends RecyclerView.Adapter<UnitsAdapter.ViewHolder>
         }
 
         void clearAllRefs() {
+        }
+    }
+
+    public static class ButtonViewHolder extends ViewHolder implements View.OnClickListener {
+
+        public ButtonViewHolder(View itemView) {
+            super(itemView);
+            AppCompatButton addButton = (AppCompatButton) itemView.findViewById(R.id.add_button);
+            addButton.setText(R.string.add_unit);
+            addButton.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(v.getContext(), EditorActivity.class);
+            intent.putExtra(EditorActivity.EXTRA_EDITING_FOR, EditorActivity.UNIT);
+            v.getContext().startActivity(intent);
         }
     }
 
