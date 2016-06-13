@@ -1,6 +1,7 @@
 package com.aviras.mrassistant.ui.doctors;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.inputmethod.EditorInfo;
 
@@ -47,6 +48,16 @@ public class DoctorPresenter implements EditorPresenter<Doctor> {
     @Override
     public void closeDatabase() {
         mRealm.close();
+    }
+
+    @Override
+    public Bundle getState() {
+        return new Bundle();
+    }
+
+    @Override
+    public void setState(Bundle state) {
+
     }
 
     @Override

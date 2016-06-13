@@ -32,6 +32,7 @@ public class EditorFragment extends Fragment implements EditorView {
 
     public static final String TAG = "EditorFragment";
     private static final String LOG_TAG = "EditorFragment";
+    private static final String KEY_PRESENTER_STATE = "presenter_state";
 
     private OnFragmentInteractionListener mListener;
     private EditorPresenter mPresenter;
@@ -86,7 +87,7 @@ public class EditorFragment extends Fragment implements EditorView {
         mPresenter.setView(this);
 
         if (null != savedInstanceState) {
-//            mPresenter.restoreUiStateFromBundle(savedInstanceState);
+            mPresenter.setState(savedInstanceState.getBundle(KEY_PRESENTER_STATE));
         } else {
             mPresenter.load(inflater.getContext(), mId);
         }
@@ -98,7 +99,8 @@ public class EditorFragment extends Fragment implements EditorView {
         if (null == outState) {
             outState = new Bundle();
         }
-//        mPresenter.saveUiStateToBundle(outState);
+        Bundle state = mPresenter.getState();
+        outState.putBundle(KEY_PRESENTER_STATE, state);
         super.onSaveInstanceState(outState);
     }
 

@@ -1,5 +1,10 @@
 package com.aviras.mrassistant.data.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import com.aviras.mrassistant.ui.utils.ParcelableUtil;
+
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
@@ -8,7 +13,7 @@ import io.realm.annotations.PrimaryKey;
  * <p/>
  * Created by ashish on 8/6/16.
  */
-public class Doctor extends RealmObject {
+public class Doctor extends RealmObject implements Parcelable {
 
     @PrimaryKey
     private int id;
@@ -20,6 +25,18 @@ public class Doctor extends RealmObject {
     private String address;
 
     private String notes;
+
+    public Doctor() {
+
+    }
+
+    protected Doctor(Parcel in) {
+        id = ParcelableUtil.readInt(in);
+        name = ParcelableUtil.readString(in);
+        contactNumber = ParcelableUtil.readString(in);
+        address = ParcelableUtil.readString(in);
+        notes = ParcelableUtil.readString(in);
+    }
 
     public int getId() {
         return id;
@@ -60,4 +77,30 @@ public class Doctor extends RealmObject {
     public void setNotes(String notes) {
         this.notes = notes;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        ParcelableUtil.write(dest, id);
+        ParcelableUtil.write(dest, name);
+        ParcelableUtil.write(dest, contactNumber);
+        ParcelableUtil.write(dest, address);
+        ParcelableUtil.write(dest, notes);
+    }
+
+    public static final Creator<Doctor> CREATOR = new Creator<Doctor>() {
+        @Override
+        public Doctor createFromParcel(Parcel in) {
+            return new Doctor(in);
+        }
+
+        @Override
+        public Doctor[] newArray(int size) {
+            return new Doctor[size];
+        }
+    };
 }

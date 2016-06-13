@@ -1,6 +1,7 @@
 package com.aviras.mrassistant.ui.medicines;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -54,6 +55,16 @@ public class MedicinePresenter implements EditorPresenter<Medicine> {
     @Override
     public void closeDatabase() {
         mRealm.close();
+    }
+
+    @Override
+    public Bundle getState() {
+        return new Bundle();
+    }
+
+    @Override
+    public void setState(Bundle state) {
+
     }
 
     @Override
