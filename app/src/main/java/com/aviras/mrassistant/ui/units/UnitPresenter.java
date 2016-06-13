@@ -104,6 +104,10 @@ public class UnitPresenter implements EditorPresenter<Unit> {
 
     @Override
     public void saveOrUpdateObject(List<Editor> editors, int id) {
+        saveOrUpdate(createUnitFromEditors(editors, id));
+    }
+
+    private Unit createUnitFromEditors(List<Editor> editors, int id) {
         Unit unit = new Unit();
         unit.setId(id);
         for (Editor editor : editors) {
@@ -115,12 +119,7 @@ public class UnitPresenter implements EditorPresenter<Unit> {
                     break;
             }
         }
-        saveOrUpdate(unit);
-    }
-
-    @Override
-    public Class<? extends Unit> getRealmClass() {
-        return Unit.class;
+        return unit;
     }
 
     private void saveOrUpdate(Unit object) {

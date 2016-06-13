@@ -5,6 +5,8 @@ import android.view.Gravity;
 import android.widget.Toast;
 
 /**
+ * Utility class for commom UI tasks
+ * <p/>
  * Created by ashish on 12/6/16.
  */
 public class UiUtil {

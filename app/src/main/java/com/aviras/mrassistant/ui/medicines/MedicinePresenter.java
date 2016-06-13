@@ -155,6 +155,10 @@ public class MedicinePresenter implements EditorPresenter<Medicine> {
 
     @Override
     public void saveOrUpdateObject(List<Editor> editors, int id) {
+        saveOrUpdate(createMedicineFormEditors(editors, id));
+    }
+
+    private Medicine createMedicineFormEditors(List<Editor> editors, int id) {
         Medicine medicine = new Medicine();
         medicine.setId(id);
         for (Editor editor : editors) {
@@ -180,12 +184,7 @@ public class MedicinePresenter implements EditorPresenter<Medicine> {
                     break;
             }
         }
-        saveOrUpdate(medicine);
-    }
-
-    @Override
-    public Class<? extends Medicine> getRealmClass() {
-        return Medicine.class;
+        return medicine;
     }
 
     private void saveOrUpdate(Medicine object) {

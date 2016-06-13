@@ -84,8 +84,22 @@ public class EditorFragment extends Fragment implements EditorView {
         mId = getArguments().getInt(EditorActivity.EXTRA_ID, 0);
 
         mPresenter.setView(this);
-        mPresenter.load(inflater.getContext(), mId);
+
+        if (null != savedInstanceState) {
+//            mPresenter.restoreUiStateFromBundle(savedInstanceState);
+        } else {
+            mPresenter.load(inflater.getContext(), mId);
+        }
         return view;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        if (null == outState) {
+            outState = new Bundle();
+        }
+//        mPresenter.saveUiStateToBundle(outState);
+        super.onSaveInstanceState(outState);
     }
 
     @Override

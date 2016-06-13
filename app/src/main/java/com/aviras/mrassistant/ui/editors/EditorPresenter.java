@@ -2,6 +2,8 @@ package com.aviras.mrassistant.ui.editors;
 
 import android.content.Context;
 
+import com.aviras.mrassistant.ui.Presenter;
+
 import java.util.List;
 
 import io.realm.RealmObject;
@@ -11,7 +13,7 @@ import io.realm.RealmObject;
  * <p/>
  * Created by ashish on 10/6/16.
  */
-public interface EditorPresenter<T extends RealmObject> {
+public interface EditorPresenter<T extends RealmObject> extends Presenter {
     /**
      * Provide the title for the {@link EditorFragment}
      *
@@ -32,34 +34,7 @@ public interface EditorPresenter<T extends RealmObject> {
      * Save {@link List<Editor>} to persistent storage
      *
      * @param editors editors to be persisted
-     * @param id id of the object shown in editor
+     * @param id      id of the object shown in editor
      */
     void saveOrUpdateObject(List<Editor> editors, int id);
-
-    Class<? extends T> getRealmClass();
-
-    /**
-     * Set the editor view. This view will get all view related callbaccks
-     *
-     * @param editorView
-     */
-    void setView(EditorView editorView);
-
-    /**
-     * Load single item with given id and notify view about this
-     *
-     * @param context
-     * @param id      id of single item to be loaded
-     */
-    void load(Context context, int id);
-
-    /**
-     * Opens the underlying database
-     */
-    void openDatabase();
-
-    /**
-     * Opens the underlying database
-     */
-    void closeDatabase();
 }
