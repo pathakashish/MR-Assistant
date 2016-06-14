@@ -17,7 +17,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.editors.EditorActivity"></activity>
+        <activity android:name=".ui.editors.EditorActivity" />
+        <activity
+            android:name=".ui.lists.MainActivity"
+            android:label="@string/title_activity_main"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

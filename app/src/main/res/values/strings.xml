@@ -26,4 +26,7 @@
     <string name="units">Units</string>
     <string name="error_please_select_atlease_one_unit">Please select at least one unit</string>
     <string name="add_unit">Add Unit</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
 </resources>
