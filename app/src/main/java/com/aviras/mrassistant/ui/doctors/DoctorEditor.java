@@ -7,6 +7,7 @@ import android.view.inputmethod.EditorInfo;
 
 import com.aviras.mrassistant.R;
 import com.aviras.mrassistant.data.models.Doctor;
+import com.aviras.mrassistant.ui.BasePresenter;
 import com.aviras.mrassistant.ui.editors.Editor;
 import com.aviras.mrassistant.ui.editors.EditorFactory;
 import com.aviras.mrassistant.ui.editors.EditorFragment;
@@ -17,7 +18,6 @@ import com.aviras.mrassistant.ui.editors.TextFieldEditor;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.realm.Realm;
 import io.realm.RealmChangeListener;
 import io.realm.RealmResults;
 
@@ -28,28 +28,21 @@ import io.realm.RealmResults;
  * <p/>
  * Created by ashish on 9/6/16.
  */
-public class DoctorPresenter implements EditorPresenter<Doctor> {
-    private static final String LOG_TAG = "DoctorPresenter";
+public class DoctorEditor extends BasePresenter implements EditorPresenter<Doctor> {
+    private static final String LOG_TAG = "DoctorEditor";
     private static final String KEY_DOCTOR = "doctor";
-    private static DoctorPresenter instance = new DoctorPresenter();
+    private static DoctorEditor instance = new DoctorEditor();
 
     private static final int ID_NAME = 2;
     private static final int ID_CONTACT_NUMBER = 3;
     private static final int ID_ADDRESS = 4;
     private static final int ID_NOTE = 5;
 
-    public static DoctorPresenter sharedInstance() {
+    public static DoctorEditor sharedInstance() {
         return instance;
     }
 
     private EditorView mEditView;
-
-    private Realm mRealm;
-
-    @Override
-    public void closeDatabase() {
-        mRealm.close();
-    }
 
     @Override
     public Bundle getState(List<Editor> editors, int id) {
@@ -64,11 +57,6 @@ public class DoctorPresenter implements EditorPresenter<Doctor> {
             Doctor doctor = state.getParcelable(KEY_DOCTOR);
             mEditView.showEditors(getEditors(context, doctor));
         }
-    }
-
-    @Override
-    public void openDatabase() {
-        mRealm = Realm.getDefaultInstance();
     }
 
     @Override

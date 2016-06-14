@@ -15,13 +15,21 @@ import io.realm.RealmObject;
  * Created by ashish on 10/6/16.
  */
 public interface EditorPresenter<T extends RealmObject> extends Presenter {
+
     /**
-     * Provide the title for the {@link EditorFragment}
+     * Load single item with given id and notify view about this
      *
      * @param context
-     * @return title for the {@link EditorFragment}
+     * @param id      id of single item to be loaded
      */
-    CharSequence getTitle(Context context);
+    void load(Context context, int id);
+
+    /**
+     * Set the editor view. This view will get all view related callbacks
+     *
+     * @param editorView
+     */
+    void setView(EditorView editorView);
 
     /**
      * Get list of {@link Editor}s representing the edit fields

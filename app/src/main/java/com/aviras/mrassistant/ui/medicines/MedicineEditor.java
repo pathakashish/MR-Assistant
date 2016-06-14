@@ -11,6 +11,7 @@ import android.view.inputmethod.EditorInfo;
 import com.aviras.mrassistant.R;
 import com.aviras.mrassistant.data.models.Medicine;
 import com.aviras.mrassistant.data.models.Unit;
+import com.aviras.mrassistant.ui.BasePresenter;
 import com.aviras.mrassistant.ui.editors.Editor;
 import com.aviras.mrassistant.ui.editors.EditorFactory;
 import com.aviras.mrassistant.ui.editors.EditorFragment;
@@ -35,28 +36,21 @@ import io.realm.RealmResults;
  * <p/>
  * Created by ashish on 9/6/16.
  */
-public class MedicinePresenter implements EditorPresenter<Medicine> {
-    private static final String LOG_TAG = "MedicinePresenter";
+public class MedicineEditor extends BasePresenter implements EditorPresenter<Medicine> {
+    private static final String LOG_TAG = "MedicineEditor";
 
     private static final int ID_NAME = 1;
     private static final int ID_DESCRIPTION = 2;
     private static final int ID_UNIT = 3;
     private static final String KEY_MEDICINE = "medicine";
 
-    private static MedicinePresenter instance = new MedicinePresenter();
+    private static MedicineEditor instance = new MedicineEditor();
 
-    public static MedicinePresenter sharedInstance() {
+    public static MedicineEditor sharedInstance() {
         return instance;
     }
 
     private EditorView mEditView;
-
-    private Realm mRealm;
-
-    @Override
-    public void closeDatabase() {
-        mRealm.close();
-    }
 
     @Override
     public Bundle getState(List<Editor> editors, int id) {
@@ -71,11 +65,6 @@ public class MedicinePresenter implements EditorPresenter<Medicine> {
             Medicine medicine = state.getParcelable(KEY_MEDICINE);
             mEditView.showEditors(getEditors(context, medicine));
         }
-    }
-
-    @Override
-    public void openDatabase() {
-        mRealm = Realm.getDefaultInstance();
     }
 
     @Override
@@ -157,7 +146,7 @@ public class MedicinePresenter implements EditorPresenter<Medicine> {
         units.setValidator(new Editor.Validator<ListEditor>(units) {
             @Override
             public boolean validate() {
-                RecyclerView.Adapter adapter = ((ListEditor) getField()).getAdapter();
+                RecyclerView.Adapter adapter = getField().getAdapter();
                 if (adapter instanceof UnitsAdapter) {
                     RealmList<Unit> supportedUnits = ((UnitsAdapter) adapter).getSelectedUnits();
                     return supportedUnits.size() > 0;

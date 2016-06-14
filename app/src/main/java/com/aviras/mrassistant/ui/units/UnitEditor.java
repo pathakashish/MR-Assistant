@@ -7,6 +7,7 @@ import android.view.inputmethod.EditorInfo;
 
 import com.aviras.mrassistant.R;
 import com.aviras.mrassistant.data.models.Unit;
+import com.aviras.mrassistant.ui.BasePresenter;
 import com.aviras.mrassistant.ui.editors.Editor;
 import com.aviras.mrassistant.ui.editors.EditorFactory;
 import com.aviras.mrassistant.ui.editors.EditorFragment;
@@ -17,7 +18,6 @@ import com.aviras.mrassistant.ui.editors.TextFieldEditor;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.realm.Realm;
 import io.realm.RealmChangeListener;
 import io.realm.RealmResults;
 
@@ -28,24 +28,17 @@ import io.realm.RealmResults;
  * <p/>
  * Created by ashish on 9/6/16.
  */
-public class UnitPresenter implements EditorPresenter<Unit> {
-    private static final String LOG_TAG = "UnitPresenter";
+public class UnitEditor extends BasePresenter implements EditorPresenter<Unit> {
+    private static final String LOG_TAG = "UnitEditor";
     private static final int ID_NAME = 1;
     private static final String KEY_UNIT = "unit";
-    private static UnitPresenter instance = new UnitPresenter();
+    private static UnitEditor instance = new UnitEditor();
 
-    public static UnitPresenter sharedInstance() {
+    public static UnitEditor sharedInstance() {
         return instance;
     }
 
     private EditorView mEditView;
-
-    private Realm mRealm;
-
-    @Override
-    public void closeDatabase() {
-        mRealm.close();
-    }
 
     @Override
     public Bundle getState(List<Editor> editors, int id) {
@@ -60,11 +53,6 @@ public class UnitPresenter implements EditorPresenter<Unit> {
             Unit unit = state.getParcelable(KEY_UNIT);
             mEditView.showEditors(getEditors(context, unit));
         }
-    }
-
-    @Override
-    public void openDatabase() {
-        mRealm = Realm.getDefaultInstance();
     }
 
     @Override

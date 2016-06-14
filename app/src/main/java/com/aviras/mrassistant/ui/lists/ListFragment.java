@@ -13,12 +13,12 @@ import com.aviras.mrassistant.R;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link ListFragmen.OnFragmentInteractionListener} interface
+ * {@link ListFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link ListFragmen#newInstance} factory method to
+ * Use the {@link ListFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ListFragmen extends Fragment {
+public class ListFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -30,7 +30,7 @@ public class ListFragmen extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public ListFragmen() {
+    public ListFragment() {
         // Required empty public constructor
     }
 
@@ -40,11 +40,11 @@ public class ListFragmen extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment ListFragmen.
+     * @return A new instance of fragment ListFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static ListFragmen newInstance(String param1, String param2) {
-        ListFragmen fragment = new ListFragmen();
+    public static ListFragment newInstance(String param1, String param2) {
+        ListFragment fragment = new ListFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);

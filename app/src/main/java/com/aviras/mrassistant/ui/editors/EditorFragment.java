@@ -18,9 +18,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.aviras.mrassistant.R;
-import com.aviras.mrassistant.ui.doctors.DoctorPresenter;
-import com.aviras.mrassistant.ui.medicines.MedicinePresenter;
-import com.aviras.mrassistant.ui.units.UnitPresenter;
+import com.aviras.mrassistant.ui.doctors.DoctorEditor;
+import com.aviras.mrassistant.ui.medicines.MedicineEditor;
+import com.aviras.mrassistant.ui.units.UnitEditor;
 import com.aviras.mrassistant.ui.utils.UiUtil;
 
 import java.util.List;
@@ -60,11 +60,11 @@ public class EditorFragment extends Fragment implements EditorView {
         if (getArguments() != null) {
             String editingFor = getArguments().getString(EditorActivity.EXTRA_EDITING_FOR);
             if (EditorActivity.UNIT.equals(editingFor)) {
-                mPresenter = UnitPresenter.sharedInstance();
+                mPresenter = UnitEditor.sharedInstance();
             } else if (EditorActivity.MEDICINE.equals(editingFor)) {
-                mPresenter = MedicinePresenter.sharedInstance();
+                mPresenter = MedicineEditor.sharedInstance();
             } else if (EditorActivity.DOCTOR.equals(editingFor)) {
-                mPresenter = DoctorPresenter.sharedInstance();
+                mPresenter = DoctorEditor.sharedInstance();
             }
         }
     }
@@ -131,7 +131,7 @@ public class EditorFragment extends Fragment implements EditorView {
         if (null != toolbar) {
             toolbar.setTitleTextColor(Color.WHITE);
             toolbar.setTitle(mPresenter.getTitle(view.getContext()));
-            toolbar.setNavigationIcon(R.drawable.ic_close_black_24dp);
+            toolbar.setNavigationIcon(R.drawable.ic_close_white_24dp);
             toolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
