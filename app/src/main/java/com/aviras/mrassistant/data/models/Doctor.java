@@ -6,6 +6,7 @@ import android.os.Parcelable;
 import com.aviras.mrassistant.ui.utils.ParcelableUtil;
 
 import io.realm.RealmObject;
+import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
 
 /**
@@ -92,6 +93,7 @@ public class Doctor extends RealmObject implements Parcelable {
         ParcelableUtil.write(dest, notes);
     }
 
+    @Ignore
     public static final Creator<Doctor> CREATOR = new Creator<Doctor>() {
         @Override
         public Doctor createFromParcel(Parcel in) {

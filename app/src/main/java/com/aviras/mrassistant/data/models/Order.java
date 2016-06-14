@@ -9,6 +9,7 @@ import java.util.List;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
+import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
 
 /**
@@ -108,6 +109,7 @@ public class Order extends RealmObject implements Parcelable {
         ParcelableUtil.write(dest, items, 0);
     }
 
+    @Ignore
     public static final Creator<Order> CREATOR = new Creator<Order>() {
         @Override
         public Order createFromParcel(Parcel in) {

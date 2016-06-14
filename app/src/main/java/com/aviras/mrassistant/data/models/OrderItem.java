@@ -6,6 +6,7 @@ import android.os.Parcelable;
 import com.aviras.mrassistant.ui.utils.ParcelableUtil;
 
 import io.realm.RealmObject;
+import io.realm.annotations.Ignore;
 
 /**
  * Represent order item
@@ -66,6 +67,7 @@ public class OrderItem extends RealmObject implements Parcelable {
         ParcelableUtil.write(dest, quantity);
     }
 
+    @Ignore
     public static final Creator<OrderItem> CREATOR = new Creator<OrderItem>() {
         @Override
         public OrderItem createFromParcel(Parcel in) {

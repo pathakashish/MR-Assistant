@@ -9,6 +9,7 @@ import java.util.List;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
+import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
 
 /**
@@ -86,6 +87,7 @@ public class Medicine extends RealmObject implements Parcelable {
         ParcelableUtil.write(dest, supportedUnits, 0);
     }
 
+    @Ignore
     public static final Creator<Medicine> CREATOR = new Creator<Medicine>() {
         @Override
         public Medicine createFromParcel(Parcel in) {
