@@ -87,7 +87,7 @@ public class EditorFragment extends Fragment implements EditorView {
         mPresenter.setView(this);
 
         if (null != savedInstanceState) {
-            mPresenter.setState(savedInstanceState.getBundle(KEY_PRESENTER_STATE));
+            mPresenter.setState(inflater.getContext(), savedInstanceState.getBundle(KEY_PRESENTER_STATE));
         } else {
             mPresenter.load(inflater.getContext(), mId);
         }
@@ -99,7 +99,7 @@ public class EditorFragment extends Fragment implements EditorView {
         if (null == outState) {
             outState = new Bundle();
         }
-        Bundle state = mPresenter.getState();
+        Bundle state = mPresenter.getState(mAdapter.getEditors(), mId);
         outState.putBundle(KEY_PRESENTER_STATE, state);
         super.onSaveInstanceState(outState);
     }
