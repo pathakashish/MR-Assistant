@@ -16,9 +16,6 @@ public class EditorActivity extends AppCompatActivity
 
     public static final String EXTRA_EDITING_FOR = "editing_for";
     public static final String EXTRA_ID = "id";
-    public static final String DOCTOR = "doctor";
-    public static final String MEDICINE = "medicine";
-    public static final String UNIT = "unit";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

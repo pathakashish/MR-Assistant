@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.aviras.mrassistant.R;
+import com.aviras.mrassistant.ui.Presenter;
 import com.aviras.mrassistant.ui.doctors.DoctorEditor;
 import com.aviras.mrassistant.ui.medicines.MedicineEditor;
 import com.aviras.mrassistant.ui.units.UnitEditor;
@@ -59,11 +60,11 @@ public class EditorFragment extends Fragment implements EditorView {
         setHasOptionsMenu(true);
         if (getArguments() != null) {
             String editingFor = getArguments().getString(EditorActivity.EXTRA_EDITING_FOR);
-            if (EditorActivity.UNIT.equals(editingFor)) {
+            if (Presenter.UNIT.equals(editingFor)) {
                 mPresenter = UnitEditor.sharedInstance();
-            } else if (EditorActivity.MEDICINE.equals(editingFor)) {
+            } else if (Presenter.MEDICINE.equals(editingFor)) {
                 mPresenter = MedicineEditor.sharedInstance();
-            } else if (EditorActivity.DOCTOR.equals(editingFor)) {
+            } else if (Presenter.DOCTOR.equals(editingFor)) {
                 mPresenter = DoctorEditor.sharedInstance();
             }
         }
