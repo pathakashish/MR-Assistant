@@ -16,6 +16,7 @@ import android.widget.CompoundButton;
 import com.aviras.mrassistant.R;
 import com.aviras.mrassistant.data.models.Unit;
 import com.aviras.mrassistant.ui.OnItemSelectedListener;
+import com.aviras.mrassistant.ui.Presenter;
 import com.aviras.mrassistant.ui.editors.EditorActivity;
 
 import java.lang.annotation.Retention;
@@ -173,7 +174,7 @@ public class UnitsAdapter extends RecyclerView.Adapter<UnitsAdapter.ViewHolder>
         @Override
         public void onClick(View v) {
             Intent intent = new Intent(v.getContext(), EditorActivity.class);
-            intent.putExtra(EditorActivity.EXTRA_EDITING_FOR, EditorActivity.UNIT);
+            intent.putExtra(EditorActivity.EXTRA_EDITING_FOR, Presenter.UNIT);
             v.getContext().startActivity(intent);
         }
     }
@@ -229,8 +230,8 @@ public class UnitsAdapter extends RecyclerView.Adapter<UnitsAdapter.ViewHolder>
                     break;
                 default:
                     Intent intent = new Intent(v.getContext(), EditorActivity.class);
-                    intent.putExtra(EditorActivity.EXTRA_EDITING_FOR, EditorActivity.UNIT);
-                    intent.putExtra(EditorActivity.EXTRA_ID, 1);
+                    intent.putExtra(EditorActivity.EXTRA_EDITING_FOR, Presenter.UNIT);
+                    intent.putExtra(EditorActivity.EXTRA_ID, unit.getId());
                     v.getContext().startActivity(intent);
                     break;
             }

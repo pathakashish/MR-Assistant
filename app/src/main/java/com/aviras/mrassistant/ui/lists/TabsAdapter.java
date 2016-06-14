@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
+import com.aviras.mrassistant.ui.Presenter;
 import com.aviras.mrassistant.ui.TitleProvider;
 
 /**
@@ -19,7 +20,11 @@ public class TabsAdapter extends FragmentStatePagerAdapter {
     public TabsAdapter(Context context, FragmentManager fm) {
         super(fm);
         mContext = context.getApplicationContext();
-        mFragments = new Fragment[]{};
+        mFragments = new Fragment[]{
+                ListFragment.newInstance(Presenter.MEDICINE),
+                ListFragment.newInstance(Presenter.DOCTOR),
+                ListFragment.newInstance(Presenter.UNIT)
+        };
     }
 
     @Override

@@ -9,44 +9,38 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.aviras.mrassistant.R;
+import com.aviras.mrassistant.ui.FabActionProvider;
+import com.aviras.mrassistant.ui.Presenter;
+import com.aviras.mrassistant.ui.Refreshable;
+import com.aviras.mrassistant.ui.TitleProvider;
+import com.aviras.mrassistant.ui.doctors.DoctorsList;
+import com.aviras.mrassistant.ui.medicines.MedicinesList;
+import com.aviras.mrassistant.ui.units.UnitsList;
 
-import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.RealmResults;
 
 /**
  * Shows list of {@link RealmObject}
  */
-public class ListFragment extends Fragment implements ListView {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+public class ListFragment extends Fragment implements ListView, TitleProvider, Refreshable, FabActionProvider {
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private static final String ARG_LIST_FOR = "list_for";
+
+    private String mListFor;
 
     private OnFragmentInteractionListener mListener;
+
+    private ListPresenter mPresenter;
 
     public ListFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ListFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static ListFragment newInstance(String param1, String param2) {
+    public static ListFragment newInstance(String listFor) {
         ListFragment fragment = new ListFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putString(ARG_LIST_FOR, listFor);
         fragment.setArguments(args);
         return fragment;
     }
@@ -55,19 +49,31 @@ public class ListFragment extends Fragment implements ListView {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            mListFor = getArguments().getString(ARG_LIST_FOR);
+            if (Presenter.UNIT.equals(mListFor)) {
+                mPresenter = UnitsList.sharedInstance();
+            } else if (Presenter.MEDICINE.equals(mListFor)) {
+                mPresenter = MedicinesList.sharedInstance();
+            } else if (Presenter.DOCTOR.equals(mListFor)) {
+                mPresenter = DoctorsList.sharedInstance();
+            }
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+        mPresenter.openDatabase();
+        mPresenter.load();
         return inflater.inflate(R.layout.fragment_list, container, false);
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mPresenter.closeDatabase();
+    }
+
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
@@ -92,8 +98,23 @@ public class ListFragment extends Fragment implements ListView {
     }
 
     @Override
-    public <T extends RealmObject> void setItems(RealmResults<T> items) {
-        
+    public void setItems(RealmResults items) {
+
+    }
+
+    @Override
+    public void refresh(Context applicationContext) {
+        mPresenter.load();
+    }
+
+    @Override
+    public CharSequence getTitle(Context context) {
+        return mPresenter.getTitle(context);
+    }
+
+    @Override
+    public void onFabClicked(View v) {
+        mPresenter.addNew(v.getContext());
     }
 
     public interface OnFragmentInteractionListener {
