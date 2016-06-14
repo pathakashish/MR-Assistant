@@ -11,6 +11,7 @@ public abstract class BasePresenter implements Presenter {
 
     @Override
     public void closeDatabase() {
+        mRealm.removeAllChangeListeners();
         mRealm.close();
     }
 
