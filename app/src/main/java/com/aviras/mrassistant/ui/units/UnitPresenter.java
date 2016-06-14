@@ -31,6 +31,7 @@ import io.realm.RealmResults;
 public class UnitPresenter implements EditorPresenter<Unit> {
     private static final String LOG_TAG = "UnitPresenter";
     private static final int ID_NAME = 1;
+    private static final String KEY_UNIT = "unit";
     private static UnitPresenter instance = new UnitPresenter();
 
     public static UnitPresenter sharedInstance() {
@@ -47,13 +48,18 @@ public class UnitPresenter implements EditorPresenter<Unit> {
     }
 
     @Override
-    public Bundle getState() {
-        return new Bundle();
+    public Bundle getState(List<Editor> editors, int id) {
+        Bundle state = new Bundle();
+        state.putParcelable(KEY_UNIT, createUnitFromEditors(editors, id));
+        return state;
     }
 
     @Override
-    public void setState(Bundle state) {
-
+    public void setState(Context context, Bundle state) {
+        if (null != mEditView) {
+            Unit unit = state.getParcelable(KEY_UNIT);
+            mEditView.showEditors(getEditors(context, unit));
+        }
     }
 
     @Override
@@ -73,12 +79,14 @@ public class UnitPresenter implements EditorPresenter<Unit> {
             @Override
             public void onChange(RealmResults<Unit> element) {
                 element.removeChangeListener(this);
+                Unit unit;
                 if (element.size() > 0) {
-                    if (null != mEditView) {
-                        mEditView.showEditors(getEditors(context, element.get(0)));
-                    }
+                    unit = element.get(0);
                 } else {
-                    mEditView.showEditors(getEditors(context, null));
+                    unit = null;
+                }
+                if (null != mEditView) {
+                    mEditView.showEditors(getEditors(context, unit));
                 }
             }
         });

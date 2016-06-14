@@ -41,6 +41,7 @@ public class MedicinePresenter implements EditorPresenter<Medicine> {
     private static final int ID_NAME = 1;
     private static final int ID_DESCRIPTION = 2;
     private static final int ID_UNIT = 3;
+    private static final String KEY_MEDICINE = "medicine";
 
     private static MedicinePresenter instance = new MedicinePresenter();
 
@@ -58,13 +59,18 @@ public class MedicinePresenter implements EditorPresenter<Medicine> {
     }
 
     @Override
-    public Bundle getState() {
-        return new Bundle();
+    public Bundle getState(List<Editor> editors, int id) {
+        Bundle state = new Bundle();
+        state.putParcelable(KEY_MEDICINE, createMedicineFormEditors(editors, id));
+        return state;
     }
 
     @Override
-    public void setState(Bundle state) {
-
+    public void setState(Context context, Bundle state) {
+        if (null != mEditView) {
+            Medicine medicine = state.getParcelable(KEY_MEDICINE);
+            mEditView.showEditors(getEditors(context, medicine));
+        }
     }
 
     @Override
@@ -84,12 +90,14 @@ public class MedicinePresenter implements EditorPresenter<Medicine> {
             @Override
             public void onChange(RealmResults<Medicine> element) {
                 element.removeChangeListener(this);
+                Medicine medicine;
                 if (element.size() > 0) {
-                    if (null != mEditView) {
-                        mEditView.showEditors(getEditors(context, element.get(0)));
-                    }
+                    medicine = element.get(0);
                 } else {
-                    mEditView.showEditors(getEditors(context, null));
+                    medicine = null;
+                }
+                if (null != mEditView) {
+                    mEditView.showEditors(getEditors(context, medicine));
                 }
             }
         });

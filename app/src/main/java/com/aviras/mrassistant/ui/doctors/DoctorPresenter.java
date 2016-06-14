@@ -30,6 +30,7 @@ import io.realm.RealmResults;
  */
 public class DoctorPresenter implements EditorPresenter<Doctor> {
     private static final String LOG_TAG = "DoctorPresenter";
+    private static final String KEY_DOCTOR = "doctor";
     private static DoctorPresenter instance = new DoctorPresenter();
 
     private static final int ID_NAME = 2;
@@ -51,13 +52,18 @@ public class DoctorPresenter implements EditorPresenter<Doctor> {
     }
 
     @Override
-    public Bundle getState() {
-        return new Bundle();
+    public Bundle getState(List<Editor> editors, int id) {
+        Bundle state = new Bundle();
+        state.putParcelable(KEY_DOCTOR, createDoctorFromEditors(editors, id));
+        return state;
     }
 
     @Override
-    public void setState(Bundle state) {
-
+    public void setState(Context context, Bundle state) {
+        if (null != mEditView) {
+            Doctor doctor = state.getParcelable(KEY_DOCTOR);
+            mEditView.showEditors(getEditors(context, doctor));
+        }
     }
 
     @Override
@@ -77,12 +83,15 @@ public class DoctorPresenter implements EditorPresenter<Doctor> {
             @Override
             public void onChange(RealmResults<Doctor> element) {
                 element.removeChangeListener(this);
+                Doctor doctor;
                 if (element.size() > 0) {
-                    if (null != mEditView) {
-                        mEditView.showEditors(getEditors(context, element.get(0)));
-                    }
+                    doctor = element.get(0);
                 } else {
-                    mEditView.showEditors(getEditors(context, null));
+                    doctor = null;
+                }
+
+                if (null != mEditView) {
+                    mEditView.showEditors(getEditors(context, doctor));
                 }
             }
         });

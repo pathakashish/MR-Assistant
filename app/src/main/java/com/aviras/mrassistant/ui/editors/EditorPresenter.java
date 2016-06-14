@@ -1,6 +1,7 @@
 package com.aviras.mrassistant.ui.editors;
 
 import android.content.Context;
+import android.os.Bundle;
 
 import com.aviras.mrassistant.ui.Presenter;
 
@@ -37,4 +38,25 @@ public interface EditorPresenter<T extends RealmObject> extends Presenter {
      * @param id      id of the object shown in editor
      */
     void saveOrUpdateObject(List<Editor> editors, int id);
+
+    /**
+     * Return a bundle containing state of this presenter. This method will be called by view to store
+     * state before it gets destroyed and view will call {@link EditorPresenter#setState(Context, Bundle)} to restore
+     * the state. When view calls {@link EditorPresenter#setState(Context, Bundle)}, it will expect the {@link EditorPresenter}
+     * to call appropriate method to update UI.
+     *
+     * @param editors extract state from these editors
+     * @param id      this is the id for which we are showing data on UI
+     * @return a {@link Bundle} containing current state
+     */
+    Bundle getState(List<Editor> editors, int id);
+
+    /**
+     * View will call this method to set the last known state and will expect {@link EditorPresenter} to
+     * call appropriate method to update UI.
+     *
+     * @param context
+     * @param state   {@link  Bundle} containing last known state which view got by calling {@link EditorPresenter#getState(List, int)}
+     */
+    void setState(Context context, Bundle state);
 }
