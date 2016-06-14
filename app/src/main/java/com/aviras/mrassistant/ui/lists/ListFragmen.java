@@ -17,7 +17,6 @@ import com.aviras.mrassistant.R;
  * to handle interaction events.
  * Use the {@link ListFragmen#newInstance} factory method to
  * create an instance of this fragment.
- *
  */
 public class ListFragmen extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
@@ -30,6 +29,10 @@ public class ListFragmen extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+
+    public ListFragmen() {
+        // Required empty public constructor
+    }
 
     /**
      * Use this factory method to create a new instance of
@@ -47,9 +50,6 @@ public class ListFragmen extends Fragment {
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
-    }
-    public ListFragmen() {
-        // Required empty public constructor
     }
 
     @Override
@@ -97,7 +97,7 @@ public class ListFragmen extends Fragment {
      * fragment to allow an interaction in this fragment to be communicated
      * to the activity and potentially other fragments contained in that
      * activity.
-     * <p>
+     * <p/>
      * See the Android Training lesson <a href=
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
