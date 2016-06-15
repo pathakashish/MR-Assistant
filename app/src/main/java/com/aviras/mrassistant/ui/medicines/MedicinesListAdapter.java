@@ -70,7 +70,6 @@ public class MedicinesListAdapter extends ListAdapter<MedicinesListAdapter.ViewH
 
     public static class ContentsViewHolder extends ViewHolder implements View.OnClickListener {
 
-        List<CharSequence> mFtsQueries;
         AppCompatTextView nameTextView;
         AppCompatTextView descriptionTextView;
         ForegroundColorSpan mColorAccent;
@@ -86,16 +85,16 @@ public class MedicinesListAdapter extends ListAdapter<MedicinesListAdapter.ViewH
         }
 
         @Override
-        void updateView(ViewHolder holder, int position, List<CharSequence> mFtsQueries) {
+        void updateView(ViewHolder holder, int position, List<CharSequence> ftsQueries) {
             String name = medicine.getName();
             String description = medicine.getDescription() == null ? "" : medicine.getDescription();
-            if (null == mFtsQueries || mFtsQueries.isEmpty()) {
+            if (null == ftsQueries || ftsQueries.isEmpty()) {
                 nameTextView.setText(name);
                 descriptionTextView.setText(description);
             } else {
                 Spannable spannedName = new SpannableString(name);
                 Spannable spannedDescription = new SpannableString(description);
-                for (CharSequence query : mFtsQueries) {
+                for (CharSequence query : ftsQueries) {
                     int nameSpanStartIndex = name.indexOf(query.toString());
                     if (nameSpanStartIndex >= 0) {
                         int nameSpanEndIndex = Math.min(nameSpanStartIndex + query.length(), nameSpanStartIndex + (name.length() - nameSpanStartIndex));
