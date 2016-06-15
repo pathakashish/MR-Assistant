@@ -57,4 +57,8 @@ public class DoctorsList extends BasePresenter implements ListPresenter<Doctor>,
             mListView.setItems(element);
         }
     }
+
+    public interface DoctorsListView {
+        void setItems(RealmResults<Doctor> doctors);
+    }
 }

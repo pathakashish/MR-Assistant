@@ -57,4 +57,8 @@ public class UnitsList extends BasePresenter implements ListPresenter<Unit>, Rea
         intent.putExtra(EditorActivity.EXTRA_EDITING_FOR, Presenter.UNIT);
         context.startActivity(intent);
     }
+
+    public interface UnitsListView {
+        void setItems(RealmResults<Unit> units);
+    }
 }

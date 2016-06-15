@@ -18,12 +18,11 @@ import com.aviras.mrassistant.ui.medicines.MedicinesList;
 import com.aviras.mrassistant.ui.units.UnitsList;
 
 import io.realm.RealmObject;
-import io.realm.RealmResults;
 
 /**
  * Shows list of {@link RealmObject}
  */
-public abstract class ListFragment extends Fragment implements ListView, TitleProvider, Refreshable, FabActionProvider {
+public abstract class ListFragment extends Fragment implements TitleProvider, Refreshable, FabActionProvider {
 
     protected static final String ARG_LIST_FOR = "list_for";
 
@@ -87,11 +86,6 @@ public abstract class ListFragment extends Fragment implements ListView, TitlePr
     public void onDetach() {
         super.onDetach();
         mListener = null;
-    }
-
-    @Override
-    public void setItems(RealmResults items) {
-
     }
 
     @Override

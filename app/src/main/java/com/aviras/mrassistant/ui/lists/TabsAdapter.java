@@ -7,6 +7,9 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.aviras.mrassistant.ui.Presenter;
 import com.aviras.mrassistant.ui.TitleProvider;
+import com.aviras.mrassistant.ui.doctors.DoctorsListFragment;
+import com.aviras.mrassistant.ui.medicines.MedicinesListFragment;
+import com.aviras.mrassistant.ui.units.UnitsListFragment;
 
 /**
  * Adapter for {@link android.support.v4.view.ViewPager}. Will show lists in pages.

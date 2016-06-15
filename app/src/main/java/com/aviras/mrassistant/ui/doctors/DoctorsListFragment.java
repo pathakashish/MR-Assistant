@@ -1,16 +1,20 @@
-package com.aviras.mrassistant.ui.lists;
+package com.aviras.mrassistant.ui.doctors;
 
 import android.content.Context;
 import android.os.Bundle;
 
 import com.aviras.mrassistant.R;
+import com.aviras.mrassistant.data.models.Doctor;
+import com.aviras.mrassistant.ui.lists.ListFragment;
+
+import io.realm.RealmResults;
 
 /**
  * Show {@link com.aviras.mrassistant.data.models.Doctor}s list
  * <p/>
  * Created by ashish on 15/6/16.
  */
-public class DoctorsListFragment extends ListFragment {
+public class DoctorsListFragment extends ListFragment implements DoctorsList.DoctorsListView {
 
     public static ListFragment newInstance(String listFor) {
         DoctorsListFragment fragment = new DoctorsListFragment();
@@ -23,5 +27,10 @@ public class DoctorsListFragment extends ListFragment {
     @Override
     public CharSequence getTitle(Context context) {
         return context.getString(R.string.title_activity_doctors);
+    }
+
+    @Override
+    public void setItems(RealmResults<Doctor> doctors) {
+
     }
 }

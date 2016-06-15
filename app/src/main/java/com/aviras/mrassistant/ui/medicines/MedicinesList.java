@@ -57,4 +57,8 @@ public class MedicinesList extends BasePresenter implements ListPresenter<Medici
         intent.putExtra(EditorActivity.EXTRA_EDITING_FOR, Presenter.MEDICINE);
         context.startActivity(intent);
     }
+
+    public interface MedicinesListView {
+        void setItems(RealmResults<Medicine> medicines);
+    }
 }
