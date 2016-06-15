@@ -1,9 +1,13 @@
 package com.aviras.mrassistant.ui.units;
 
 import android.content.Intent;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatImageButton;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +18,8 @@ import com.aviras.mrassistant.ui.Presenter;
 import com.aviras.mrassistant.ui.editors.EditorActivity;
 import com.aviras.mrassistant.ui.lists.ListAdapter;
 import com.aviras.mrassistant.ui.lists.ListFragment;
+
+import java.util.List;
 
 import io.realm.RealmResults;
 
@@ -47,7 +53,7 @@ public class UnitsListAdapter extends ListAdapter<UnitsListAdapter.ViewHolder, U
             return;
         }
         holder.unit = mItems.get(position);
-        holder.updateView(holder, position);
+        holder.updateView(holder, position, mFtsQueries);
     }
 
     public abstract static class ViewHolder extends RecyclerView.ViewHolder {
@@ -57,15 +63,17 @@ public class UnitsListAdapter extends ListAdapter<UnitsListAdapter.ViewHolder, U
             super(itemView);
         }
 
-        abstract void updateView(ViewHolder holder, int position);
+        abstract void updateView(ViewHolder holder, int position, List<CharSequence> ftsQueries);
     }
 
     public static class ContentsViewHolder extends ViewHolder implements View.OnClickListener {
 
         AppCompatTextView nameTextView;
+        final ForegroundColorSpan mColorAccent;
 
         public ContentsViewHolder(View itemView) {
             super(itemView);
+            mColorAccent = new ForegroundColorSpan(ContextCompat.getColor(itemView.getContext(), R.color.colorAccent));
             itemView.setOnClickListener(this);
             nameTextView = (AppCompatTextView) itemView.findViewById(R.id.name_textview);
             AppCompatImageButton deleteButton = (AppCompatImageButton) itemView.findViewById(R.id.delete_button);
@@ -73,8 +81,21 @@ public class UnitsListAdapter extends ListAdapter<UnitsListAdapter.ViewHolder, U
         }
 
         @Override
-        void updateView(ViewHolder holder, int position) {
-            nameTextView.setText(unit.getName());
+        void updateView(ViewHolder holder, int position, List<CharSequence> ftsQueries) {
+            String name = unit.getName();
+            if (null == ftsQueries || ftsQueries.isEmpty()) {
+                nameTextView.setText(name);
+            } else {
+                Spannable spannedName = new SpannableString(name);
+                for (CharSequence query : ftsQueries) {
+                    int nameSpanStartIndex = name.indexOf(query.toString());
+                    if (nameSpanStartIndex >= 0) {
+                        int nameSpanEndIndex = Math.min(nameSpanStartIndex + query.length(), nameSpanStartIndex + (name.length() - nameSpanStartIndex));
+                        spannedName.setSpan(mColorAccent, nameSpanStartIndex, nameSpanEndIndex, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    }
+                }
+                nameTextView.setText(spannedName);
+            }
         }
 
         @Override
@@ -103,7 +124,7 @@ public class UnitsListAdapter extends ListAdapter<UnitsListAdapter.ViewHolder, U
         }
 
         @Override
-        void updateView(ViewHolder holder, int position) {
+        void updateView(ViewHolder holder, int position, List<CharSequence> ftsQueries) {
 
         }
     }
