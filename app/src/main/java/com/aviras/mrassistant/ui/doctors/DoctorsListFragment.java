@@ -36,6 +36,7 @@ public class DoctorsListFragment extends ListFragment<Doctor> implements Doctors
     public void setItems(RealmResults<Doctor> doctors) {
         if (null != mAdapter) {
             mAdapter.setItems(doctors);
+            mAdapter.notifyDataSetChanged();
         }
     }
 

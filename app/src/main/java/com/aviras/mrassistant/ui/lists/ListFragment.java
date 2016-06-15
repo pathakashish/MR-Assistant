@@ -20,7 +20,6 @@ import com.aviras.mrassistant.ui.medicines.MedicinesList;
 import com.aviras.mrassistant.ui.units.UnitsList;
 
 import io.realm.RealmObject;
-import io.realm.RealmResults;
 
 /**
  * Shows list of {@link RealmObject}
@@ -112,7 +111,9 @@ public abstract class ListFragment<T extends RealmObject> extends Fragment imple
 
     @Override
     public void onFabClicked(View v) {
-        mPresenter.addNew(v.getContext());
+        if (null != mPresenter) {
+            mPresenter.addNew(v.getContext());
+        }
     }
 
     public interface OnFragmentInteractionListener {
