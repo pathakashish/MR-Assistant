@@ -20,7 +20,7 @@
         <activity android:name=".ui.editors.EditorActivity" />
         <activity
             android:name=".ui.lists.MainActivity"
-            android:label="@string/title_activity_main"
+            android:label="@string/app_name"
             android:theme="@style/AppTheme"></activity>
     </application>
 
