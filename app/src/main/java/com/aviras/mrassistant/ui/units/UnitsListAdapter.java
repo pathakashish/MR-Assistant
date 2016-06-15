@@ -1,18 +1,29 @@
 package com.aviras.mrassistant.ui.units;
 
+import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.aviras.mrassistant.R;
 import com.aviras.mrassistant.data.models.Unit;
+import com.aviras.mrassistant.ui.lists.ListAdapter;
 import com.aviras.mrassistant.ui.lists.ListFragment;
 
+import io.realm.RealmResults;
+
 /**
- * Implementation for {@link ListFragment.ListAdapter} for {@link ListFragment}
+ * Implementation for {@link com.aviras.mrassistant.ui.lists.ListAdapter} for {@link ListFragment}
  * <p/>
  * Created by ashish on 15/6/16.
  */
-public class UnitsListAdapter extends ListFragment.ListAdapter<UnitsListAdapter.ViewHolder, Unit> {
+public class UnitsListAdapter extends ListAdapter<UnitsListAdapter.ViewHolder, Unit> {
+
+    @Override
+    public void setItems(RealmResults<Unit> items) {
+        mItems = items;
+    }
 
     @Override
     protected ViewHolder getListItemViewHolder(ViewGroup parent, int viewType) {
@@ -21,7 +32,8 @@ public class UnitsListAdapter extends ListFragment.ListAdapter<UnitsListAdapter.
 
     @Override
     protected ViewHolder getEmptyViewHolder(ViewGroup parent, int viewType) {
-        return null;
+        return new EmptyViewHolder(LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.layout_empty_message, parent, false));
     }
 
     @Override
@@ -33,6 +45,15 @@ public class UnitsListAdapter extends ListFragment.ListAdapter<UnitsListAdapter.
 
         public ViewHolder(View itemView) {
             super(itemView);
+        }
+    }
+
+    public static class EmptyViewHolder extends ViewHolder {
+
+        public EmptyViewHolder(View itemView) {
+            super(itemView);
+            AppCompatTextView emptyMessageTextView = (AppCompatTextView) itemView.findViewById(R.id.empty_message_textview);
+            emptyMessageTextView.setText(R.string.empty_message_units);
         }
     }
 }

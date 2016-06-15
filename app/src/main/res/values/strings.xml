@@ -32,4 +32,7 @@
     <string name="title_activity_units">Units</string>
     <string name="title_activity_medicines">Medicines</string>
     <string name="title_activity_doctors">Doctors</string>
+    <string name="empty_message_units">There are no units to display. Click on Add button below to add unit.</string>
+    <string name="empty_message_doctors">There are no doctors to display. Click Add button below to add new doctor</string>
+    <string name="empty_message_medicines">There are no medicines to display. Please click Add button below to add medicine</string>
 </resources>
