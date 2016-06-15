@@ -14,7 +14,7 @@ import io.realm.RealmResults;
  * <p/>
  * Created by ashish on 15/6/16.
  */
-public class MedicinesListFragment extends ListFragment implements MedicinesList.MedicinesListView {
+public class MedicinesListFragment extends ListFragment<Medicine> implements MedicinesList.MedicinesListView {
 
     public static ListFragment newInstance(String listFor) {
         MedicinesListFragment fragment = new MedicinesListFragment();

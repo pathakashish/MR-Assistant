@@ -5,7 +5,6 @@ import android.content.Context;
 import com.aviras.mrassistant.ui.Presenter;
 
 import io.realm.RealmObject;
-import io.realm.RealmResults;
 
 /**
  * Presenter interface for showing list
@@ -28,16 +27,15 @@ public interface ListPresenter<T extends RealmObject> extends Presenter {
 
     /**
      * Open add item screen for this list
+     *
      * @param context
      */
     void addNew(Context context);
 
     /**
-     * Implement this interface to show list
-     * <p/>
-     * Created by ashish on 11/6/16.
+     * Delete item with given id
+     *
+     * @param context
      */
-    public interface ListView {
-        void setItems(RealmResults<? extends RealmObject> items);
-    }
+    void delete(Context context, int id);
 }

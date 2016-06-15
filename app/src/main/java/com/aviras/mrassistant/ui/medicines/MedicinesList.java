@@ -9,6 +9,7 @@ import com.aviras.mrassistant.ui.BasePresenter;
 import com.aviras.mrassistant.ui.Presenter;
 import com.aviras.mrassistant.ui.editors.EditorActivity;
 import com.aviras.mrassistant.ui.lists.ListPresenter;
+import com.aviras.mrassistant.ui.lists.ListView;
 
 import io.realm.RealmChangeListener;
 import io.realm.RealmResults;
@@ -58,7 +59,11 @@ public class MedicinesList extends BasePresenter implements ListPresenter<Medici
         context.startActivity(intent);
     }
 
-    public interface MedicinesListView {
-        void setItems(RealmResults<Medicine> medicines);
+    @Override
+    public void delete(Context context, int id) {
+
+    }
+
+    public interface MedicinesListView extends ListView<Medicine> {
     }
 }

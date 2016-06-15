@@ -14,7 +14,7 @@ import io.realm.RealmResults;
  * <p/>
  * Created by ashish on 15/6/16.
  */
-public class UnitsListFragment extends ListFragment implements UnitsList.UnitsListView {
+public class UnitsListFragment extends ListFragment<Unit> implements UnitsList.UnitsListView {
 
     public static ListFragment newInstance(String listFor) {
         UnitsListFragment fragment = new UnitsListFragment();

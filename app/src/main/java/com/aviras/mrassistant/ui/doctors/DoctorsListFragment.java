@@ -14,7 +14,7 @@ import io.realm.RealmResults;
  * <p/>
  * Created by ashish on 15/6/16.
  */
-public class DoctorsListFragment extends ListFragment implements DoctorsList.DoctorsListView {
+public class DoctorsListFragment extends ListFragment<Doctor> implements DoctorsList.DoctorsListView {
 
     public static ListFragment newInstance(String listFor) {
         DoctorsListFragment fragment = new DoctorsListFragment();
@@ -30,7 +30,7 @@ public class DoctorsListFragment extends ListFragment implements DoctorsList.Doc
     }
 
     @Override
-    public void setItems(RealmResults<Doctor> doctors) {
+    public void setItems(RealmResults<Doctor> items) {
 
     }
 }

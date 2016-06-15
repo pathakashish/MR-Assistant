@@ -22,7 +22,7 @@ import io.realm.RealmObject;
 /**
  * Shows list of {@link RealmObject}
  */
-public abstract class ListFragment extends Fragment implements TitleProvider, Refreshable, FabActionProvider {
+public abstract class ListFragment<T extends RealmObject> extends Fragment implements ListView<T>, TitleProvider, Refreshable, FabActionProvider {
 
     protected static final String ARG_LIST_FOR = "list_for";
 
@@ -55,6 +55,7 @@ public abstract class ListFragment extends Fragment implements TitleProvider, Re
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mPresenter.openDatabase();
+        mPresenter.setView(this);
         mPresenter.load();
         return inflater.inflate(R.layout.fragment_list, container, false);
     }
@@ -62,6 +63,7 @@ public abstract class ListFragment extends Fragment implements TitleProvider, Re
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        mPresenter.setView(null);
         mPresenter.closeDatabase();
     }
 

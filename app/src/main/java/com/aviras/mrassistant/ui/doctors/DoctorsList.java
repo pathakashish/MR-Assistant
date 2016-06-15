@@ -9,6 +9,7 @@ import com.aviras.mrassistant.ui.BasePresenter;
 import com.aviras.mrassistant.ui.Presenter;
 import com.aviras.mrassistant.ui.editors.EditorActivity;
 import com.aviras.mrassistant.ui.lists.ListPresenter;
+import com.aviras.mrassistant.ui.lists.ListView;
 
 import io.realm.RealmChangeListener;
 import io.realm.RealmResults;
@@ -47,6 +48,11 @@ public class DoctorsList extends BasePresenter implements ListPresenter<Doctor>,
     }
 
     @Override
+    public void delete(Context context, int id) {
+
+    }
+
+    @Override
     public CharSequence getTitle(Context context) {
         return context.getString(R.string.title_activity_doctors);
     }
@@ -58,7 +64,6 @@ public class DoctorsList extends BasePresenter implements ListPresenter<Doctor>,
         }
     }
 
-    public interface DoctorsListView {
-        void setItems(RealmResults<Doctor> doctors);
+    public interface DoctorsListView extends ListView<Doctor> {
     }
 }

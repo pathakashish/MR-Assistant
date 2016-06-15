@@ -9,6 +9,7 @@ import com.aviras.mrassistant.ui.BasePresenter;
 import com.aviras.mrassistant.ui.Presenter;
 import com.aviras.mrassistant.ui.editors.EditorActivity;
 import com.aviras.mrassistant.ui.lists.ListPresenter;
+import com.aviras.mrassistant.ui.lists.ListView;
 
 import io.realm.RealmChangeListener;
 import io.realm.RealmResults;
@@ -58,7 +59,11 @@ public class UnitsList extends BasePresenter implements ListPresenter<Unit>, Rea
         context.startActivity(intent);
     }
 
-    public interface UnitsListView {
-        void setItems(RealmResults<Unit> units);
+    @Override
+    public void delete(Context context, int id) {
+
+    }
+
+    public interface UnitsListView extends ListView<Unit> {
     }
 }
