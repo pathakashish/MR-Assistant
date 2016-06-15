@@ -3,6 +3,7 @@ package com.aviras.mrassistant.ui.lists;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -30,6 +31,10 @@ public class MainActivity extends AppCompatActivity implements ListFragment.OnFr
         assert viewPager != null;
         viewPager.setAdapter(sectionsPagerAdapter);
 
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tablayout);
+        assert tabLayout != null;
+        tabLayout.setupWithViewPager(viewPager);
+        tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         assert fab != null;
@@ -46,15 +51,14 @@ public class MainActivity extends AppCompatActivity implements ListFragment.OnFr
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                Fragment fr = sectionsPagerAdapter.getItem(viewPager.getCurrentItem());
-                if (fr instanceof Refreshable) {
-                    ((Refreshable) fr).refresh(getApplicationContext());
-                }
             }
 
             @Override
             public void onPageSelected(int position) {
-
+                Fragment fr = sectionsPagerAdapter.getItem(viewPager.getCurrentItem());
+                if (fr instanceof Refreshable) {
+                    ((Refreshable) fr).refresh(getApplicationContext());
+                }
             }
 
             @Override

@@ -21,9 +21,9 @@ public class TabsAdapter extends FragmentStatePagerAdapter {
         super(fm);
         mContext = context.getApplicationContext();
         mFragments = new Fragment[]{
-                ListFragment.newInstance(Presenter.MEDICINE),
-                ListFragment.newInstance(Presenter.DOCTOR),
-                ListFragment.newInstance(Presenter.UNIT)
+                MedicinesListFragment.newInstance(Presenter.MEDICINE),
+                DoctorsListFragment.newInstance(Presenter.DOCTOR),
+                UnitsListFragment.newInstance(Presenter.UNIT)
         };
     }
 
@@ -41,7 +41,7 @@ public class TabsAdapter extends FragmentStatePagerAdapter {
     public CharSequence getPageTitle(int position) {
         Fragment fr = mFragments[position];
         if (fr instanceof TitleProvider) {
-            ((TitleProvider) fr).getTitle(mContext);
+            return ((TitleProvider) fr).getTitle(mContext);
         }
         return null;
     }

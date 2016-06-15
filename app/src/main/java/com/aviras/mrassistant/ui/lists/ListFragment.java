@@ -23,26 +23,18 @@ import io.realm.RealmResults;
 /**
  * Shows list of {@link RealmObject}
  */
-public class ListFragment extends Fragment implements ListView, TitleProvider, Refreshable, FabActionProvider {
+public abstract class ListFragment extends Fragment implements ListView, TitleProvider, Refreshable, FabActionProvider {
 
-    private static final String ARG_LIST_FOR = "list_for";
+    protected static final String ARG_LIST_FOR = "list_for";
 
     private String mListFor;
 
     private OnFragmentInteractionListener mListener;
 
-    private ListPresenter mPresenter;
+    protected ListPresenter mPresenter;
 
     public ListFragment() {
         // Required empty public constructor
-    }
-
-    public static ListFragment newInstance(String listFor) {
-        ListFragment fragment = new ListFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_LIST_FOR, listFor);
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @Override
@@ -104,12 +96,11 @@ public class ListFragment extends Fragment implements ListView, TitleProvider, R
 
     @Override
     public void refresh(Context applicationContext) {
-        mPresenter.load();
-    }
-
-    @Override
-    public CharSequence getTitle(Context context) {
-        return mPresenter.getTitle(context);
+        // When shown in ViewPager, this method may get called even before fragment is created. In
+        // this case, protect with null check from NPE
+        if (null != mPresenter) {
+            mPresenter.load();
+        }
     }
 
     @Override
