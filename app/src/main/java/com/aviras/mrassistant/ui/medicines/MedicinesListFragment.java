@@ -2,6 +2,7 @@ package com.aviras.mrassistant.ui.medicines;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 
 import com.aviras.mrassistant.R;
 import com.aviras.mrassistant.data.models.Medicine;
@@ -32,5 +33,10 @@ public class MedicinesListFragment extends ListFragment<Medicine> implements Med
     @Override
     public void setItems(RealmResults<Medicine> medicines) {
 
+    }
+
+    @Override
+    protected RecyclerView.Adapter getListAdapter(Context context) {
+        return null;
     }
 }

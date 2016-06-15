@@ -2,6 +2,7 @@ package com.aviras.mrassistant.ui.units;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 
 import com.aviras.mrassistant.R;
 import com.aviras.mrassistant.data.models.Unit;
@@ -32,5 +33,10 @@ public class UnitsListFragment extends ListFragment<Unit> implements UnitsList.U
     @Override
     public void setItems(RealmResults<Unit> units) {
 
+    }
+
+    @Override
+    protected RecyclerView.Adapter getListAdapter(Context context) {
+        return null;
     }
 }

@@ -4,6 +4,8 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +20,7 @@ import com.aviras.mrassistant.ui.medicines.MedicinesList;
 import com.aviras.mrassistant.ui.units.UnitsList;
 
 import io.realm.RealmObject;
+import io.realm.RealmResults;
 
 /**
  * Shows list of {@link RealmObject}
@@ -31,6 +34,8 @@ public abstract class ListFragment<T extends RealmObject> extends Fragment imple
     private OnFragmentInteractionListener mListener;
 
     protected ListPresenter mPresenter;
+    private LinearLayoutManager mLayoutManager;
+    private RecyclerView.Adapter mAdapter;
 
     public ListFragment() {
         // Required empty public constructor
@@ -57,8 +62,18 @@ public abstract class ListFragment<T extends RealmObject> extends Fragment imple
         mPresenter.openDatabase();
         mPresenter.setView(this);
         mPresenter.load();
-        return inflater.inflate(R.layout.fragment_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_list, container, false);
+
+        final RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerview);
+        mLayoutManager = new LinearLayoutManager(inflater.getContext(), LinearLayoutManager.VERTICAL, false);
+        recyclerView.setLayoutManager(mLayoutManager);
+        mAdapter = getListAdapter(inflater.getContext());
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setAdapter(mAdapter);
+        return view;
     }
+
+    protected abstract RecyclerView.Adapter getListAdapter(Context context);
 
     @Override
     public void onDestroyView() {
@@ -106,5 +121,37 @@ public abstract class ListFragment<T extends RealmObject> extends Fragment imple
 
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(Uri uri);
+    }
+
+    public static abstract class ListAdapter<VH extends RecyclerView.ViewHolder, T extends RealmObject>
+            extends RecyclerView.Adapter<VH> {
+        private static final int TYPE_EMPTY_VIEW = 125463;
+        private static final int TYPE_LIST_ITEM = 546656;
+        protected RealmResults<T> mItems;
+
+        public void setItems(RealmResults<T> items) {
+            mItems = items;
+        }
+
+        @Override
+        public int getItemCount() {
+            // We will show empty message or view if we have nothing to show
+            return null == mItems || mItems.isEmpty() ? 1 : mItems.size();
+        }
+
+        @Override
+        public VH onCreateViewHolder(ViewGroup parent, int viewType) {
+            return TYPE_EMPTY_VIEW == viewType ? getEmptyViewHolder(parent, viewType)
+                    : getListItemViewHolder(parent, viewType);
+        }
+
+        protected abstract VH getListItemViewHolder(ViewGroup parent, int viewType);
+
+        protected abstract VH getEmptyViewHolder(ViewGroup parent, int viewType);
+
+        @Override
+        public int getItemViewType(int position) {
+            return null == mItems || mItems.isEmpty() ? TYPE_EMPTY_VIEW : TYPE_LIST_ITEM;
+        }
     }
 }
