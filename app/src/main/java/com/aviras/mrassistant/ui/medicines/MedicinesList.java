@@ -60,8 +60,10 @@ public class MedicinesList extends BasePresenter implements ListPresenter<Medici
     }
 
     @Override
-    public void delete(Context context, int id) {
-
+    public void delete(Context context, Medicine item) {
+        mRealm.beginTransaction();
+        item.deleteFromRealm();
+        mRealm.commitTransaction();
     }
 
     public interface MedicinesListView extends ListView<Medicine> {

@@ -37,5 +37,5 @@ public interface ListPresenter<T extends RealmObject> extends Presenter {
      *
      * @param context
      */
-    void delete(Context context, int id);
+    void delete(Context context, T item);
 }
