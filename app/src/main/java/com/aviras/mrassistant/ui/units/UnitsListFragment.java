@@ -36,6 +36,7 @@ public class UnitsListFragment extends ListFragment<Unit> implements UnitsList.U
     public void setItems(RealmResults<Unit> units) {
         if (null != mAdapter) {
             mAdapter.setItems(units);
+            mAdapter.notifyDataSetChanged();
         }
     }
 

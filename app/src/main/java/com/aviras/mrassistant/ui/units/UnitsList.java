@@ -60,8 +60,10 @@ public class UnitsList extends BasePresenter implements ListPresenter<Unit>, Rea
     }
 
     @Override
-    public void delete(Context context, int id) {
-
+    public void delete(Context context, Unit item) {
+        mRealm.beginTransaction();
+        item.deleteFromRealm();
+        mRealm.commitTransaction();
     }
 
     public interface UnitsListView extends ListView<Unit> {
