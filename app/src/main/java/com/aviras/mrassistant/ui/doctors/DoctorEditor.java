@@ -70,7 +70,6 @@ public class DoctorEditor extends BasePresenter implements EditorPresenter<Docto
         query.addChangeListener(new RealmChangeListener<RealmResults<Doctor>>() {
             @Override
             public void onChange(RealmResults<Doctor> element) {
-                element.removeChangeListener(this);
                 Doctor doctor;
                 if (element.size() > 0) {
                     doctor = element.get(0);

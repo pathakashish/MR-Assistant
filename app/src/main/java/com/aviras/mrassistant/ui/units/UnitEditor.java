@@ -66,7 +66,6 @@ public class UnitEditor extends BasePresenter implements EditorPresenter<Unit> {
         query.addChangeListener(new RealmChangeListener<RealmResults<Unit>>() {
             @Override
             public void onChange(RealmResults<Unit> element) {
-                element.removeChangeListener(this);
                 Unit unit;
                 if (element.size() > 0) {
                     unit = element.get(0);
