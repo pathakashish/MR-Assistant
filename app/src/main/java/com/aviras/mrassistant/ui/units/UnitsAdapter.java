@@ -1,11 +1,9 @@
 package com.aviras.mrassistant.ui.units;
 
 import android.content.Intent;
-import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatCheckBox;
-import android.support.v7.widget.AppCompatImageButton;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -19,9 +17,6 @@ import com.aviras.mrassistant.ui.OnItemSelectedListener;
 import com.aviras.mrassistant.ui.Presenter;
 import com.aviras.mrassistant.ui.editors.EditorActivity;
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-
 import io.realm.RealmList;
 
 /**
@@ -32,10 +27,7 @@ import io.realm.RealmList;
 public class UnitsAdapter extends RecyclerView.Adapter<UnitsAdapter.ViewHolder>
         implements OnItemSelectedListener {
 
-    public static final int MODE_SELECTION = 1;
-    public static final int MODE_EDIT = 2;
     private static final int TYPE_ADD_BUTTON = 35146854;
-    private static final int TYPE_EDIT = 161;
     private static final int TYPE_SELECT = 547587;
     private RealmList<Unit> mSupportedUnits = new RealmList<>();
 
@@ -48,17 +40,9 @@ public class UnitsAdapter extends RecyclerView.Adapter<UnitsAdapter.ViewHolder>
         this.mSupportedUnits.addAll(supportedUnits);
     }
 
-    @Retention(RetentionPolicy.SOURCE)
-    @IntDef({MODE_SELECTION, MODE_EDIT})
-    public @interface Mode {
-    }
-
-    @Mode
-    private int mMode;
     private RealmList<Unit> mUnits;
 
-    public UnitsAdapter(@Mode int selectionMode) {
-        mMode = selectionMode;
+    public UnitsAdapter() {
     }
 
     public void setUnits(RealmList<Unit> supportedUnits) {
@@ -92,9 +76,7 @@ public class UnitsAdapter extends RecyclerView.Adapter<UnitsAdapter.ViewHolder>
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         ViewHolder holder;
-        if (TYPE_EDIT == viewType) {
-            holder = new EditViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_edit_mode_item, parent, false));
-        } else if (TYPE_SELECT == viewType) {
+        if (TYPE_SELECT == viewType) {
             holder = new SelectViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_select_mode_item, parent, false));
         } else {
             holder = new ButtonViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_add_button, parent, false));
@@ -109,14 +91,7 @@ public class UnitsAdapter extends RecyclerView.Adapter<UnitsAdapter.ViewHolder>
         }
         holder.unit = mUnits.get(position);
         holder.nameTextView.setText(holder.unit.getName());
-        if (MODE_EDIT == mMode) {
-            onBindViewHolder((EditViewHolder) holder);
-        } else if (MODE_SELECTION == mMode) {
-            onBindViewHolder((SelectViewHolder) holder);
-        }
-    }
-
-    public void onBindViewHolder(EditViewHolder holder) {
+        onBindViewHolder((SelectViewHolder) holder);
     }
 
     public void onBindViewHolder(SelectViewHolder holder) {
@@ -141,8 +116,6 @@ public class UnitsAdapter extends RecyclerView.Adapter<UnitsAdapter.ViewHolder>
     public int getItemViewType(int position) {
         if (null == mUnits || mUnits.isEmpty()) {
             return TYPE_ADD_BUTTON;
-        } else if (MODE_EDIT == mMode) {
-            return TYPE_EDIT;
         } else {
             return TYPE_SELECT;
         }
@@ -206,34 +179,7 @@ public class UnitsAdapter extends RecyclerView.Adapter<UnitsAdapter.ViewHolder>
         @Override
         public void onClick(View v) {
             if (v == itemView) {
-                selectRadioButton.setChecked(true);
-            }
-        }
-    }
-
-    public static class EditViewHolder extends ViewHolder implements View.OnClickListener {
-
-        AppCompatImageButton deleteButton;
-
-        public EditViewHolder(View itemView) {
-            super(itemView);
-            deleteButton = (AppCompatImageButton) itemView.findViewById(R.id.delete_button);
-            deleteButton.setOnClickListener(this);
-            itemView.setOnClickListener(this);
-        }
-
-        @Override
-        public void onClick(View v) {
-            int id = v.getId();
-            switch (id) {
-                case R.id.delete_button:
-                    break;
-                default:
-                    Intent intent = new Intent(v.getContext(), EditorActivity.class);
-                    intent.putExtra(EditorActivity.EXTRA_EDITING_FOR, Presenter.UNIT);
-                    intent.putExtra(EditorActivity.EXTRA_ID, unit.getId());
-                    v.getContext().startActivity(intent);
-                    break;
+                selectRadioButton.toggle();
             }
         }
     }

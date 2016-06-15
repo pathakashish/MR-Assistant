@@ -78,7 +78,6 @@ public class MedicineEditor extends BasePresenter implements EditorPresenter<Med
         query.addChangeListener(new RealmChangeListener<RealmResults<Medicine>>() {
             @Override
             public void onChange(RealmResults<Medicine> element) {
-                element.removeChangeListener(this);
                 Medicine medicine;
                 if (element.size() > 0) {
                     medicine = element.get(0);
@@ -126,7 +125,7 @@ public class MedicineEditor extends BasePresenter implements EditorPresenter<Med
         description.setImeOption(EditorInfo.IME_ACTION_NONE);
         editors.add(description);
 
-        final UnitsAdapter unitsAdapter = new UnitsAdapter(UnitsAdapter.MODE_SELECTION);
+        final UnitsAdapter unitsAdapter = new UnitsAdapter();
         ListEditor units = EditorFactory.newListEditor(ID_UNIT, context.getString(R.string.units),
                 unitsAdapter, new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
         if (null != medicine) {
