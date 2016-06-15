@@ -15,8 +15,9 @@ public interface ListPresenter<T extends RealmObject> extends Presenter {
 
     /**
      * Loads list of {@link RealmObject}s
+     * @param searchString
      */
-    void load();
+    void load(CharSequence searchString);
 
     /**
      * Set the list view. This view will get all view related callbacks

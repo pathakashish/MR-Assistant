@@ -10,8 +10,13 @@ import com.aviras.mrassistant.ui.Presenter;
 import com.aviras.mrassistant.ui.editors.EditorActivity;
 import com.aviras.mrassistant.ui.lists.ListPresenter;
 import com.aviras.mrassistant.ui.lists.ListView;
+import com.aviras.mrassistant.ui.utils.FtsUtil;
 
+import java.util.List;
+
+import io.realm.Case;
 import io.realm.RealmChangeListener;
+import io.realm.RealmQuery;
 import io.realm.RealmResults;
 
 /**
@@ -30,8 +35,15 @@ public class MedicinesList extends BasePresenter implements ListPresenter<Medici
     }
 
     @Override
-    public void load() {
-        RealmResults<Medicine> list = mRealm.where(Medicine.class).findAllAsync();
+    public void load(CharSequence searchString) {
+        List<CharSequence> ftsList = FtsUtil.getAllPossibleSearchStrings(searchString);
+        RealmQuery<Medicine> query = mRealm.where(Medicine.class);
+        for (CharSequence search : ftsList) {
+            query = query.contains("name", search.toString(), Case.INSENSITIVE)
+                    .or()
+                    .contains("description", search.toString(), Case.INSENSITIVE);
+        }
+        RealmResults<Medicine> list = query.findAllAsync();
         list.addChangeListener(this);
     }
 

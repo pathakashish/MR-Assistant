@@ -33,7 +33,7 @@ public class DoctorsListAdapter extends ListAdapter<DoctorsListAdapter.ViewHolde
     @Override
     protected ViewHolder getListItemViewHolder(ViewGroup parent, int viewType) {
         return new ContentsViewHolder(LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.layout_edit_mode_doctor_item, parent, false));
+                .inflate(R.layout.layout_edit_mode_two_line_item, parent, false));
     }
 
     @Override

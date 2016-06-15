@@ -3,10 +3,14 @@ package com.aviras.mrassistant.ui.lists;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
+import java.util.List;
+
 import io.realm.RealmObject;
 import io.realm.RealmResults;
 
 /**
+ * Base Adapter for models
+ * <p/>
  * Created by ashish on 15/6/16.
  */
 public abstract class ListAdapter<VH extends RecyclerView.ViewHolder, T extends RealmObject>
@@ -14,8 +18,13 @@ public abstract class ListAdapter<VH extends RecyclerView.ViewHolder, T extends 
     private static final int TYPE_EMPTY_VIEW = 125463;
     private static final int TYPE_LIST_ITEM = 546656;
     protected RealmResults<T> mItems;
+    protected List<CharSequence> mFtsQueries;
 
     public abstract void setItems(RealmResults<T> items);
+
+    public void setFtsQueries(List<CharSequence> ftsQueries) {
+        mFtsQueries = ftsQueries;
+    }
 
     @Override
     public int getItemCount() {
