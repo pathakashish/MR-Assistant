@@ -45,8 +45,8 @@ public class UnitsAdapter extends RecyclerView.Adapter<UnitsAdapter.ViewHolder>
     public UnitsAdapter() {
     }
 
-    public void setUnits(RealmList<Unit> supportedUnits) {
-        mUnits = supportedUnits;
+    public void setUnits(RealmList<Unit> units) {
+        mUnits = units;
     }
 
     @Override

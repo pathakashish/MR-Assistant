@@ -13,10 +13,20 @@ public abstract class BasePresenter implements Presenter {
     public void closeDatabase() {
         mRealm.removeAllChangeListeners();
         mRealm.close();
+        onDatabaseClosed();
+    }
+
+    protected void onDatabaseClosed() {
+
     }
 
     @Override
     public void openDatabase() {
         mRealm = Realm.getDefaultInstance();
+        onDatabaseOpened();
+    }
+
+    protected void onDatabaseOpened() {
+
     }
 }

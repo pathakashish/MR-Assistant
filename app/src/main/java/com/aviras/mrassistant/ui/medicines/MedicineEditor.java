@@ -21,6 +21,7 @@ import com.aviras.mrassistant.ui.editors.ListEditor;
 import com.aviras.mrassistant.ui.editors.TextFieldEditor;
 import com.aviras.mrassistant.ui.units.UnitsAdapter;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,6 +52,12 @@ public class MedicineEditor extends BasePresenter implements EditorPresenter<Med
     }
 
     private EditorView mEditView;
+
+    @Override
+    protected void onDatabaseOpened() {
+        super.onDatabaseOpened();
+        AllUnitsMonitor.sharedInstance().init(mRealm);
+    }
 
     @Override
     public Bundle getState(List<Editor> editors, int id) {
@@ -128,21 +135,29 @@ public class MedicineEditor extends BasePresenter implements EditorPresenter<Med
         final UnitsAdapter unitsAdapter = new UnitsAdapter();
         final ListEditor units = EditorFactory.newListEditor(ID_UNIT, context.getString(R.string.units),
                 unitsAdapter, new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
-        if (null != medicine) {
-            unitsAdapter.setSupportedUnits(medicine.getSupportedUnits());
-        }
-        final Realm realm = Realm.getDefaultInstance();
-        final RealmResults<Unit> result = realm.where(Unit.class).findAllAsync();
-        result.addChangeListener(new RealmChangeListener<RealmResults<Unit>>() {
+        final AllUnitsMonitor.OnAllUnitsListChangedListener unitsListChangeListener = new AllUnitsMonitor.OnAllUnitsListChangedListener() {
+
             @Override
-            public void onChange(RealmResults<Unit> element) {
-                result.removeChangeListener(this); // Explicitly remove this listener here as we don't want multiple listener instances waiting for changes till presenter closes the database
+            public void onListChange(RealmList<Unit> allUnits) {
+                Log.v(LOG_TAG, "onListChange - " + allUnits.size());
                 RealmList<Unit> units = new RealmList<>();
-                units.addAll(element);
+                units.addAll(allUnits);
                 unitsAdapter.setUnits(units);
                 unitsAdapter.notifyDataSetChanged();
             }
-        });
+        };
+        AllUnitsMonitor.sharedInstance().setChangeListener(unitsListChangeListener);
+        RealmList<Unit> allUnits = new RealmList<>();
+        if (null != AllUnitsMonitor.sharedInstance().mAllUnits) {
+            synchronized (AllUnitsMonitor.sharedInstance().mAllUnits) {
+                allUnits.addAll(AllUnitsMonitor.sharedInstance().mAllUnits);
+            }
+        }
+        unitsAdapter.setUnits(allUnits);
+        if (null != medicine) {
+            unitsAdapter.setSupportedUnits(medicine.getSupportedUnits());
+        }
+        unitsAdapter.notifyDataSetChanged();
         units.setValidator(new Editor.Validator<ListEditor>(units) {
             @Override
             public boolean validate() {
@@ -208,5 +223,44 @@ public class MedicineEditor extends BasePresenter implements EditorPresenter<Med
         mRealm.beginTransaction();
         mRealm.copyToRealmOrUpdate(object);
         mRealm.commitTransaction();
+    }
+
+    public static class AllUnitsMonitor implements RealmChangeListener<RealmResults<Unit>> {
+
+        private static final String LOG_TAG = AllUnitsMonitor.class.getSimpleName();
+
+        static AllUnitsMonitor instance = new AllUnitsMonitor();
+        WeakReference<OnAllUnitsListChangedListener> changeListenerRef;
+
+        static AllUnitsMonitor sharedInstance() {
+            return instance;
+        }
+
+        final RealmList<Unit> mAllUnits = new RealmList<>();
+
+        public void init(Realm realm) {
+            final RealmResults<Unit> allUnits = realm.where(Unit.class).findAllAsync();
+            allUnits.addChangeListener(this);
+        }
+
+        @Override
+        public void onChange(RealmResults<Unit> element) {
+            Log.v(LOG_TAG, "onChange - " + element.size());
+            synchronized (mAllUnits) {
+                mAllUnits.clear();
+                mAllUnits.addAll(element);
+                if (null != changeListenerRef && null != changeListenerRef.get()) {
+                    changeListenerRef.get().onListChange(mAllUnits);
+                }
+            }
+        }
+
+        public void setChangeListener(OnAllUnitsListChangedListener onAllUnitsListChangedListener) {
+            changeListenerRef = new WeakReference<>(onAllUnitsListChangedListener);
+        }
+
+        private interface OnAllUnitsListChangedListener {
+            void onListChange(RealmList<Unit> allUnits);
+        }
     }
 }

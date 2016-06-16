@@ -120,11 +120,7 @@ public class EditorFragment extends Fragment implements EditorView {
     @Override
     public void showEditors(List<Editor> editors) {
         mAdapter.setEditors(editors);
-        if (null != mLayoutManager) {
-            int positionStart = mLayoutManager.findFirstVisibleItemPosition();
-            int itemCount = mLayoutManager.findLastVisibleItemPosition() - positionStart;
-            mAdapter.notifyItemRangeChanged(positionStart, itemCount);
-        }
+        mAdapter.notifyDataSetChanged();
     }
 
     private void initToolbar(View view) {
