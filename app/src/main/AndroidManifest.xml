@@ -21,7 +21,8 @@
         <activity
             android:name=".ui.lists.MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="stateHidden|stateUnchanged" />
     </application>
 
 </manifest>

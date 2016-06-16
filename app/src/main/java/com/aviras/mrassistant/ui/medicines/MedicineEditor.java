@@ -132,10 +132,11 @@ public class MedicineEditor extends BasePresenter implements EditorPresenter<Med
             unitsAdapter.setSupportedUnits(medicine.getSupportedUnits());
         }
         final Realm realm = Realm.getDefaultInstance();
-        RealmResults<Unit> result = realm.where(Unit.class).findAllAsync();
+        final RealmResults<Unit> result = realm.where(Unit.class).findAllAsync();
         result.addChangeListener(new RealmChangeListener<RealmResults<Unit>>() {
             @Override
             public void onChange(RealmResults<Unit> element) {
+                result.removeChangeListener(this); // Explicitly remove this listener here as we don't want multiple listener instances waiting for changes till presenter closes the database
                 RealmList<Unit> units = new RealmList<>();
                 units.addAll(element);
                 unitsAdapter.setUnits(units);
