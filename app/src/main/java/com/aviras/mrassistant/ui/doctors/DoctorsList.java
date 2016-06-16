@@ -2,6 +2,7 @@ package com.aviras.mrassistant.ui.doctors;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
 import com.aviras.mrassistant.R;
 import com.aviras.mrassistant.data.models.Doctor;
@@ -27,6 +28,7 @@ import io.realm.RealmResults;
 public class DoctorsList extends BasePresenter implements ListPresenter<Doctor>, RealmChangeListener<RealmResults<Doctor>> {
 
     private static final DoctorsList instance = new DoctorsList();
+    private static final String LOG_TAG = DoctorsList.class.getSimpleName();
 
     private ListView mListView;
 
@@ -36,6 +38,7 @@ public class DoctorsList extends BasePresenter implements ListPresenter<Doctor>,
 
     @Override
     public void load(CharSequence searchString) {
+        Log.v(LOG_TAG, "load - searchString: " + searchString);
         List<CharSequence> ftsList = FtsUtil.getAllPossibleSearchStrings(searchString);
         RealmQuery<Doctor> query = mRealm.where(Doctor.class);
         for (CharSequence search : ftsList) {
@@ -54,11 +57,13 @@ public class DoctorsList extends BasePresenter implements ListPresenter<Doctor>,
 
     @Override
     public void setView(ListView listView) {
+        Log.v(LOG_TAG, "setView - listView: " + listView);
         mListView = listView;
     }
 
     @Override
     public void addNew(Context context) {
+        Log.v(LOG_TAG, "addNew");
         Intent intent = new Intent(context, EditorActivity.class);
         intent.putExtra(EditorActivity.EXTRA_EDITING_FOR, Presenter.DOCTOR);
         context.startActivity(intent);
@@ -66,6 +71,7 @@ public class DoctorsList extends BasePresenter implements ListPresenter<Doctor>,
 
     @Override
     public void delete(Context context, Doctor item) {
+        Log.v(LOG_TAG, "delete - " + item);
         mRealm.beginTransaction();
         item.deleteFromRealm();
         mRealm.commitTransaction();
@@ -78,6 +84,7 @@ public class DoctorsList extends BasePresenter implements ListPresenter<Doctor>,
 
     @Override
     public void onChange(RealmResults<Doctor> element) {
+        Log.v(LOG_TAG, "onChange - element.size(): " + element.size());
         if (null != mListView) {
             mListView.setItems(element);
         }

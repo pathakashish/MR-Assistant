@@ -3,6 +3,7 @@ package com.aviras.mrassistant.ui.units;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.inputmethod.EditorInfo;
 
 import com.aviras.mrassistant.R;
@@ -42,6 +43,7 @@ public class UnitEditor extends BasePresenter implements EditorPresenter<Unit>, 
 
     @Override
     public Bundle getState(List<Editor> editors, int id) {
+        Log.v(LOG_TAG, "getState - editors: " + editors + ", id" + id);
         Bundle state = new Bundle();
         state.putParcelable(KEY_UNIT, createUnitFromEditors(editors, id));
         return state;
@@ -49,6 +51,7 @@ public class UnitEditor extends BasePresenter implements EditorPresenter<Unit>, 
 
     @Override
     public void setState(Context context, Bundle state) {
+        Log.v(LOG_TAG, "setState - state: " + state);
         if (null != mEditView) {
             Unit unit = state.getParcelable(KEY_UNIT);
             mEditView.showEditors(getEditors(context, unit));
@@ -57,17 +60,20 @@ public class UnitEditor extends BasePresenter implements EditorPresenter<Unit>, 
 
     @Override
     public void setView(EditorView editorView) {
+        Log.v(LOG_TAG, "setView - editorView: " + editorView);
         mEditView = editorView;
     }
 
     @Override
     public void load(final Context context, int id) {
+        Log.v(LOG_TAG, "load - id: " + id);
         RealmResults<Unit> query = mRealm.where(Unit.class).equalTo("id", id).findAllAsync();
         query.addChangeListener(this);
     }
 
     @Override
     public void onChange(RealmResults<Unit> element) {
+        Log.v(LOG_TAG, "onChange - element.size(): " + element.size());
         Unit unit;
         if (element.size() > 0) {
             unit = element.get(0);
@@ -86,6 +92,7 @@ public class UnitEditor extends BasePresenter implements EditorPresenter<Unit>, 
 
     @Override
     public List<Editor> getEditors(Context context, Unit unit) {
+        Log.v(LOG_TAG, "getEditors - doctor: " + unit);
         List<Editor> editors = new ArrayList<>();
 
         TextFieldEditor name = EditorFactory.newTextFieldEditor(context, ID_NAME, R.string.unit_name, "", 1);
@@ -110,10 +117,12 @@ public class UnitEditor extends BasePresenter implements EditorPresenter<Unit>, 
 
     @Override
     public void saveOrUpdateObject(List<Editor> editors, int id) {
+        Log.v(LOG_TAG, "saveOrUpdateObject - editors: " + editors + ", id: " + id);
         saveOrUpdate(createUnitFromEditors(editors, id));
     }
 
     private Unit createUnitFromEditors(List<Editor> editors, int id) {
+        Log.v(LOG_TAG, "createUnitFromEditors - editors: " + editors + ", id: " + id);
         Unit unit = new Unit();
         unit.setId(id);
         for (Editor editor : editors) {
@@ -129,6 +138,7 @@ public class UnitEditor extends BasePresenter implements EditorPresenter<Unit>, 
     }
 
     private void saveOrUpdate(Unit object) {
+        Log.v(LOG_TAG, "saveOrUpdate - object: " + object);
         if (object.getId() == 0) {
             Number id = mRealm.where(object.getClass()).max("id");
             if (null == id) {

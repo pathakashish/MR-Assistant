@@ -57,6 +57,7 @@ public class EditorFragment extends Fragment implements EditorView {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.v(LOG_TAG, "onCreate - savedInstanceState: " + savedInstanceState);
         setHasOptionsMenu(true);
         if (getArguments() != null) {
             String editingFor = getArguments().getString(EditorActivity.EXTRA_EDITING_FOR);
@@ -74,12 +75,14 @@ public class EditorFragment extends Fragment implements EditorView {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        Log.v(LOG_TAG, "onDestroy");
         mPresenter.closeDatabase();
     }
 
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Log.v(LOG_TAG, "onCreateView - savedInstanceState: " + savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_editor, container, false);
         initToolbar(view);
         final RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerview);
@@ -103,6 +106,7 @@ public class EditorFragment extends Fragment implements EditorView {
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
+        Log.v(LOG_TAG, "onSaveInstanceState: " + outState);
         if (null == outState) {
             outState = new Bundle();
         }
@@ -113,12 +117,14 @@ public class EditorFragment extends Fragment implements EditorView {
 
     @Override
     public void onDestroyView() {
+        Log.v(LOG_TAG, "onDestroyView");
         super.onDestroyView();
         mPresenter.setView(null);
     }
 
     @Override
     public void showEditors(List<Editor> editors) {
+        Log.v(LOG_TAG, "showEditors - editors: " + editors);
         mAdapter.setEditors(editors);
         mAdapter.notifyDataSetChanged();
     }
@@ -146,6 +152,7 @@ public class EditorFragment extends Fragment implements EditorView {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        Log.v(LOG_TAG, "onAttach");
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
         } else {
@@ -157,16 +164,19 @@ public class EditorFragment extends Fragment implements EditorView {
     @Override
     public void onDetach() {
         super.onDetach();
+        Log.v(LOG_TAG, "onDetach");
         mListener = null;
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        Log.v(LOG_TAG, "onCreateOptionsMenu - menu: " + menu);
         inflater.inflate(R.menu.menu_done, menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Log.v(LOG_TAG, "onOptionsItemSelected - item: " + item);
         switch (item.getItemId()) {
             case R.id.action_menu_done:
                 for (Editor editor : mAdapter.getEditors()) {

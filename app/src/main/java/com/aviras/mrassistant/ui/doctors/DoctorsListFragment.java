@@ -2,6 +2,7 @@ package com.aviras.mrassistant.ui.doctors;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.aviras.mrassistant.R;
 import com.aviras.mrassistant.data.models.Doctor;
@@ -17,6 +18,7 @@ import io.realm.RealmResults;
  */
 public class DoctorsListFragment extends ListFragment<Doctor> implements DoctorsList.DoctorsListView {
 
+    private static final String LOG_TAG = DoctorsListFragment.class.getSimpleName();
     private ListAdapter mAdapter = new DoctorsListAdapter();
 
     public static ListFragment newInstance(String listFor) {
@@ -34,6 +36,7 @@ public class DoctorsListFragment extends ListFragment<Doctor> implements Doctors
 
     @Override
     public void setItems(RealmResults<Doctor> doctors) {
+        Log.v(LOG_TAG, "setItems - doctors: " + doctors);
         if (null != mAdapter) {
             mAdapter.setItems(doctors);
             mAdapter.notifyDataSetChanged();
@@ -42,6 +45,7 @@ public class DoctorsListFragment extends ListFragment<Doctor> implements Doctors
 
     @Override
     protected ListAdapter<DoctorsListAdapter.ViewHolder, Doctor> getListAdapter(Context context) {
+        Log.v(LOG_TAG, "getListAdapter");
         return mAdapter;
     }
 }

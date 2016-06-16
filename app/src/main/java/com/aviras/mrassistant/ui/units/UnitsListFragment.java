@@ -2,6 +2,7 @@ package com.aviras.mrassistant.ui.units;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.aviras.mrassistant.R;
 import com.aviras.mrassistant.data.models.Unit;
@@ -17,6 +18,7 @@ import io.realm.RealmResults;
  */
 public class UnitsListFragment extends ListFragment<Unit> implements UnitsList.UnitsListView {
 
+    private static final String LOG_TAG = UnitsListFragment.class.getSimpleName();
     private ListAdapter mAdapter = new UnitsListAdapter();
 
     public static ListFragment newInstance(String listFor) {
@@ -34,6 +36,7 @@ public class UnitsListFragment extends ListFragment<Unit> implements UnitsList.U
 
     @Override
     public void setItems(RealmResults<Unit> units) {
+        Log.v(LOG_TAG, "setItems - units: " + units);
         if (null != mAdapter) {
             mAdapter.setItems(units);
             mAdapter.notifyDataSetChanged();
@@ -42,6 +45,7 @@ public class UnitsListFragment extends ListFragment<Unit> implements UnitsList.U
 
     @Override
     protected ListAdapter<UnitsListAdapter.ViewHolder, Unit> getListAdapter(Context context) {
+        Log.v(LOG_TAG, "getListAdapter");
         return mAdapter;
     }
 }

@@ -56,11 +56,13 @@ public class MedicineEditor extends BasePresenter implements EditorPresenter<Med
     @Override
     protected void onDatabaseOpened() {
         super.onDatabaseOpened();
+        Log.v(LOG_TAG, "onDatabaseOpened");
         AllUnitsMonitor.sharedInstance().init(mRealm);
     }
 
     @Override
     public Bundle getState(List<Editor> editors, int id) {
+        Log.v(LOG_TAG, "getState - editors: " + editors + ", id" + id);
         Bundle state = new Bundle();
         state.putParcelable(KEY_MEDICINE, createMedicineFormEditors(editors, id));
         return state;
@@ -68,6 +70,7 @@ public class MedicineEditor extends BasePresenter implements EditorPresenter<Med
 
     @Override
     public void setState(Context context, Bundle state) {
+        Log.v(LOG_TAG, "setState - state: " + state);
         if (null != mEditView) {
             Medicine medicine = state.getParcelable(KEY_MEDICINE);
             mEditView.showEditors(getEditors(context, medicine));
@@ -76,17 +79,20 @@ public class MedicineEditor extends BasePresenter implements EditorPresenter<Med
 
     @Override
     public void setView(EditorView editorView) {
+        Log.v(LOG_TAG, "setView - editorView: " + editorView);
         mEditView = editorView;
     }
 
     @Override
     public void load(final Context context, int id) {
+        Log.v(LOG_TAG, "load - id: " + id);
         RealmResults<Medicine> query = mRealm.where(Medicine.class).equalTo("id", id).findAllAsync();
         query.addChangeListener(this);
     }
 
     @Override
     public void onChange(RealmResults<Medicine> element) {
+        Log.v(LOG_TAG, "onChange - element.size(): " + element.size());
         Medicine medicine;
         if (element.size() > 0) {
             medicine = element.get(0);
@@ -104,6 +110,7 @@ public class MedicineEditor extends BasePresenter implements EditorPresenter<Med
     }
 
     public List<Editor> getEditors(Context context, Medicine medicine) {
+        Log.v(LOG_TAG, "getEditors - doctor: " + medicine);
         List<Editor> editors = new ArrayList<>();
 
         TextFieldEditor name = EditorFactory.newTextFieldEditor(context, ID_NAME, R.string.medicine_name_here, "", 1);
@@ -178,10 +185,12 @@ public class MedicineEditor extends BasePresenter implements EditorPresenter<Med
 
     @Override
     public void saveOrUpdateObject(List<Editor> editors, int id) {
+        Log.v(LOG_TAG, "saveOrUpdateObject - editors: " + editors + ", id: " + id);
         saveOrUpdate(createMedicineFormEditors(editors, id));
     }
 
     private Medicine createMedicineFormEditors(List<Editor> editors, int id) {
+        Log.v(LOG_TAG, "createMedicineFormEditors - editors: " + editors + ", id: " + id);
         Medicine medicine = new Medicine();
         medicine.setId(id);
         for (Editor editor : editors) {
@@ -211,6 +220,7 @@ public class MedicineEditor extends BasePresenter implements EditorPresenter<Med
     }
 
     private void saveOrUpdate(Medicine object) {
+        Log.v(LOG_TAG, "saveOrUpdate - object: " + object);
         if (object.getId() == 0) {
             Number id = mRealm.where(object.getClass()).max("id");
             if (null == id) {
@@ -245,7 +255,7 @@ public class MedicineEditor extends BasePresenter implements EditorPresenter<Med
 
         @Override
         public void onChange(RealmResults<Unit> element) {
-            Log.v(LOG_TAG, "onChange - " + element.size());
+            Log.v(LOG_TAG, "onChange - element.size(): " + element.size());
             synchronized (mAllUnits) {
                 mAllUnits.clear();
                 mAllUnits.addAll(element);

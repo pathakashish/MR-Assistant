@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +34,7 @@ public abstract class ListFragment<T extends RealmObject> extends Fragment imple
 
     protected static final String ARG_LIST_FOR = "list_for";
     private static final String KEY_SEARCH_STRING = "search_string";
+    private final String LOG_TAG = this.getClass().getSimpleName();
 
     private OnFragmentInteractionListener mListener;
 
@@ -48,6 +50,7 @@ public abstract class ListFragment<T extends RealmObject> extends Fragment imple
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.v(LOG_TAG, "onCreate - savedInstanceState: " + savedInstanceState);
         if (getArguments() != null) {
             String listFor = getArguments().getString(ARG_LIST_FOR);
             if (Presenter.UNIT.equals(listFor)) {
@@ -64,12 +67,14 @@ public abstract class ListFragment<T extends RealmObject> extends Fragment imple
     @Override
     public void onDestroy() {
         super.onDestroy();
+        Log.v(LOG_TAG, "onDestroy");
         mPresenter.closeDatabase();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Log.v(LOG_TAG, "onCreateView - savedInstanceState: " + savedInstanceState);
         mPresenter.setView(this);
         View view = inflater.inflate(R.layout.fragment_list, container, false);
         mSearchTextInputLayout = (TextInputLayout) view.findViewById(R.id.search_textinputlayout);
@@ -110,6 +115,7 @@ public abstract class ListFragment<T extends RealmObject> extends Fragment imple
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
+        Log.v(LOG_TAG, "onSaveInstanceState - outState: " + outState);
         if (null == outState) {
             outState = new Bundle();
         }
@@ -122,6 +128,7 @@ public abstract class ListFragment<T extends RealmObject> extends Fragment imple
     }
 
     private void load(CharSequence text) {
+        Log.v(LOG_TAG, "load - text: " + text);
         if (null != mPresenter) {
             mPresenter.load(text);
         }
@@ -132,6 +139,7 @@ public abstract class ListFragment<T extends RealmObject> extends Fragment imple
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        Log.v(LOG_TAG, "onDestroyView");
         mPresenter.setView(null);
     }
 
@@ -144,6 +152,7 @@ public abstract class ListFragment<T extends RealmObject> extends Fragment imple
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        Log.v(LOG_TAG, "onAttach");
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
         } else {
@@ -155,11 +164,13 @@ public abstract class ListFragment<T extends RealmObject> extends Fragment imple
     @Override
     public void onDetach() {
         super.onDetach();
+        Log.v(LOG_TAG, "onDetach");
         mListener = null;
     }
 
     @Override
     public void refresh(Context applicationContext) {
+        Log.v(LOG_TAG, "refresh");
         // When shown in ViewPager, this method may get called even before fragment is created. In
         // this case, protect with null check from NPE
         if (null != mPresenter && null != mSearchTextInputLayout) {
@@ -171,6 +182,7 @@ public abstract class ListFragment<T extends RealmObject> extends Fragment imple
 
     @Override
     public void onFabClicked(View v) {
+        Log.v(LOG_TAG, "onFabClicked");
         if (null != mPresenter) {
             mPresenter.addNew(v.getContext());
         }

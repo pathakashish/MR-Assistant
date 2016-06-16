@@ -1,5 +1,7 @@
 package com.aviras.mrassistant.ui;
 
+import android.util.Log;
+
 import io.realm.Realm;
 
 /**
@@ -7,10 +9,12 @@ import io.realm.Realm;
  */
 public abstract class BasePresenter implements Presenter {
 
+    private static final String LOG_TAG = BasePresenter.class.getSimpleName();
     protected Realm mRealm;
 
     @Override
     public void closeDatabase() {
+        Log.v(LOG_TAG, "closeDatabase");
         mRealm.removeAllChangeListeners();
         mRealm.close();
         onDatabaseClosed();
@@ -22,6 +26,7 @@ public abstract class BasePresenter implements Presenter {
 
     @Override
     public void openDatabase() {
+        Log.v(LOG_TAG, "openDatabase");
         mRealm = Realm.getDefaultInstance();
         onDatabaseOpened();
     }

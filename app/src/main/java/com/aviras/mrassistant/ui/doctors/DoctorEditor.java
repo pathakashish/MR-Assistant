@@ -3,6 +3,7 @@ package com.aviras.mrassistant.ui.doctors;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.inputmethod.EditorInfo;
 
 import com.aviras.mrassistant.R;
@@ -46,6 +47,7 @@ public class DoctorEditor extends BasePresenter implements EditorPresenter<Docto
 
     @Override
     public Bundle getState(List<Editor> editors, int id) {
+        Log.v(LOG_TAG, "getState - editors: " + editors + ", id" + id);
         Bundle state = new Bundle();
         state.putParcelable(KEY_DOCTOR, createDoctorFromEditors(editors, id));
         return state;
@@ -53,6 +55,7 @@ public class DoctorEditor extends BasePresenter implements EditorPresenter<Docto
 
     @Override
     public void setState(Context context, Bundle state) {
+        Log.v(LOG_TAG, "setState - state" + state + ", mEditView: " + mEditView);
         if (null != mEditView) {
             Doctor doctor = state.getParcelable(KEY_DOCTOR);
             mEditView.showEditors(getEditors(context, doctor));
@@ -61,17 +64,20 @@ public class DoctorEditor extends BasePresenter implements EditorPresenter<Docto
 
     @Override
     public void setView(EditorView editorView) {
+        Log.v(LOG_TAG, "setView - editorView: " + editorView);
         mEditView = editorView;
     }
 
     @Override
     public void load(final Context context, int id) {
+        Log.v(LOG_TAG, "load - id: " + id);
         RealmResults<Doctor> query = mRealm.where(Doctor.class).equalTo("id", id).findAllAsync();
         query.addChangeListener(this);
     }
 
     @Override
     public void onChange(RealmResults<Doctor> element) {
+        Log.v(LOG_TAG, "onChange - element.size(): " + element.size());
         Doctor doctor;
         if (element.size() > 0) {
             doctor = element.get(0);
@@ -90,6 +96,7 @@ public class DoctorEditor extends BasePresenter implements EditorPresenter<Docto
     }
 
     public List<Editor> getEditors(Context context, Doctor doctor) {
+        Log.v(LOG_TAG, "getEditors - doctor: " + doctor);
         List<Editor> editors = new ArrayList<>();
 
         TextFieldEditor name = EditorFactory.newTextFieldEditor(context, ID_NAME, R.string.doctors_name_here, "", 1);
@@ -138,10 +145,12 @@ public class DoctorEditor extends BasePresenter implements EditorPresenter<Docto
 
     @Override
     public void saveOrUpdateObject(List<Editor> editors, int id) {
+        Log.v(LOG_TAG, "saveOrUpdateObject - editors: " + editors + ", id: " + id);
         saveOrUpdate(createDoctorFromEditors(editors, id));
     }
 
     private Doctor createDoctorFromEditors(List<Editor> editors, int id) {
+        Log.v(LOG_TAG, "createDoctorFromEditors - editors: " + editors + ", id: " + id);
         Doctor doctor = new Doctor();
         doctor.setId(id);
         for (Editor editor : editors) {
@@ -166,6 +175,7 @@ public class DoctorEditor extends BasePresenter implements EditorPresenter<Docto
     }
 
     private void saveOrUpdate(Doctor object) {
+        Log.v(LOG_TAG, "saveOrUpdate - object: " + object);
         if (object.getId() == 0) {
             Number id = mRealm.where(object.getClass()).max("id");
             if (null == id) {
