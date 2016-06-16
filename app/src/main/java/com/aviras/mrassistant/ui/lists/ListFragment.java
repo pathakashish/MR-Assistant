@@ -57,13 +57,19 @@ public abstract class ListFragment<T extends RealmObject> extends Fragment imple
             } else if (Presenter.DOCTOR.equals(listFor)) {
                 mPresenter = DoctorsList.sharedInstance();
             }
+            mPresenter.openDatabase();
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mPresenter.closeDatabase();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        mPresenter.openDatabase();
         mPresenter.setView(this);
         View view = inflater.inflate(R.layout.fragment_list, container, false);
         mSearchTextInputLayout = (TextInputLayout) view.findViewById(R.id.search_textinputlayout);
@@ -127,7 +133,6 @@ public abstract class ListFragment<T extends RealmObject> extends Fragment imple
     public void onDestroyView() {
         super.onDestroyView();
         mPresenter.setView(null);
-        mPresenter.closeDatabase();
     }
 
     public void onButtonPressed(Uri uri) {

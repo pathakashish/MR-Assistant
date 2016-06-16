@@ -67,13 +67,19 @@ public class EditorFragment extends Fragment implements EditorView {
             } else if (Presenter.DOCTOR.equals(editingFor)) {
                 mPresenter = DoctorEditor.sharedInstance();
             }
+            mPresenter.openDatabase();
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mPresenter.closeDatabase();
     }
 
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        mPresenter.openDatabase();
         View view = inflater.inflate(R.layout.fragment_editor, container, false);
         initToolbar(view);
         final RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerview);
@@ -108,7 +114,6 @@ public class EditorFragment extends Fragment implements EditorView {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mPresenter.closeDatabase();
         mPresenter.setView(null);
     }
 
