@@ -36,7 +36,7 @@ import io.realm.RealmResults;
  * <p/>
  * Created by ashish on 9/6/16.
  */
-public class MedicineEditor extends BasePresenter implements EditorPresenter<Medicine> {
+public class MedicineEditor extends BasePresenter implements EditorPresenter<Medicine>, RealmChangeListener<RealmResults<Medicine>> {
     private static final String LOG_TAG = "MedicineEditor";
 
     private static final int ID_NAME = 1;
@@ -75,20 +75,20 @@ public class MedicineEditor extends BasePresenter implements EditorPresenter<Med
     @Override
     public void load(final Context context, int id) {
         RealmResults<Medicine> query = mRealm.where(Medicine.class).equalTo("id", id).findAllAsync();
-        query.addChangeListener(new RealmChangeListener<RealmResults<Medicine>>() {
-            @Override
-            public void onChange(RealmResults<Medicine> element) {
-                Medicine medicine;
-                if (element.size() > 0) {
-                    medicine = element.get(0);
-                } else {
-                    medicine = null;
-                }
-                if (null != mEditView) {
-                    mEditView.showEditors(getEditors(context, medicine));
-                }
-            }
-        });
+        query.addChangeListener(this);
+    }
+
+    @Override
+    public void onChange(RealmResults<Medicine> element) {
+        Medicine medicine;
+        if (element.size() > 0) {
+            medicine = element.get(0);
+        } else {
+            medicine = null;
+        }
+        if (null != mEditView && mEditView.getContext() != null) {
+            mEditView.showEditors(getEditors(mEditView.getContext(), medicine));
+        }
     }
 
     @Override
@@ -126,7 +126,7 @@ public class MedicineEditor extends BasePresenter implements EditorPresenter<Med
         editors.add(description);
 
         final UnitsAdapter unitsAdapter = new UnitsAdapter();
-        ListEditor units = EditorFactory.newListEditor(ID_UNIT, context.getString(R.string.units),
+        final ListEditor units = EditorFactory.newListEditor(ID_UNIT, context.getString(R.string.units),
                 unitsAdapter, new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
         if (null != medicine) {
             unitsAdapter.setSupportedUnits(medicine.getSupportedUnits());

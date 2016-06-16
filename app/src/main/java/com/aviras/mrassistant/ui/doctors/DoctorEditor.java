@@ -28,7 +28,7 @@ import io.realm.RealmResults;
  * <p/>
  * Created by ashish on 9/6/16.
  */
-public class DoctorEditor extends BasePresenter implements EditorPresenter<Doctor> {
+public class DoctorEditor extends BasePresenter implements EditorPresenter<Doctor>, RealmChangeListener<RealmResults<Doctor>> {
     private static final String LOG_TAG = "DoctorEditor";
     private static final String KEY_DOCTOR = "doctor";
     private static DoctorEditor instance = new DoctorEditor();
@@ -67,21 +67,21 @@ public class DoctorEditor extends BasePresenter implements EditorPresenter<Docto
     @Override
     public void load(final Context context, int id) {
         RealmResults<Doctor> query = mRealm.where(Doctor.class).equalTo("id", id).findAllAsync();
-        query.addChangeListener(new RealmChangeListener<RealmResults<Doctor>>() {
-            @Override
-            public void onChange(RealmResults<Doctor> element) {
-                Doctor doctor;
-                if (element.size() > 0) {
-                    doctor = element.get(0);
-                } else {
-                    doctor = null;
-                }
+        query.addChangeListener(this);
+    }
 
-                if (null != mEditView) {
-                    mEditView.showEditors(getEditors(context, doctor));
-                }
-            }
-        });
+    @Override
+    public void onChange(RealmResults<Doctor> element) {
+        Doctor doctor;
+        if (element.size() > 0) {
+            doctor = element.get(0);
+        } else {
+            doctor = null;
+        }
+
+        if (null != mEditView && mEditView.getContext() != null) {
+            mEditView.showEditors(getEditors(mEditView.getContext(), doctor));
+        }
     }
 
     @Override

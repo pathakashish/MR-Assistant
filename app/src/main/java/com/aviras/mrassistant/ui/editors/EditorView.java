@@ -1,5 +1,7 @@
 package com.aviras.mrassistant.ui.editors;
 
+import android.content.Context;
+
 import java.util.List;
 
 /**
@@ -9,4 +11,6 @@ import java.util.List;
  */
 public interface EditorView {
     void showEditors(List<Editor> editors);
+
+    Context getContext();
 }

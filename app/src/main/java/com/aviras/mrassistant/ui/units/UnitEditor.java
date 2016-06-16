@@ -28,7 +28,7 @@ import io.realm.RealmResults;
  * <p/>
  * Created by ashish on 9/6/16.
  */
-public class UnitEditor extends BasePresenter implements EditorPresenter<Unit> {
+public class UnitEditor extends BasePresenter implements EditorPresenter<Unit>, RealmChangeListener<RealmResults<Unit>> {
     private static final String LOG_TAG = "UnitEditor";
     private static final int ID_NAME = 1;
     private static final String KEY_UNIT = "unit";
@@ -63,20 +63,20 @@ public class UnitEditor extends BasePresenter implements EditorPresenter<Unit> {
     @Override
     public void load(final Context context, int id) {
         RealmResults<Unit> query = mRealm.where(Unit.class).equalTo("id", id).findAllAsync();
-        query.addChangeListener(new RealmChangeListener<RealmResults<Unit>>() {
-            @Override
-            public void onChange(RealmResults<Unit> element) {
-                Unit unit;
-                if (element.size() > 0) {
-                    unit = element.get(0);
-                } else {
-                    unit = null;
-                }
-                if (null != mEditView) {
-                    mEditView.showEditors(getEditors(context, unit));
-                }
-            }
-        });
+        query.addChangeListener(this);
+    }
+
+    @Override
+    public void onChange(RealmResults<Unit> element) {
+        Unit unit;
+        if (element.size() > 0) {
+            unit = element.get(0);
+        } else {
+            unit = null;
+        }
+        if (null != mEditView && mEditView.getContext() != null) {
+            mEditView.showEditors(getEditors(mEditView.getContext(), unit));
+        }
     }
 
     @Override
