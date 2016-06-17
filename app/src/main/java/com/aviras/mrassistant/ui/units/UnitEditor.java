@@ -70,8 +70,8 @@ public class UnitEditor extends BasePresenter implements EditorPresenter<Unit>, 
         RealmResults<Unit> query = mRealm.where(Unit.class).equalTo("id", id).findAllAsync();
         query.removeChangeListener(this);
         query.addChangeListener(this);
-        if (query.isLoaded() && null != mEditView) {
-            mEditView.showEditors(getEditors(context, null));
+        if (null != mEditView) {
+            mEditView.showEditors(getEditors(context, query.isLoaded() && query.size() > 0 ? query.get(0) : null));
         }
     }
 

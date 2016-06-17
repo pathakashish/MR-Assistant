@@ -31,6 +31,7 @@ public class MedicinesList extends BasePresenter implements ListPresenter<Medici
     private static final String LOG_TAG = MedicinesList.class.getSimpleName();
 
     private ListView mListView;
+    private RealmResults<Medicine> mCurrentList;
 
     public static MedicinesList sharedInstance() {
         return instance;
@@ -46,9 +47,11 @@ public class MedicinesList extends BasePresenter implements ListPresenter<Medici
                     .or()
                     .contains("description", search.toString(), Case.INSENSITIVE);
         }
-        RealmResults<Medicine> list = query.findAllAsync();
-        list.removeChangeListener(this);
-        list.addChangeListener(this);
+        if (null != mCurrentList) {
+            mCurrentList.removeChangeListener(this);
+        }
+        mCurrentList = query.findAllAsync();
+        mCurrentList.addChangeListener(this);
     }
 
     @Override
@@ -64,7 +67,7 @@ public class MedicinesList extends BasePresenter implements ListPresenter<Medici
 
     @Override
     public void onChange(RealmResults<Medicine> element) {
-        Log.v(LOG_TAG, "onChange - element.size(): " + element.size());
+        Log.v(LOG_TAG, this + " " + "onChange - element.size(): " + element.size());
         if (null != mListView) {
             mListView.setItems(element);
         }

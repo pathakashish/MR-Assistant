@@ -31,6 +31,7 @@ public class UnitsList extends BasePresenter implements ListPresenter<Unit>, Rea
     private static final String LOG_TAG = UnitsList.class.getSimpleName();
 
     private ListView mListView;
+    private RealmResults<Unit> mCurrentList;
 
     public static UnitsList sharedInstance() {
         return instance;
@@ -44,9 +45,11 @@ public class UnitsList extends BasePresenter implements ListPresenter<Unit>, Rea
         for (CharSequence search : ftsList) {
             query = query.contains("name", search.toString(), Case.INSENSITIVE);
         }
-        RealmResults<Unit> list = query.findAllAsync();
-        list.removeChangeListener(this);
-        list.addChangeListener(this);
+        if (null != mCurrentList) {
+            mCurrentList.removeChangeListener(this);
+        }
+        mCurrentList = query.findAllAsync();
+        mCurrentList.addChangeListener(this);
     }
 
     @Override

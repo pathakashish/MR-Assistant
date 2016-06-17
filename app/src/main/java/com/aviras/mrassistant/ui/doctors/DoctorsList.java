@@ -31,6 +31,7 @@ public class DoctorsList extends BasePresenter implements ListPresenter<Doctor>,
     private static final String LOG_TAG = DoctorsList.class.getSimpleName();
 
     private ListView mListView;
+    private RealmResults<Doctor> mCurrentList;
 
     public static DoctorsList sharedInstance() {
         return instance;
@@ -51,9 +52,11 @@ public class DoctorsList extends BasePresenter implements ListPresenter<Doctor>,
                     .contains("notes", search.toString(), Case.INSENSITIVE);
             ;
         }
-        RealmResults<Doctor> list = query.findAllAsync();
-        list.removeChangeListener(this);
-        list.addChangeListener(this);
+        if (null != mCurrentList) {
+            mCurrentList.removeChangeListener(this);
+        }
+        mCurrentList = query.findAllAsync();
+        mCurrentList.addChangeListener(this);
     }
 
     @Override
