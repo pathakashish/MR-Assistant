@@ -46,6 +46,7 @@ public class MedicineEditor extends BasePresenter implements EditorPresenter<Med
     private static final String KEY_MEDICINE = "medicine";
 
     private static MedicineEditor instance = new MedicineEditor();
+    private AllUnitsMonitor.OnAllUnitsListChangedListener mUnitsListChangeListener;
 
     public static MedicineEditor sharedInstance() {
         return instance;
@@ -146,7 +147,7 @@ public class MedicineEditor extends BasePresenter implements EditorPresenter<Med
         final UnitsAdapter unitsAdapter = new UnitsAdapter();
         final ListEditor units = EditorFactory.newListEditor(ID_UNIT, context.getString(R.string.units),
                 unitsAdapter, new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
-        final AllUnitsMonitor.OnAllUnitsListChangedListener unitsListChangeListener = new AllUnitsMonitor.OnAllUnitsListChangedListener() {
+        mUnitsListChangeListener = new AllUnitsMonitor.OnAllUnitsListChangedListener() {
 
             @Override
             public void onListChange(RealmList<Unit> allUnits) {
@@ -157,7 +158,7 @@ public class MedicineEditor extends BasePresenter implements EditorPresenter<Med
                 unitsAdapter.notifyDataSetChanged();
             }
         };
-        AllUnitsMonitor.sharedInstance().setChangeListener(unitsListChangeListener);
+        AllUnitsMonitor.sharedInstance().setChangeListener(mUnitsListChangeListener);
         RealmList<Unit> allUnits = new RealmList<>();
         if (null != AllUnitsMonitor.sharedInstance().mAllUnits) {
             synchronized (AllUnitsMonitor.sharedInstance().mAllUnits) {
