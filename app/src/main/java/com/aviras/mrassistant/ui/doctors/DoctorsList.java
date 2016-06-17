@@ -52,6 +52,7 @@ public class DoctorsList extends BasePresenter implements ListPresenter<Doctor>,
             ;
         }
         RealmResults<Doctor> list = query.findAllAsync();
+        list.removeChangeListener(this);
         list.addChangeListener(this);
     }
 

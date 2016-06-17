@@ -60,7 +60,6 @@ public abstract class ListFragment<T extends RealmObject> extends Fragment imple
             } else if (Presenter.DOCTOR.equals(listFor)) {
                 mPresenter = DoctorsList.sharedInstance();
             }
-            mPresenter.openDatabase();
         }
     }
 
@@ -68,7 +67,6 @@ public abstract class ListFragment<T extends RealmObject> extends Fragment imple
     public void onDestroy() {
         super.onDestroy();
         Log.v(LOG_TAG, "onDestroy");
-        mPresenter.closeDatabase();
     }
 
     @Override

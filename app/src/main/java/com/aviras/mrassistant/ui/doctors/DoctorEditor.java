@@ -72,7 +72,11 @@ public class DoctorEditor extends BasePresenter implements EditorPresenter<Docto
     public void load(final Context context, int id) {
         Log.v(LOG_TAG, "load - id: " + id);
         RealmResults<Doctor> query = mRealm.where(Doctor.class).equalTo("id", id).findAllAsync();
+        query.removeChangeListener(this);
         query.addChangeListener(this);
+        if (query.isLoaded() && null != mEditView) {
+            mEditView.showEditors(getEditors(context, null));
+        }
     }
 
     @Override

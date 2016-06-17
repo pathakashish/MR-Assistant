@@ -45,6 +45,7 @@ public class UnitsList extends BasePresenter implements ListPresenter<Unit>, Rea
             query = query.contains("name", search.toString(), Case.INSENSITIVE);
         }
         RealmResults<Unit> list = query.findAllAsync();
+        list.removeChangeListener(this);
         list.addChangeListener(this);
     }
 

@@ -3,15 +3,13 @@ package com.aviras.mrassistant.ui.editors;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.view.Gravity;
-import android.widget.Toast;
 
 import com.aviras.mrassistant.R;
+import com.aviras.mrassistant.ui.BaseActivity;
 import com.aviras.mrassistant.ui.utils.UiUtil;
 
-public class EditorActivity extends AppCompatActivity
+public class EditorActivity extends BaseActivity
         implements EditorFragment.OnFragmentInteractionListener {
 
     public static final String EXTRA_EDITING_FOR = "editing_for";

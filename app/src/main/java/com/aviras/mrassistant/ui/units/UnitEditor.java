@@ -68,7 +68,11 @@ public class UnitEditor extends BasePresenter implements EditorPresenter<Unit>, 
     public void load(final Context context, int id) {
         Log.v(LOG_TAG, "load - id: " + id);
         RealmResults<Unit> query = mRealm.where(Unit.class).equalTo("id", id).findAllAsync();
+        query.removeChangeListener(this);
         query.addChangeListener(this);
+        if (query.isLoaded() && null != mEditView) {
+            mEditView.showEditors(getEditors(context, null));
+        }
     }
 
     @Override
@@ -92,7 +96,7 @@ public class UnitEditor extends BasePresenter implements EditorPresenter<Unit>, 
 
     @Override
     public List<Editor> getEditors(Context context, Unit unit) {
-        Log.v(LOG_TAG, "getEditors - doctor: " + unit);
+        Log.v(LOG_TAG, "getEditors - unit: " + unit);
         List<Editor> editors = new ArrayList<>();
 
         TextFieldEditor name = EditorFactory.newTextFieldEditor(context, ID_NAME, R.string.unit_name, "", 1);

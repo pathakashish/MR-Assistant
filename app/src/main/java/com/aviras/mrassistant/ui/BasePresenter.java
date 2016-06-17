@@ -5,33 +5,22 @@ import android.util.Log;
 import io.realm.Realm;
 
 /**
+ * Base for all presenter. Holds reference to common data
+ * <p/>
  * Created by ashish on 14/6/16.
  */
 public abstract class BasePresenter implements Presenter {
 
-    private static final String LOG_TAG = BasePresenter.class.getSimpleName();
+    private final String LOG_TAG = this.getClass().getSimpleName();
     protected Realm mRealm;
 
-    @Override
-    public void closeDatabase() {
-        Log.v(LOG_TAG, "closeDatabase");
+    public void init(Realm realm) {
+        Log.d(LOG_TAG, "init - realm: " + realm);
+        mRealm = realm;
+    }
+
+    public void removeAllChangeListeners() {
+        Log.d(LOG_TAG, "removeAllChangeListeners");
         mRealm.removeAllChangeListeners();
-        mRealm.close();
-        onDatabaseClosed();
-    }
-
-    protected void onDatabaseClosed() {
-
-    }
-
-    @Override
-    public void openDatabase() {
-        Log.v(LOG_TAG, "openDatabase");
-        mRealm = Realm.getDefaultInstance();
-        onDatabaseOpened();
-    }
-
-    protected void onDatabaseOpened() {
-
     }
 }

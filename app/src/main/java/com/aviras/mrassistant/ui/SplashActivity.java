@@ -24,7 +24,6 @@ public class SplashActivity extends AppCompatActivity {
             mMoveToNext = savedInstanceState.getBoolean(KEY_MOVE_TO_NEXT);
         }
         setContentView(R.layout.activity_splash);
-        Realm.setDefaultConfiguration(new RealmConfiguration.Builder(this).build());
     }
 
     @Override

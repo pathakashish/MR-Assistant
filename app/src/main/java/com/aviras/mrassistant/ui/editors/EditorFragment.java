@@ -32,7 +32,7 @@ import java.util.List;
 public class EditorFragment extends Fragment implements EditorView {
 
     public static final String TAG = "EditorFragment";
-    private static final String LOG_TAG = "EditorFragment";
+    private String LOG_TAG = "EditorFragment";
     private static final String KEY_PRESENTER_STATE = "presenter_state";
 
     private OnFragmentInteractionListener mListener;
@@ -61,6 +61,7 @@ public class EditorFragment extends Fragment implements EditorView {
         setHasOptionsMenu(true);
         if (getArguments() != null) {
             String editingFor = getArguments().getString(EditorActivity.EXTRA_EDITING_FOR);
+            LOG_TAG += editingFor;
             if (Presenter.UNIT.equals(editingFor)) {
                 mPresenter = UnitEditor.sharedInstance();
             } else if (Presenter.MEDICINE.equals(editingFor)) {
@@ -68,7 +69,6 @@ public class EditorFragment extends Fragment implements EditorView {
             } else if (Presenter.DOCTOR.equals(editingFor)) {
                 mPresenter = DoctorEditor.sharedInstance();
             }
-            mPresenter.openDatabase();
         }
     }
 
@@ -76,7 +76,6 @@ public class EditorFragment extends Fragment implements EditorView {
     public void onDestroy() {
         super.onDestroy();
         Log.v(LOG_TAG, "onDestroy");
-        mPresenter.closeDatabase();
     }
 
     @Override

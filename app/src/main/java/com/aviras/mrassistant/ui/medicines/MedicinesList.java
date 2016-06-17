@@ -47,6 +47,7 @@ public class MedicinesList extends BasePresenter implements ListPresenter<Medici
                     .contains("description", search.toString(), Case.INSENSITIVE);
         }
         RealmResults<Medicine> list = query.findAllAsync();
+        list.removeChangeListener(this);
         list.addChangeListener(this);
     }
 

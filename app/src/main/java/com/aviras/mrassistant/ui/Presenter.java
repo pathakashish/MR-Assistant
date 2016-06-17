@@ -23,12 +23,7 @@ public interface Presenter {
     CharSequence getTitle(Context context);
 
     /**
-     * Opens the underlying database
+     * Remove all change listeners registered by this presenter.
      */
-    void openDatabase();
-
-    /**
-     * Opens the underlying database
-     */
-    void closeDatabase();
+    void removeAllChangeListeners();
 }

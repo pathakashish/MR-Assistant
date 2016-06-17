@@ -54,9 +54,9 @@ public class MedicineEditor extends BasePresenter implements EditorPresenter<Med
     private EditorView mEditView;
 
     @Override
-    protected void onDatabaseOpened() {
-        super.onDatabaseOpened();
-        Log.v(LOG_TAG, "onDatabaseOpened");
+    public void init(Realm realm) {
+        super.init(realm);
+        Log.v(LOG_TAG, "init");
         AllUnitsMonitor.sharedInstance().init(mRealm);
     }
 
@@ -87,7 +87,11 @@ public class MedicineEditor extends BasePresenter implements EditorPresenter<Med
     public void load(final Context context, int id) {
         Log.v(LOG_TAG, "load - id: " + id);
         RealmResults<Medicine> query = mRealm.where(Medicine.class).equalTo("id", id).findAllAsync();
+        query.removeChangeListener(this);
         query.addChangeListener(this);
+        if (query.isLoaded() && null != mEditView) {
+            mEditView.showEditors(getEditors(context, null));
+        }
     }
 
     @Override
@@ -110,7 +114,7 @@ public class MedicineEditor extends BasePresenter implements EditorPresenter<Med
     }
 
     public List<Editor> getEditors(Context context, Medicine medicine) {
-        Log.v(LOG_TAG, "getEditors - doctor: " + medicine);
+        Log.v(LOG_TAG, "getEditors - medicine: " + medicine);
         List<Editor> editors = new ArrayList<>();
 
         TextFieldEditor name = EditorFactory.newTextFieldEditor(context, ID_NAME, R.string.medicine_name_here, "", 1);
@@ -241,6 +245,7 @@ public class MedicineEditor extends BasePresenter implements EditorPresenter<Med
 
         static AllUnitsMonitor instance = new AllUnitsMonitor();
         WeakReference<OnAllUnitsListChangedListener> changeListenerRef;
+        private RealmResults<Unit> mAllUnitProxy;
 
         static AllUnitsMonitor sharedInstance() {
             return instance;
@@ -249,8 +254,12 @@ public class MedicineEditor extends BasePresenter implements EditorPresenter<Med
         final RealmList<Unit> mAllUnits = new RealmList<>();
 
         public void init(Realm realm) {
-            final RealmResults<Unit> allUnits = realm.where(Unit.class).findAllAsync();
-            allUnits.addChangeListener(this);
+            Log.v(LOG_TAG, "init");
+            if (null == mAllUnitProxy) {
+                mAllUnitProxy = realm.where(Unit.class).findAllAsync();
+            }
+            mAllUnitProxy.removeChangeListener(this);
+            mAllUnitProxy.addChangeListener(this);
         }
 
         @Override
