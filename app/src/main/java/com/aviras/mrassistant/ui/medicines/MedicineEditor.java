@@ -10,6 +10,7 @@ import android.view.inputmethod.EditorInfo;
 
 import com.aviras.mrassistant.R;
 import com.aviras.mrassistant.data.models.Medicine;
+import com.aviras.mrassistant.data.models.SupportedUnit;
 import com.aviras.mrassistant.data.models.Unit;
 import com.aviras.mrassistant.ui.BasePresenter;
 import com.aviras.mrassistant.ui.editors.Editor;
@@ -19,7 +20,6 @@ import com.aviras.mrassistant.ui.editors.EditorPresenter;
 import com.aviras.mrassistant.ui.editors.EditorView;
 import com.aviras.mrassistant.ui.editors.ListEditor;
 import com.aviras.mrassistant.ui.editors.TextFieldEditor;
-import com.aviras.mrassistant.ui.units.UnitsAdapter;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -184,7 +184,7 @@ public class MedicineEditor extends BasePresenter implements EditorPresenter<Med
             public boolean validate() {
                 RecyclerView.Adapter adapter = getField().getAdapter();
                 if (adapter instanceof UnitsAdapter) {
-                    RealmList<Unit> supportedUnits = ((UnitsAdapter) adapter).getSelectedUnits();
+                    RealmList<SupportedUnit> supportedUnits = ((UnitsAdapter) adapter).getSelectedUnits();
                     return supportedUnits.size() > 0;
                 } else {
                     Log.w(LOG_TAG, "Wrong adapter set for units");
@@ -222,7 +222,7 @@ public class MedicineEditor extends BasePresenter implements EditorPresenter<Med
                 case ID_UNIT:
                     RecyclerView.Adapter adapter = ((ListEditor) editor).getAdapter();
                     if (adapter instanceof UnitsAdapter) {
-                        RealmList<Unit> supportedUnits = ((UnitsAdapter) adapter).getSelectedUnits();
+                        RealmList<SupportedUnit> supportedUnits = ((UnitsAdapter) adapter).getSelectedUnits();
                         medicine.setSupportedUnits(supportedUnits);
                     } else {
                         Log.w(LOG_TAG, "Wrong adapter set for units");

@@ -12,6 +12,7 @@
         android:scrollbarThumbVertical="@color/colorAccent"
         android:scrollbarTrackVertical="@color/colorSecondary"
         android:scrollbars="vertical"
+        android:textAppearance="?android:attr/textAppearanceLarge"
         android:textIsSelectable="true" />
 
 </android.support.design.widget.TextInputLayout>

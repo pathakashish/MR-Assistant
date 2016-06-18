@@ -9,4 +9,5 @@
     <dimen name="button_min_height">48dp</dimen>
     <dimen name="text_input_layout_margin">8dp</dimen>
     <dimen name="scrollbar_size">4dp</dimen>
+    <dimen name="edittext_price_width">80dp</dimen>
 </resources>

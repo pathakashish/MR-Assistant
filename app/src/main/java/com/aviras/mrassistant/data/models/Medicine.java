@@ -26,7 +26,7 @@ public class Medicine extends RealmObject implements Parcelable {
 
     private String description;
 
-    private RealmList<Unit> supportedUnits = new RealmList<>();
+    private RealmList<SupportedUnit> supportedUnits = new RealmList<>();
 
     public Medicine() {
 
@@ -37,9 +37,9 @@ public class Medicine extends RealmObject implements Parcelable {
         name = ParcelableUtil.readString(in);
         description = ParcelableUtil.readString(in);
         List<Parcelable> listFromParcel = ParcelableUtil.readParcelableList(in);
-        if(null != listFromParcel) {
+        if (null != listFromParcel) {
             for (Parcelable item : listFromParcel) {
-                supportedUnits.add((Unit) item);
+                supportedUnits.add((SupportedUnit) item);
             }
         }
     }
@@ -68,11 +68,11 @@ public class Medicine extends RealmObject implements Parcelable {
         this.description = description;
     }
 
-    public RealmList<Unit> getSupportedUnits() {
+    public RealmList<SupportedUnit> getSupportedUnits() {
         return supportedUnits;
     }
 
-    public void setSupportedUnits(RealmList<Unit> supportedUnits) {
+    public void setSupportedUnits(RealmList<SupportedUnit> supportedUnits) {
         this.supportedUnits = supportedUnits;
     }
 

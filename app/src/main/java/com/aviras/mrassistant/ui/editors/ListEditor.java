@@ -1,6 +1,7 @@
 package com.aviras.mrassistant.ui.editors;
 
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.aviras.mrassistant.R;
+import com.aviras.mrassistant.ui.utils.DividerItemDecoration;
 
 /**
  * Represent list in the editor.
@@ -74,6 +76,7 @@ public class ListEditor extends Editor {
                 lEditor = (ListEditor) editor;
                 recyclerView.setNestedScrollingEnabled(!lEditor.isNestedInScrollableView());
                 recyclerView.setLayoutManager(lEditor.getLayoutManager());
+                recyclerView.addItemDecoration(new DividerItemDecoration(ContextCompat.getDrawable(recyclerView.getContext(), R.drawable.divider_drawable_1dp)));
                 recyclerView.setAdapter(lEditor.getAdapter());
                 if (null != lEditor.getAdapter()) {
                     lEditor.getAdapter().setListEditorViewHolder(this);
