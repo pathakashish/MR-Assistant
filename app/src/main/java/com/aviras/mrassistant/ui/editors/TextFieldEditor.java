@@ -100,15 +100,24 @@ public class TextFieldEditor extends Editor {
                 EditText editText = textInputLayout.getEditText();
                 if (null != editText) {
                     editText.removeTextChangedListener(this);
+
                     editText.setInputType(tEditor.getInputType());
                     editText.setImeOptions(tEditor.getImeOption());
+
                     editText.setText(tEditor.getValue());
-//                    editText.getLayoutParams().height = editTextMinHeight * Math.min(tEditor.getLineCount(), 3);
                     editText.setMaxLines(tEditor.getLineCount());
+                    editText.setEllipsize(tEditor.getEllipsize());
+
                     editText.setScrollContainer(tEditor.getLineCount() > 1);
                     editText.setVerticalScrollBarEnabled(tEditor.getLineCount() > 1);
                     editText.setScrollbarFadingEnabled(tEditor.getLineCount() <= 1);
-                    editText.setEllipsize(tEditor.getEllipsize());
+
+                    if (editText.isFocused()) {
+                        int start = editText.getSelectionStart() >= 0 ? editText.getSelectionStart() : 0;
+                        int end = editText.getSelectionEnd() >= 0 ? editText.getSelectionEnd() : 0;
+                        editText.setSelection(start, end);
+                    }
+
                     editText.addTextChangedListener(this);
                 }
                 if (tEditor.getValidator() != null && !tEditor.getValidator().validate()) {

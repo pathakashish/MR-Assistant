@@ -8,9 +8,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="top|start"
-        android:scrollbarAlwaysDrawVerticalTrack="true"
+        android:scrollbarSize="@dimen/scrollbar_size"
         android:scrollbarThumbVertical="@color/colorAccent"
         android:scrollbarTrackVertical="@color/colorSecondary"
-        android:scrollbars="vertical" />
+        android:scrollbars="vertical"
+        android:textIsSelectable="true" />
 
 </android.support.design.widget.TextInputLayout>
