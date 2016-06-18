@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -23,6 +24,7 @@ import com.aviras.mrassistant.ui.TitleProvider;
 import com.aviras.mrassistant.ui.doctors.DoctorsList;
 import com.aviras.mrassistant.ui.medicines.MedicinesList;
 import com.aviras.mrassistant.ui.units.UnitsList;
+import com.aviras.mrassistant.ui.utils.DividerItemDecoration;
 import com.aviras.mrassistant.ui.utils.FtsUtil;
 
 import io.realm.RealmObject;
@@ -80,6 +82,7 @@ public abstract class ListFragment<T extends RealmObject> extends Fragment imple
         LinearLayoutManager layoutManager = new LinearLayoutManager(inflater.getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
+        recyclerView.addItemDecoration(new DividerItemDecoration(ContextCompat.getDrawable(inflater.getContext(), R.drawable.divider_drawable_1dp)));
         mAdapter = getListAdapter(inflater.getContext());
         recyclerView.setAdapter(mAdapter);
         EditText searchEditText = mSearchTextInputLayout.getEditText();
