@@ -128,6 +128,11 @@ public class EditorFragment extends Fragment implements EditorView {
         mAdapter.notifyDataSetChanged();
     }
 
+    @Override
+    public List<Editor> getEditors() {
+        return null == mAdapter ? null : mAdapter.getEditors();
+    }
+
     private void initToolbar(View view) {
         if (getActivity() == null) {
             Log.w(LOG_TAG, "initToolbar - not attached to activity");

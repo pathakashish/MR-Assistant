@@ -105,7 +105,16 @@ public class MedicineEditor extends BasePresenter implements EditorPresenter<Med
             medicine = null;
         }
         if (null != mEditView && mEditView.getContext() != null) {
-            mEditView.showEditors(getEditors(mEditView.getContext(), medicine));
+            List<Editor> editors;
+            if (null == medicine) {
+                editors = mEditView.getEditors();
+            } else {
+                editors = null;
+            }
+            if (null == editors) {
+                editors = getEditors(mEditView.getContext(), medicine);
+            }
+            mEditView.showEditors(editors);
         }
     }
 

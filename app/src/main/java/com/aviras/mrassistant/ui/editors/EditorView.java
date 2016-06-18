@@ -13,4 +13,6 @@ public interface EditorView {
     void showEditors(List<Editor> editors);
 
     Context getContext();
+
+    List<Editor> getEditors();
 }

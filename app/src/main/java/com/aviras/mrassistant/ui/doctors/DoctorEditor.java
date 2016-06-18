@@ -8,6 +8,7 @@ import android.view.inputmethod.EditorInfo;
 
 import com.aviras.mrassistant.R;
 import com.aviras.mrassistant.data.models.Doctor;
+import com.aviras.mrassistant.data.models.Medicine;
 import com.aviras.mrassistant.ui.BasePresenter;
 import com.aviras.mrassistant.ui.editors.Editor;
 import com.aviras.mrassistant.ui.editors.EditorFactory;
@@ -88,9 +89,17 @@ public class DoctorEditor extends BasePresenter implements EditorPresenter<Docto
         } else {
             doctor = null;
         }
-
         if (null != mEditView && mEditView.getContext() != null) {
-            mEditView.showEditors(getEditors(mEditView.getContext(), doctor));
+            List<Editor> editors;
+            if (null == doctor) {
+                editors = mEditView.getEditors();
+            } else {
+                editors = null;
+            }
+            if (null == editors) {
+                editors = getEditors(mEditView.getContext(), doctor);
+            }
+            mEditView.showEditors(editors);
         }
     }
 

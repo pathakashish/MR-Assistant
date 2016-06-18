@@ -85,7 +85,16 @@ public class UnitEditor extends BasePresenter implements EditorPresenter<Unit>, 
             unit = null;
         }
         if (null != mEditView && mEditView.getContext() != null) {
-            mEditView.showEditors(getEditors(mEditView.getContext(), unit));
+            List<Editor> editors;
+            if (null == unit) {
+                editors = mEditView.getEditors();
+            } else {
+                editors = null;
+            }
+            if (null == editors) {
+                editors = getEditors(mEditView.getContext(), unit);
+            }
+            mEditView.showEditors(editors);
         }
     }
 
