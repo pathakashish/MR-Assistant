@@ -17,6 +17,6 @@
         android:layout_centerInParent="true"
         android:gravity="center"
         android:text="@string/message_welcome_to_mrassistant"
-        android:textColor="?colorAccent"
+        android:textColor="@color/colorAccent"
         android:textSize="@dimen/text_size_splash" />
 </RelativeLayout>
