@@ -21,6 +21,8 @@ public class OrderItem extends RealmObject implements Parcelable {
 
     private float quantity;
 
+    private String note;
+
     public OrderItem() {
 
     }
@@ -29,6 +31,7 @@ public class OrderItem extends RealmObject implements Parcelable {
         medicine = ParcelableUtil.readParcelable(in);
         unit = ParcelableUtil.readParcelable(in);
         quantity = ParcelableUtil.readFloat(in);
+        note = ParcelableUtil.readString(in);
     }
 
     public Medicine getMedicine() {
@@ -55,6 +58,14 @@ public class OrderItem extends RealmObject implements Parcelable {
         this.quantity = quantity;
     }
 
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -65,6 +76,7 @@ public class OrderItem extends RealmObject implements Parcelable {
         ParcelableUtil.write(dest, medicine, flags);
         ParcelableUtil.write(dest, unit, flags);
         ParcelableUtil.write(dest, quantity);
+        ParcelableUtil.write(dest, note);
     }
 
     @Ignore

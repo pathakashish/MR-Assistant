@@ -26,6 +26,8 @@ public class Order extends RealmObject implements Parcelable {
 
     private RealmList<OrderItem> items = new RealmList<>();
 
+    private String specialRequest;
+
     private long createdDate;
     private long expectedDeliveryDate;
     private long actualDeliveryDate;
@@ -46,6 +48,7 @@ public class Order extends RealmObject implements Parcelable {
                 items.add((OrderItem) item);
             }
         }
+        specialRequest = ParcelableUtil.readString(in);
     }
 
     public int getId() {
@@ -96,6 +99,14 @@ public class Order extends RealmObject implements Parcelable {
         this.actualDeliveryDate = actualDeliveryDate;
     }
 
+    public String getSpecialRequest() {
+        return specialRequest;
+    }
+
+    public void setSpecialRequest(String specialRequest) {
+        this.specialRequest = specialRequest;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -109,6 +120,7 @@ public class Order extends RealmObject implements Parcelable {
         ParcelableUtil.write(dest, expectedDeliveryDate);
         ParcelableUtil.write(dest, actualDeliveryDate);
         ParcelableUtil.write(dest, items, 0);
+        ParcelableUtil.write(dest, specialRequest);
     }
 
     @Ignore
