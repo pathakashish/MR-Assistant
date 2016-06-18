@@ -105,7 +105,9 @@ public class TextFieldEditor extends Editor {
                     editText.setText(tEditor.getValue());
 //                    editText.getLayoutParams().height = editTextMinHeight * Math.min(tEditor.getLineCount(), 3);
                     editText.setMaxLines(tEditor.getLineCount());
-                    editText.setLines(tEditor.getLineCount());
+                    editText.setScrollContainer(tEditor.getLineCount() > 1);
+                    editText.setVerticalScrollBarEnabled(tEditor.getLineCount() > 1);
+                    editText.setScrollbarFadingEnabled(tEditor.getLineCount() <= 1);
                     editText.setEllipsize(tEditor.getEllipsize());
                     editText.addTextChangedListener(this);
                 }
@@ -133,12 +135,13 @@ public class TextFieldEditor extends Editor {
 
         @Override
         public void afterTextChanged(Editable s) {
-            EditText editText = textInputLayout.getEditText();
-            if (null != editText) {
-                if (null != editText.getLayout() && editText.getLayout().getLineCount() > tEditor.getLineCount()) {
-                    editText.getText().delete(editText.getText().length() - 1, editText.getText().length());
-                }
-            }
+// Following code can be used to prevent user from entering more lines than specified
+//            EditText editText = textInputLayout.getEditText();
+//            if (null != editText) {
+//                if (null != editText.getLayout() && editText.getLayout().getLineCount() > tEditor.getLineCount()) {
+//                    editText.getText().delete(editText.getText().length() - 1, editText.getText().length());
+//                }
+//            }
             tEditor.setValue(s.toString());
             if (tEditor.getValidator() != null && !tEditor.getValidator().validate()) {
                 textInputLayout.setErrorEnabled(true);

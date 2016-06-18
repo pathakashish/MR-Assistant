@@ -141,7 +141,7 @@ public class MedicineEditor extends BasePresenter implements EditorPresenter<Med
             }
         }, context.getString(R.string.error_name_required));
         name.setInputType(EditorInfo.TYPE_TEXT_VARIATION_PERSON_NAME);
-        name.setImeOption(EditorInfo.IME_ACTION_DONE);
+        name.setImeOption(EditorInfo.IME_ACTION_NEXT);
         editors.add(name);
 
 
