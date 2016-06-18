@@ -16,6 +16,7 @@ import com.aviras.mrassistant.data.models.Unit;
 import com.aviras.mrassistant.ui.OnItemSelectedListener;
 import com.aviras.mrassistant.ui.Presenter;
 import com.aviras.mrassistant.ui.editors.EditorActivity;
+import com.aviras.mrassistant.ui.editors.ListEditor;
 
 import io.realm.RealmList;
 
@@ -24,7 +25,7 @@ import io.realm.RealmList;
  * <p/>
  * Created by ashish on 11/6/16.
  */
-public class UnitsAdapter extends RecyclerView.Adapter<UnitsAdapter.ViewHolder>
+public class UnitsAdapter extends ListEditor.ListEditorAdapter<UnitsAdapter.ViewHolder>
         implements OnItemSelectedListener {
 
     private static final int TYPE_ADD_BUTTON = 35146854;

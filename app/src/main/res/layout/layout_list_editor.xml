@@ -5,6 +5,11 @@
     android:orientation="vertical">
 
     <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/name_textview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <android.support.v7.widget.AppCompatTextView
         android:id="@+id/error_message_textview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

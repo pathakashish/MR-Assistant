@@ -35,7 +35,7 @@ public class EditorFactory {
 
     public static ListEditor newListEditor(int id,
                                            @Nullable CharSequence name,
-                                           RecyclerView.Adapter adapter,
+                                           ListEditor.ListEditorAdapter adapter,
                                            RecyclerView.LayoutManager layoutManager) {
         ListEditor editor = new ListEditor(id, VIEW_TYPE_LIST_EDITOR, name, adapter,
                 layoutManager, true);

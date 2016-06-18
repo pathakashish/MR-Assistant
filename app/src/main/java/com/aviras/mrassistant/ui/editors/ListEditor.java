@@ -3,6 +3,7 @@ package com.aviras.mrassistant.ui.editors;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,10 +19,10 @@ import com.aviras.mrassistant.R;
 public class ListEditor extends Editor {
 
     private boolean isNestedInScrollableView = false;
-    private RecyclerView.Adapter adapter;
+    private ListEditorAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
 
-    public ListEditor(int id, int type, @Nullable CharSequence name, RecyclerView.Adapter adapter, RecyclerView.LayoutManager layoutManager, boolean isNestedInScrollableView) {
+    public ListEditor(int id, int type, @Nullable CharSequence name, ListEditorAdapter adapter, RecyclerView.LayoutManager layoutManager, boolean isNestedInScrollableView) {
         super(id, type, name);
         this.isNestedInScrollableView = isNestedInScrollableView;
         this.adapter = adapter;
@@ -36,11 +37,11 @@ public class ListEditor extends Editor {
         isNestedInScrollableView = nestedInScrollableView;
     }
 
-    public RecyclerView.Adapter getAdapter() {
+    public ListEditorAdapter getAdapter() {
         return adapter;
     }
 
-    public void setAdapter(RecyclerView.Adapter adapter) {
+    public void setAdapter(ListEditorAdapter adapter) {
         this.adapter = adapter;
     }
 
@@ -56,6 +57,7 @@ public class ListEditor extends Editor {
 
         private static final String LOG_TAG = "SlctbleLstEdtrVewHldr";
         RecyclerView recyclerView;
+        AppCompatTextView nameTextView;
         AppCompatTextView errorTextView;
         ListEditor lEditor;
 
@@ -63,6 +65,7 @@ public class ListEditor extends Editor {
             super(LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_list_editor, parent, false));
             recyclerView = (RecyclerView) itemView.findViewById(R.id.recyclerview);
             errorTextView = (AppCompatTextView) itemView.findViewById(R.id.error_message_textview);
+            nameTextView = (AppCompatTextView) itemView.findViewById(R.id.name_textview);
         }
 
         @Override
@@ -72,17 +75,116 @@ public class ListEditor extends Editor {
                 recyclerView.setNestedScrollingEnabled(!lEditor.isNestedInScrollableView());
                 recyclerView.setLayoutManager(lEditor.getLayoutManager());
                 recyclerView.setAdapter(lEditor.getAdapter());
+                if (null != lEditor.getAdapter()) {
+                    lEditor.getAdapter().setListEditorViewHolder(this);
+                }
 
-                if (lEditor.getValidator() != null && !lEditor.getValidator().validate()) {
-                    errorTextView.setText(lEditor.getErrorMessasge());
-                    errorTextView.setVisibility(View.VISIBLE);
+                updateErrorView();
+
+                if (TextUtils.isEmpty(lEditor.getName())) {
+                    nameTextView.setVisibility(View.GONE);
                 } else {
-                    errorTextView.setVisibility(View.GONE);
+                    nameTextView.setText(lEditor.getName());
+                    nameTextView.setVisibility(View.VISIBLE);
                 }
             } else {
                 Log.w(LOG_TAG, "Wrong editor passed to this view");
             }
         }
+
+        void updateErrorView() {
+            if (lEditor.getValidator() != null && !lEditor.getValidator().validate()) {
+                errorTextView.setText(lEditor.getErrorMessasge());
+                errorTextView.setVisibility(View.VISIBLE);
+            } else {
+                errorTextView.setVisibility(View.GONE);
+            }
+        }
     }
 
+    public static abstract class ListEditorAdapter<VH extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<VH> {
+
+        private ListEditorViewHolder listEditorViewHolder;
+        private RecyclerView.AdapterDataObserver externalObserver;
+        // localObserver will registered as RecyclerView.AdapterDataObserver and will proxy calls to
+        // actual RecyclerView.AdapterDataObserver which was passed to registeredDatasetObserver as
+        // argument. Purpose is to facilitate real time validate on each change.
+        private RecyclerView.AdapterDataObserver localObserver;
+
+        private RecyclerView.AdapterDataObserver getLocalObserver() {
+            localObserver = new RecyclerView.AdapterDataObserver() {
+                @Override
+                public void onChanged() {
+                    notifyListEditorViewHolder();
+                    if (null != externalObserver)
+                        externalObserver.onChanged();
+                }
+
+                @Override
+                public void onItemRangeChanged(int positionStart, int itemCount) {
+                    notifyListEditorViewHolder();
+                    if (null != externalObserver)
+                        externalObserver.onItemRangeChanged(positionStart, itemCount);
+                }
+
+                @Override
+                public void onItemRangeChanged(int positionStart, int itemCount, Object payload) {
+                    notifyListEditorViewHolder();
+                    if (null != externalObserver)
+                        externalObserver.onItemRangeChanged(positionStart, itemCount, payload);
+                }
+
+                @Override
+                public void onItemRangeInserted(int positionStart, int itemCount) {
+                    notifyListEditorViewHolder();
+                    if (null != externalObserver)
+                        externalObserver.onItemRangeInserted(positionStart, itemCount);
+                }
+
+                @Override
+                public void onItemRangeRemoved(int positionStart, int itemCount) {
+                    notifyListEditorViewHolder();
+                    if (null != externalObserver)
+                        externalObserver.onItemRangeRemoved(positionStart, itemCount);
+                }
+
+                @Override
+                public void onItemRangeMoved(int fromPosition, int toPosition, int itemCount) {
+                    notifyListEditorViewHolder();
+                    if (null != externalObserver)
+                        externalObserver.onItemRangeMoved(fromPosition, toPosition, itemCount);
+                }
+            };
+            return localObserver;
+        }
+
+        private void notifyListEditorViewHolder() {
+            if (null != listEditorViewHolder) {
+                listEditorViewHolder.updateErrorView();
+            }
+        }
+
+        @Override
+        public void registerAdapterDataObserver(RecyclerView.AdapterDataObserver observer) {
+            super.registerAdapterDataObserver(getLocalObserver());
+            externalObserver = observer;
+        }
+
+        @Override
+        public void unregisterAdapterDataObserver(RecyclerView.AdapterDataObserver observer) {
+            super.unregisterAdapterDataObserver(localObserver);
+            externalObserver = null;
+            localObserver = null;
+        }
+
+        @Override
+        public void onDetachedFromRecyclerView(RecyclerView recyclerView) {
+            super.onDetachedFromRecyclerView(recyclerView);
+            listEditorViewHolder = null;
+        }
+
+        public void setListEditorViewHolder(ListEditorViewHolder listEditorViewHolder) {
+            this.listEditorViewHolder = listEditorViewHolder;
+        }
+    }
 }
