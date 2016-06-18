@@ -37,8 +37,10 @@ public class Medicine extends RealmObject implements Parcelable {
         name = ParcelableUtil.readString(in);
         description = ParcelableUtil.readString(in);
         List<Parcelable> listFromParcel = ParcelableUtil.readParcelableList(in);
-        for (Parcelable item : listFromParcel) {
-            supportedUnits.add((Unit) item);
+        if(null != listFromParcel) {
+            for (Parcelable item : listFromParcel) {
+                supportedUnits.add((Unit) item);
+            }
         }
     }
 

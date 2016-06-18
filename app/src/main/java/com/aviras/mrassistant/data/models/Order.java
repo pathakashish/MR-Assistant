@@ -41,8 +41,10 @@ public class Order extends RealmObject implements Parcelable {
         expectedDeliveryDate = ParcelableUtil.readLong(in);
         actualDeliveryDate = ParcelableUtil.readLong(in);
         List<Parcelable> listFromParcel = ParcelableUtil.readParcelableList(in);
-        for (Parcelable item : listFromParcel) {
-            items.add((OrderItem) item);
+        if (null != listFromParcel) {
+            for (Parcelable item : listFromParcel) {
+                items.add((OrderItem) item);
+            }
         }
     }
 
