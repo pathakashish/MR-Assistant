@@ -9,6 +9,7 @@ import com.aviras.mrassistant.ui.Presenter;
 import com.aviras.mrassistant.ui.TitleProvider;
 import com.aviras.mrassistant.ui.doctors.DoctorsListFragment;
 import com.aviras.mrassistant.ui.medicines.MedicinesListFragment;
+import com.aviras.mrassistant.ui.orders.OrdersListFragment;
 import com.aviras.mrassistant.ui.units.UnitsListFragment;
 
 /**
@@ -24,6 +25,7 @@ public class TabsAdapter extends FragmentStatePagerAdapter {
         super(fm);
         mContext = context.getApplicationContext();
         mFragments = new Fragment[]{
+                OrdersListFragment.newInstance(Presenter.ORDER),
                 MedicinesListFragment.newInstance(Presenter.MEDICINE),
                 DoctorsListFragment.newInstance(Presenter.DOCTOR),
                 UnitsListFragment.newInstance(Presenter.UNIT)

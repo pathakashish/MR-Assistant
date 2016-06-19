@@ -21,6 +21,7 @@ import com.aviras.mrassistant.logger.Log;
 import com.aviras.mrassistant.ui.Presenter;
 import com.aviras.mrassistant.ui.doctors.DoctorEditor;
 import com.aviras.mrassistant.ui.medicines.MedicineEditor;
+import com.aviras.mrassistant.ui.orders.OrderEditor;
 import com.aviras.mrassistant.ui.units.UnitEditor;
 import com.aviras.mrassistant.ui.utils.UiUtil;
 
@@ -68,6 +69,8 @@ public class EditorFragment extends Fragment implements EditorView {
                 mPresenter = MedicineEditor.sharedInstance();
             } else if (Presenter.DOCTOR.equals(editingFor)) {
                 mPresenter = DoctorEditor.sharedInstance();
+            } else if (Presenter.ORDER.equals(editingFor)) {
+                mPresenter = OrderEditor.sharedInstance();
             }
         }
     }

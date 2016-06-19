@@ -7,6 +7,8 @@ import com.aviras.mrassistant.ui.doctors.DoctorEditor;
 import com.aviras.mrassistant.ui.doctors.DoctorsList;
 import com.aviras.mrassistant.ui.medicines.MedicineEditor;
 import com.aviras.mrassistant.ui.medicines.MedicinesList;
+import com.aviras.mrassistant.ui.orders.OrderEditor;
+import com.aviras.mrassistant.ui.orders.OrdersList;
 import com.aviras.mrassistant.ui.units.UnitEditor;
 import com.aviras.mrassistant.ui.units.UnitsList;
 
@@ -44,6 +46,9 @@ public class MrAssistantApp extends Application {
 
         UnitsList.sharedInstance().init(realm);
         UnitEditor.sharedInstance().init(realm);
+
+        OrdersList.sharedInstance().init(realm);
+        OrderEditor.sharedInstance().init(realm);
     }
 
     private void initLogging() {

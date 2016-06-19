@@ -17,7 +17,7 @@ public class OrderItem extends RealmObject implements Parcelable {
 
     private Medicine medicine;
 
-    private Unit unit;
+    private SupportedUnit unit;
 
     private float quantity;
 
@@ -42,11 +42,11 @@ public class OrderItem extends RealmObject implements Parcelable {
         this.medicine = medicine;
     }
 
-    public Unit getUnit() {
+    public SupportedUnit getUnit() {
         return unit;
     }
 
-    public void setUnit(Unit unit) {
+    public void setUnit(SupportedUnit unit) {
         this.unit = unit;
     }
 

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?android:attr/selectableItemBackground"
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:layout_width="0dip"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/name_textview"
+            layout="@layout/layout_name_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <include
+            android:id="@+id/dates_info_textview"
+            layout="@layout/layout_description_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <include
+            android:id="@+id/description_textview"
+            layout="@layout/layout_description_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <include
+            android:id="@+id/total_textvview"
+            layout="@layout/layout_name_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true" />
+
+        <android.support.v7.widget.AppCompatImageButton
+            android:id="@+id/delete_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/total_textvview"
+            android:background="?android:attr/selectableItemBackground"
+            android:minHeight="@dimen/button_min_height"
+            android:minWidth="@dimen/button_min_height"
+            android:src="@drawable/ic_close_accent_color_24dp" />
+
+        <android.support.v7.widget.AppCompatImageButton
+            android:id="@+id/delivered_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/total_textvview"
+            android:layout_toEndOf="@id/delete_button"
+            android:background="?android:attr/selectableItemBackground"
+            android:minHeight="@dimen/button_min_height"
+            android:minWidth="@dimen/button_min_height"
+            android:src="@drawable/ic_done_accent_color_24dp" />
+    </RelativeLayout>
+</LinearLayout>

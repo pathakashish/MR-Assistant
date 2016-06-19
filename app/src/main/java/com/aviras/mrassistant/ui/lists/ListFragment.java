@@ -23,6 +23,7 @@ import com.aviras.mrassistant.ui.Refreshable;
 import com.aviras.mrassistant.ui.TitleProvider;
 import com.aviras.mrassistant.ui.doctors.DoctorsList;
 import com.aviras.mrassistant.ui.medicines.MedicinesList;
+import com.aviras.mrassistant.ui.orders.OrdersList;
 import com.aviras.mrassistant.ui.units.UnitsList;
 import com.aviras.mrassistant.ui.utils.DividerItemDecoration;
 import com.aviras.mrassistant.ui.utils.FtsUtil;
@@ -61,6 +62,8 @@ public abstract class ListFragment<T extends RealmObject> extends Fragment imple
                 mPresenter = MedicinesList.sharedInstance();
             } else if (Presenter.DOCTOR.equals(listFor)) {
                 mPresenter = DoctorsList.sharedInstance();
+            } else if (Presenter.ORDER.equals(listFor)) {
+                mPresenter = OrdersList.sharedInstance();
             }
         }
     }

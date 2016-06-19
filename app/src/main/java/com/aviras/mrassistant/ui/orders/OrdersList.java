@@ -43,11 +43,11 @@ public class OrdersList extends BasePresenter implements ListPresenter<Order>, R
         List<CharSequence> ftsList = FtsUtil.getAllPossibleSearchStrings(searchString);
         RealmQuery<Order> query = mRealm.where(Order.class);
         for (CharSequence search : ftsList) {
-            query = query.contains("name", search.toString(), Case.INSENSITIVE)
+            query = query.contains("doctor.name", search.toString(), Case.INSENSITIVE)
                     .or()
-                    .contains("items.name", search.toString(), Case.INSENSITIVE)
+                    .contains("items.medicine.name", search.toString(), Case.INSENSITIVE)
                     .or()
-                    .contains("items.description", search.toString(), Case.INSENSITIVE);;
+                    .contains("items.note", search.toString(), Case.INSENSITIVE);
         }
         if (null != mCurrentList) {
             mCurrentList.removeChangeListener(this);
@@ -88,6 +88,12 @@ public class OrdersList extends BasePresenter implements ListPresenter<Order>, R
         Log.v(LOG_TAG, "delete - " + item);
         mRealm.beginTransaction();
         item.deleteFromRealm();
+        mRealm.commitTransaction();
+    }
+
+    public void deliver(Context context, Order order) {
+        mRealm.beginTransaction();
+        order.setActualDeliveryDate(System.currentTimeMillis());
         mRealm.commitTransaction();
     }
 
