@@ -1,6 +1,6 @@
 package com.aviras.mrassistant.ui;
 
-import android.util.Log;
+import com.aviras.mrassistant.logger.Log;
 
 import io.realm.Realm;
 

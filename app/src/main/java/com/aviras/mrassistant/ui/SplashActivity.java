@@ -7,9 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import com.aviras.mrassistant.R;
 import com.aviras.mrassistant.ui.lists.MainActivity;
 
-import io.realm.Realm;
-import io.realm.RealmConfiguration;
-
 public class SplashActivity extends AppCompatActivity {
 
     private static final long SPLASH_DELAY = 2000;

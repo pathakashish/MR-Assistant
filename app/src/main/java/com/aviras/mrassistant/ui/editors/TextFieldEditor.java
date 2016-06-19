@@ -6,7 +6,6 @@ import android.support.design.widget.TextInputLayout;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -14,6 +13,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 
 import com.aviras.mrassistant.R;
+import com.aviras.mrassistant.logger.Log;
 
 /**
  * Represent single line or multiline text field. It can accept text inputs using EditText

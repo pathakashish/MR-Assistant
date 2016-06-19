@@ -9,7 +9,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -18,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.aviras.mrassistant.R;
+import com.aviras.mrassistant.logger.Log;
 import com.aviras.mrassistant.ui.Presenter;
 import com.aviras.mrassistant.ui.doctors.DoctorEditor;
 import com.aviras.mrassistant.ui.medicines.MedicineEditor;

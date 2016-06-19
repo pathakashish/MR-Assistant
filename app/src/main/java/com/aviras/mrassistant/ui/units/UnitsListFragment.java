@@ -2,10 +2,10 @@ package com.aviras.mrassistant.ui.units;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 
 import com.aviras.mrassistant.R;
 import com.aviras.mrassistant.data.models.Unit;
+import com.aviras.mrassistant.logger.Log;
 import com.aviras.mrassistant.ui.lists.ListAdapter;
 import com.aviras.mrassistant.ui.lists.ListFragment;
 

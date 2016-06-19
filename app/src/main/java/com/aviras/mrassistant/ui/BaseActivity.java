@@ -2,7 +2,8 @@ package com.aviras.mrassistant.ui;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+
+import com.aviras.mrassistant.logger.Log;
 
 /**
  * Base class for activities in this project. All Activities in this project must extend this so

@@ -15,6 +15,7 @@ public interface ListPresenter<T extends RealmObject> extends Presenter {
 
     /**
      * Loads list of {@link RealmObject}s
+     *
      * @param searchString
      */
     void load(CharSequence searchString);

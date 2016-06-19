@@ -5,13 +5,13 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.inputmethod.EditorInfo;
 
 import com.aviras.mrassistant.R;
 import com.aviras.mrassistant.data.models.Medicine;
 import com.aviras.mrassistant.data.models.SupportedUnit;
 import com.aviras.mrassistant.data.models.Unit;
+import com.aviras.mrassistant.logger.Log;
 import com.aviras.mrassistant.ui.BasePresenter;
 import com.aviras.mrassistant.ui.editors.Editor;
 import com.aviras.mrassistant.ui.editors.EditorFactory;

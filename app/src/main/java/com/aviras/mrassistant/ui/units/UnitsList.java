@@ -2,10 +2,10 @@ package com.aviras.mrassistant.ui.units;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 
 import com.aviras.mrassistant.R;
 import com.aviras.mrassistant.data.models.Unit;
+import com.aviras.mrassistant.logger.Log;
 import com.aviras.mrassistant.ui.BasePresenter;
 import com.aviras.mrassistant.ui.Presenter;
 import com.aviras.mrassistant.ui.editors.EditorActivity;
