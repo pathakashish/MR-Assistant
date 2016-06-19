@@ -293,12 +293,15 @@ public class OrdersEditorAdapter extends ListEditor.ListEditorAdapter<OrdersEdit
         AppCompatEditText searchEditText;
         AppCompatTextView totalTextView;
         AppCompatSpinner doctorsSpinner;
+        AppCompatButton addDoctorButton;
         AppCompatButton selectDeliveryDateButton;
         DoctorsAdapter doctorsAdapter;
 
         public SummaryViewHolder(View itemView) {
             super(itemView);
             searchEditText = (AppCompatEditText) itemView.findViewById(R.id.search_edittext);
+            addDoctorButton = (AppCompatButton) itemView.findViewById(R.id.add_doctor_button);
+            addDoctorButton.setOnClickListener(this);
             selectDeliveryDateButton = (AppCompatButton) itemView.findViewById(R.id.select_delivery_date_button);
             selectDeliveryDateButton.setOnClickListener(this);
             doctorsAdapter = new DoctorsAdapter();
@@ -326,6 +329,13 @@ public class OrdersEditorAdapter extends ListEditor.ListEditorAdapter<OrdersEdit
             doctorsAdapter.setItems(adapter.getDoctors());
             doctorsAdapter.notifyDataSetChanged();
             doctorsSpinner.setSelection(getDoctorPosition(adapter.getDoctor()));
+            if (doctorsAdapter.getCount() > 0) {
+                doctorsSpinner.setVisibility(View.VISIBLE);
+                addDoctorButton.setVisibility(View.GONE);
+            } else {
+                doctorsSpinner.setVisibility(View.GONE);
+                addDoctorButton.setVisibility(View.VISIBLE);
+            }
             doctorsSpinner.setOnItemSelectedListener(this);
             totalTextView.setText(itemView.getContext().getString(R.string.total, decimalFormatter.format(adapter.getTotal())));
         }
@@ -365,29 +375,39 @@ public class OrdersEditorAdapter extends ListEditor.ListEditorAdapter<OrdersEdit
 
         @Override
         public void onClick(View v) {
-            CharSequence dateText = selectDeliveryDateButton.getText();
-            long date;
-            try {
-                date = df.parse(dateText.toString()).getTime();
-            } catch (Exception e) {
-                date = System.currentTimeMillis();
-            }
-            FragmentActivity activity = InternalActivityStack.getActivityAtTop();
-            if (null != activity) {
-                new DatePickerFragment(new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                        Calendar cal = Calendar.getInstance();
-                        cal.set(Calendar.YEAR, year);
-                        cal.set(Calendar.MONTH, monthOfYear);
-                        cal.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                        adapter.setExpectedDeliveryDate(cal.getTimeInMillis());
-                        selectDeliveryDateButton.setText(df.format(cal.getTimeInMillis()));
-                        adapter.notifyDataSetChanged();
+            int id = v.getId();
+            switch (id) {
+                case R.id.add_doctor_button:
+                    Intent intent = new Intent(v.getContext(), EditorActivity.class);
+                    intent.putExtra(EditorActivity.EXTRA_EDITING_FOR, Presenter.DOCTOR);
+                    v.getContext().startActivity(intent);
+                    break;
+                case R.id.select_delivery_date_button:
+                    CharSequence dateText = selectDeliveryDateButton.getText();
+                    long date;
+                    try {
+                        date = df.parse(dateText.toString()).getTime();
+                    } catch (Exception e) {
+                        date = System.currentTimeMillis();
                     }
-                }, date).show(activity.getSupportFragmentManager(), DatePickerFragment.TAG);
-            } else {
-                Log.w(LOG_TAG, "We shouldn't be here. How did this happen");
+                    FragmentActivity activity = InternalActivityStack.getActivityAtTop();
+                    if (null != activity) {
+                        new DatePickerFragment(new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                                Calendar cal = Calendar.getInstance();
+                                cal.set(Calendar.YEAR, year);
+                                cal.set(Calendar.MONTH, monthOfYear);
+                                cal.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                                adapter.setExpectedDeliveryDate(cal.getTimeInMillis());
+                                selectDeliveryDateButton.setText(df.format(cal.getTimeInMillis()));
+                                adapter.notifyDataSetChanged();
+                            }
+                        }, date).show(activity.getSupportFragmentManager(), DatePickerFragment.TAG);
+                    } else {
+                        Log.w(LOG_TAG, "We shouldn't be here. How did this happen");
+                    }
+                    break;
             }
         }
 

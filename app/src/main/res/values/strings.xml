@@ -48,4 +48,5 @@
     <string name="search_here">Search medicine here…</string>
     <string name="select_delivery_date">Choose delivery date</string>
     <string name="total">Total: ₹ %1$s</string>
+    <string name="add_doctor">Add doctor</string>
 </resources>

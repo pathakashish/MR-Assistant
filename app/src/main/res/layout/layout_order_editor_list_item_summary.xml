@@ -14,6 +14,12 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@color/colorAccent" />
 
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/add_doctor_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/add_doctor" />
+
     <android.support.v7.widget.AppCompatSpinner
         android:id="@+id/doctors_spinner"
         android:layout_width="match_parent"
