@@ -39,5 +39,5 @@
     <string name="empty_message_orders">Click \'+\' button below to add order</string>
     <string name="order_description">Taken: %1$s\nExpected delivery: %2$s\nActual delivery date: %3$s</string>
     <string name="not_delivered">Not delivered yet</string>
-    <string name="price"><h3>₹</h3> %1$s</string>
+    <string name="price">₹ %1$s</string>
 </resources>
