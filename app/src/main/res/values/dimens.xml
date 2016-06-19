@@ -10,4 +10,5 @@
     <dimen name="text_input_layout_margin">8dp</dimen>
     <dimen name="scrollbar_size">4dp</dimen>
     <dimen name="edittext_price_width">80dp</dimen>
+    <dimen name="general_padding">8dp</dimen>
 </resources>

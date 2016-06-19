@@ -139,6 +139,10 @@ public class SetPriceLayoutHelper implements TextWatcher, View.OnTouchListener, 
         mPriceEditText.addTextChangedListener(this);
     }
 
+    public void setStartDrawable(int startResId) {
+        mPriceEditText.setCompoundDrawablesRelativeWithIntrinsicBounds(startResId, 0, 0, 0);
+    }
+
     public interface OnPriceChangeListener {
         void onPriceChange(float newPrice);
     }

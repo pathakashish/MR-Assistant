@@ -148,13 +148,17 @@ public class UnitsAdapter extends ListEditor.ListEditorAdapter<UnitsAdapter.View
         if (null == supportedUnit) {
             holder.defaultRadioButton.setVisibility(View.GONE);
             holder.priceHelper.setVisibility(View.GONE);
+            holder.adjustPerUnitPriceTextView.setVisibility(View.GONE);
         } else {
             holder.defaultRadioButton.setChecked(supportedUnit.isDefault());
             holder.defaultRadioButton.setVisibility(View.VISIBLE);
             holder.priceHelper.setVisibility(View.VISIBLE);
+            holder.adjustPerUnitPriceTextView.setVisibility(View.VISIBLE);
             holder.priceHelper.pauseListeners();
             holder.priceHelper.setPrice(supportedUnit.getUnitPrice());
             holder.priceHelper.resumeListeners();
+            holder.priceHelper.setStartDrawable(R.drawable.indian_rupee_icon_accent_color);
+            holder.adjustPerUnitPriceTextView.setText(holder.itemView.getContext().getString(R.string.adjust_per_unit_price, holder.nameTextView.getText().toString()));
         }
         holder.defaultRadioButton.setOnCheckedChangeListener(holder);
     }
@@ -212,6 +216,7 @@ public class UnitsAdapter extends ListEditor.ListEditorAdapter<UnitsAdapter.View
 
     public static class SelectViewHolder extends ViewHolder implements CompoundButton.OnCheckedChangeListener, View.OnClickListener {
 
+        private final AppCompatTextView adjustPerUnitPriceTextView;
         UnitsAdapter unitsAdapter;
         AppCompatCheckBox selectCheckBox;
         AppCompatRadioButton defaultRadioButton;
@@ -222,6 +227,7 @@ public class UnitsAdapter extends ListEditor.ListEditorAdapter<UnitsAdapter.View
             priceHelper = new SetPriceLayoutHelper(itemView);
             selectCheckBox = (AppCompatCheckBox) itemView.findViewById(R.id.select_checkbox);
             defaultRadioButton = (AppCompatRadioButton) itemView.findViewById(R.id.default_radiobutton);
+            adjustPerUnitPriceTextView = (AppCompatTextView) itemView.findViewById(R.id.adjust_per_unit_price);
             itemView.setOnClickListener(this);
         }
 

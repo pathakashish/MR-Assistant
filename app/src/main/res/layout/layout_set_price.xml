@@ -12,16 +12,19 @@
         android:background="?android:attr/selectableItemBackground"
         android:minHeight="@dimen/button_min_height"
         android:minWidth="@dimen/button_min_height"
-        android:src="@drawable/ic_remove_color_accent_24dp" />
+        android:src="@drawable/ic_remove_circle_outline_accent_24dp" />
 
     <android.support.v7.widget.AppCompatEditText
         android:id="@+id/price_edittext"
         android:layout_width="@dimen/edittext_price_width"
         android:layout_height="wrap_content"
+        android:drawablePadding="@dimen/general_padding"
         android:gravity="center"
         android:imeOptions="actionDone"
         android:inputType="numberDecimal"
         android:maxLines="1"
+        android:paddingEnd="@dimen/general_padding"
+        android:paddingStart="@dimen/general_padding"
         android:selectAllOnFocus="true"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
@@ -32,5 +35,5 @@
         android:background="?android:attr/selectableItemBackground"
         android:minHeight="@dimen/button_min_height"
         android:minWidth="@dimen/button_min_height"
-        android:src="@drawable/ic_add_color_accent_24dp" />
+        android:src="@drawable/ic_add_circle_outline_accent_colot_24dp" />
 </LinearLayout>
