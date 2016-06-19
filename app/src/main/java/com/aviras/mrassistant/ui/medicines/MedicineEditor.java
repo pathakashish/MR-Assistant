@@ -2,6 +2,7 @@ package com.aviras.mrassistant.ui.medicines;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -20,6 +21,7 @@ import com.aviras.mrassistant.ui.editors.EditorPresenter;
 import com.aviras.mrassistant.ui.editors.EditorView;
 import com.aviras.mrassistant.ui.editors.ListEditor;
 import com.aviras.mrassistant.ui.editors.TextFieldEditor;
+import com.aviras.mrassistant.ui.utils.DividerItemDecoration;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -155,7 +157,8 @@ public class MedicineEditor extends BasePresenter implements EditorPresenter<Med
 
         final UnitsAdapter unitsAdapter = new UnitsAdapter();
         final ListEditor units = EditorFactory.newListEditor(ID_UNIT, context.getString(R.string.units),
-                unitsAdapter, new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
+                unitsAdapter, new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false),
+                new DividerItemDecoration(ContextCompat.getDrawable(context, R.drawable.divider_drawable_1dp)));
         mUnitsListChangeListener = new AllUnitsMonitor.OnAllUnitsListChangedListener() {
 
             @Override

@@ -36,7 +36,7 @@ public class Order extends RealmObject implements Parcelable {
 
     }
 
-    protected Order(Parcel in) {
+    public Order(Parcel in) {
         id = ParcelableUtil.readInt(in);
         doctor = ParcelableUtil.readParcelable(in);
         createdDate = ParcelableUtil.readLong(in);

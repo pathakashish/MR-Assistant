@@ -16,7 +16,7 @@ import com.aviras.mrassistant.R;
 import com.aviras.mrassistant.data.models.SupportedUnit;
 import com.aviras.mrassistant.data.models.Unit;
 import com.aviras.mrassistant.ui.Presenter;
-import com.aviras.mrassistant.ui.SetPriceLayoutHelper;
+import com.aviras.mrassistant.ui.SetValueLayoutHelper;
 import com.aviras.mrassistant.ui.editors.EditorActivity;
 import com.aviras.mrassistant.ui.editors.ListEditor;
 
@@ -111,9 +111,9 @@ public class UnitsAdapter extends ListEditor.ListEditorAdapter<UnitsAdapter.View
         if (TYPE_SELECT == viewType) {
             holder = new SelectViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_select_unit_item, parent, false));
             final SelectViewHolder selectViewHolder = (SelectViewHolder) holder;
-            selectViewHolder.priceHelper.setOnPriceChangeListener(new SetPriceLayoutHelper.OnPriceChangeListener() {
+            selectViewHolder.priceHelper.setOnValueChangeListener(new SetValueLayoutHelper.OnValueChangeListener() {
                 @Override
-                public void onPriceChange(float newPrice) {
+                public void onValueChange(float newPrice) {
                     SupportedUnit supportedUnit = getAssociatedSupportedUnits(mUnits.get(selectViewHolder.getAdapterPosition()));
                     if (null != supportedUnit) {
                         supportedUnit.setUnitPrice(newPrice);
@@ -155,7 +155,7 @@ public class UnitsAdapter extends ListEditor.ListEditorAdapter<UnitsAdapter.View
             holder.priceHelper.setVisibility(View.VISIBLE);
             holder.adjustPerUnitPriceTextView.setVisibility(View.VISIBLE);
             holder.priceHelper.pauseListeners();
-            holder.priceHelper.setPrice(supportedUnit.getUnitPrice());
+            holder.priceHelper.setValue(supportedUnit.getUnitPrice());
             holder.priceHelper.resumeListeners();
             holder.priceHelper.setStartDrawable(R.drawable.indian_rupee_icon_accent_color);
             holder.adjustPerUnitPriceTextView.setText(holder.itemView.getContext().getString(R.string.adjust_per_unit_price, holder.nameTextView.getText().toString()));
@@ -220,11 +220,11 @@ public class UnitsAdapter extends ListEditor.ListEditorAdapter<UnitsAdapter.View
         UnitsAdapter unitsAdapter;
         AppCompatCheckBox selectCheckBox;
         AppCompatRadioButton defaultRadioButton;
-        SetPriceLayoutHelper priceHelper;
+        SetValueLayoutHelper priceHelper;
 
         public SelectViewHolder(View itemView) {
             super(itemView);
-            priceHelper = new SetPriceLayoutHelper(itemView);
+            priceHelper = new SetValueLayoutHelper(itemView);
             selectCheckBox = (AppCompatCheckBox) itemView.findViewById(R.id.select_checkbox);
             defaultRadioButton = (AppCompatRadioButton) itemView.findViewById(R.id.default_radiobutton);
             adjustPerUnitPriceTextView = (AppCompatTextView) itemView.findViewById(R.id.adjust_per_unit_price);

@@ -44,7 +44,7 @@ public class OrdersListAdapter extends ListAdapter<OrdersListAdapter.ViewHolder,
     @Override
     protected ViewHolder getListItemViewHolder(ViewGroup parent, int viewType) {
         return new ContentsViewHolder(LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.layout_edit_mode_two_line_item, parent, false));
+                .inflate(R.layout.layout_order_list_item, parent, false));
     }
 
     @Override
@@ -93,7 +93,10 @@ public class OrdersListAdapter extends ListAdapter<OrdersListAdapter.ViewHolder,
             nameTextView = (AppCompatTextView) itemView.findViewById(R.id.name_textview);
             descriptionTextView = (AppCompatTextView) itemView.findViewById(R.id.description_textview);
             datesInfoTextView = (AppCompatTextView) itemView.findViewById(R.id.dates_info_textview);
+            datesInfoTextView.setLines(3);
+            datesInfoTextView.setMaxLines(3);
             totalTextView = (AppCompatTextView) itemView.findViewById(R.id.total_textvview);
+            totalTextView.setTextColor(ContextCompat.getColor(itemView.getContext(), R.color.colorAccent));
             doneButton = (AppCompatImageButton) itemView.findViewById(R.id.delivered_button);
             doneButton.setOnClickListener(this);
             deleteButton = (AppCompatImageButton) itemView.findViewById(R.id.delete_button);
@@ -130,11 +133,6 @@ public class OrdersListAdapter extends ListAdapter<OrdersListAdapter.ViewHolder,
                 }
                 nameTextView.setText(spannedName);
                 descriptionTextView.setText(spannedDescription);
-                float totalPrice = 0.0f;
-                for (OrderItem item : order.getItems()) {
-                    totalPrice += (item.getQuantity() * item.getUnit().getUnitPrice());
-                }
-                totalTextView.setText(itemView.getContext().getString(R.string.price, decimalFormat.format(totalPrice)));
             }
 
             datesInfoTextView.setText(dates);
@@ -152,6 +150,11 @@ public class OrdersListAdapter extends ListAdapter<OrdersListAdapter.ViewHolder,
                 doneButton.setVisibility(View.GONE);
                 deleteButton.setVisibility(View.VISIBLE);
             }
+            float totalPrice = 0.0f;
+            for (OrderItem item : order.getItems()) {
+                totalPrice += (item.getQuantity() * item.getUnit().getUnitPrice());
+            }
+            totalTextView.setText(itemView.getContext().getString(R.string.price, decimalFormat.format(totalPrice)));
         }
 
         @Override

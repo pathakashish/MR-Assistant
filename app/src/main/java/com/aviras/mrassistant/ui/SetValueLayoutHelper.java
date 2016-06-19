@@ -16,7 +16,7 @@ import java.text.DecimalFormat;
  * <p/>
  * Created by ashish on 18/6/16.
  */
-public class SetPriceLayoutHelper implements TextWatcher, View.OnTouchListener, Runnable {
+public class SetValueLayoutHelper implements TextWatcher, View.OnTouchListener, Runnable {
     private static final long INITIAL_POST_DURATION = 250;
     private static final long REPEAT_DURATION = 21;
     private static final DecimalFormat mDf = new DecimalFormat("#.##");
@@ -27,17 +27,17 @@ public class SetPriceLayoutHelper implements TextWatcher, View.OnTouchListener, 
 
     private AppCompatEditText mPriceEditText;
     private float price;
-    private float priceStep = 0.5f;
+    private float valueStep = 0.5f;
     private boolean increment;
 
-    private OnPriceChangeListener mPriceChangeListener;
+    private OnValueChangeListener mPriceChangeListener;
 
-    public SetPriceLayoutHelper(View parent) {
+    public SetValueLayoutHelper(View parent) {
         mLayout = parent.findViewById(R.id.price_layout);
         assert mLayout != null;
         mIncreaseButton = (AppCompatImageButton) mLayout.findViewById(R.id.increase_button);
         mDecreaseButton = (AppCompatImageButton) mLayout.findViewById(R.id.descrease_button);
-        mPriceEditText = (AppCompatEditText) mLayout.findViewById(R.id.price_edittext);
+        mPriceEditText = (AppCompatEditText) mLayout.findViewById(R.id.value_edittext);
 
         mPriceEditText.addTextChangedListener(this);
         mIncreaseButton.setOnTouchListener(this);
@@ -52,12 +52,12 @@ public class SetPriceLayoutHelper implements TextWatcher, View.OnTouchListener, 
         mLayout.setVisibility(visibility);
     }
 
-    public void setPrice(float price) {
+    public void setValue(float price) {
         this.price = price;
         mPriceEditText.setText(String.valueOf(mDf.format(price)));
     }
 
-    public void setOnPriceChangeListener(OnPriceChangeListener mPriceChangeListener) {
+    public void setOnValueChangeListener(OnValueChangeListener mPriceChangeListener) {
         this.mPriceChangeListener = mPriceChangeListener;
     }
 
@@ -109,10 +109,10 @@ public class SetPriceLayoutHelper implements TextWatcher, View.OnTouchListener, 
 
     private void updatePrice() {
         if (increment) {
-            price += priceStep;
+            price += valueStep;
         } else {
-            if (price > priceStep) {
-                price -= priceStep;
+            if (price > valueStep) {
+                price -= valueStep;
             }
         }
         mPriceEditText.setText(String.valueOf(mDf.format(price)));
@@ -121,7 +121,7 @@ public class SetPriceLayoutHelper implements TextWatcher, View.OnTouchListener, 
 
     private void notifyListener() {
         if (null != mPriceChangeListener) {
-            mPriceChangeListener.onPriceChange(price);
+            mPriceChangeListener.onValueChange(price);
         }
     }
 
@@ -143,7 +143,11 @@ public class SetPriceLayoutHelper implements TextWatcher, View.OnTouchListener, 
         mPriceEditText.setCompoundDrawablesRelativeWithIntrinsicBounds(startResId, 0, 0, 0);
     }
 
-    public interface OnPriceChangeListener {
-        void onPriceChange(float newPrice);
+    public void setStepSize(float valStep) {
+        this.valueStep = valStep;
+    }
+
+    public interface OnValueChangeListener {
+        void onValueChange(float newPrice);
     }
 }

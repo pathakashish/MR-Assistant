@@ -7,4 +7,6 @@
     <color name="textColorPrimary">#212121</color>
     <color name="textColorSecondary">#727272</color>
     <color name="colorDivider">#B6B6B6</color>
+    <color name="colorSelectedItem">#CDDC39</color>
+    <color name="colorUnselectedItem">#ffffff</color>
 </resources>

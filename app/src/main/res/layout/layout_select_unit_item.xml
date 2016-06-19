@@ -38,5 +38,5 @@
         android:id="@+id/adjust_per_unit_price"
         layout="@layout/layout_description_textview" />
 
-    <include layout="@layout/layout_set_price" />
+    <include layout="@layout/layout_set_value" />
 </LinearLayout>

@@ -15,7 +15,7 @@
         android:src="@drawable/ic_remove_circle_outline_accent_24dp" />
 
     <android.support.v7.widget.AppCompatEditText
-        android:id="@+id/price_edittext"
+        android:id="@+id/value_edittext"
         android:layout_width="@dimen/edittext_price_width"
         android:layout_height="wrap_content"
         android:drawablePadding="@dimen/general_padding"

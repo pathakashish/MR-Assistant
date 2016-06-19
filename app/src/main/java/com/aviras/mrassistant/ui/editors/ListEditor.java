@@ -1,7 +1,6 @@
 package com.aviras.mrassistant.ui.editors;
 
 import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -11,7 +10,6 @@ import android.view.ViewGroup;
 
 import com.aviras.mrassistant.R;
 import com.aviras.mrassistant.logger.Log;
-import com.aviras.mrassistant.ui.utils.DividerItemDecoration;
 
 /**
  * Represent list in the editor.
@@ -23,12 +21,16 @@ public class ListEditor extends Editor {
     private boolean isNestedInScrollableView = false;
     private ListEditorAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
+    private RecyclerView.ItemDecoration itemDecoration;
 
-    public ListEditor(int id, int type, @Nullable CharSequence name, ListEditorAdapter adapter, RecyclerView.LayoutManager layoutManager, boolean isNestedInScrollableView) {
+    public ListEditor(int id, int type, @Nullable CharSequence name,
+                      ListEditorAdapter adapter, RecyclerView.LayoutManager layoutManager, RecyclerView.ItemDecoration itemDecoration,
+                      boolean isNestedInScrollableView) {
         super(id, type, name);
         this.isNestedInScrollableView = isNestedInScrollableView;
         this.adapter = adapter;
         this.layoutManager = layoutManager;
+        this.itemDecoration = itemDecoration;
     }
 
     public boolean isNestedInScrollableView() {
@@ -76,7 +78,7 @@ public class ListEditor extends Editor {
                 lEditor = (ListEditor) editor;
                 recyclerView.setNestedScrollingEnabled(!lEditor.isNestedInScrollableView());
                 recyclerView.setLayoutManager(lEditor.getLayoutManager());
-                recyclerView.addItemDecoration(new DividerItemDecoration(ContextCompat.getDrawable(recyclerView.getContext(), R.drawable.divider_drawable_1dp)));
+                recyclerView.addItemDecoration(lEditor.itemDecoration);
                 recyclerView.setAdapter(lEditor.getAdapter());
                 if (null != lEditor.getAdapter()) {
                     lEditor.getAdapter().setListEditorViewHolder(this);

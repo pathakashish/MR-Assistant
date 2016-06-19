@@ -1,7 +1,8 @@
 package com.aviras.mrassistant.ui;
 
-import android.app.Activity;
 import android.app.Application;
+import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AppCompatActivity;
 
 import com.aviras.mrassistant.MrAssistantApp;
 
@@ -17,7 +18,7 @@ import io.realm.Realm;
  * Created by ashish on 3/2/16.
  */
 public class InternalActivityStack {
-    private static final List<SoftReference<Activity>> sActivityStack = new ArrayList<>();
+    private static final List<SoftReference<AppCompatActivity>> sActivityStack = new ArrayList<>();
 
     private InternalActivityStack() {
     }
@@ -27,7 +28,7 @@ public class InternalActivityStack {
      *
      * @param activity instance to be pushed to stack
      */
-    public static void pushActivity(Activity activity) {
+    public static void pushActivity(AppCompatActivity activity) {
         if (sActivityStack.size() == 0) {
             Application app = activity.getApplication();
             if (app instanceof MrAssistantApp) {
@@ -42,8 +43,8 @@ public class InternalActivityStack {
      *
      * @param activity instance to be removed from stack
      */
-    public static void removeActivity(Activity activity) {
-        SoftReference<Activity> foundActivityRef = findSoftReferenceFor(activity);
+    public static void removeActivity(AppCompatActivity activity) {
+        SoftReference<AppCompatActivity> foundActivityRef = findSoftReferenceFor(activity);
         sActivityStack.remove(foundActivityRef);
         if (sActivityStack.size() == 0) {
             Realm.getDefaultInstance().removeAllChangeListeners();
@@ -51,9 +52,9 @@ public class InternalActivityStack {
         }
     }
 
-    private static SoftReference<Activity> findSoftReferenceFor(Activity activity) {
-        SoftReference<Activity> foundActivityRef = null;
-        for (SoftReference<Activity> activityRef : sActivityStack) {
+    private static SoftReference<AppCompatActivity> findSoftReferenceFor(AppCompatActivity activity) {
+        SoftReference<AppCompatActivity> foundActivityRef = null;
+        for (SoftReference<AppCompatActivity> activityRef : sActivityStack) {
             if (activityRef.get() == activity) {
                 foundActivityRef = activityRef;
                 break;
@@ -69,8 +70,8 @@ public class InternalActivityStack {
         synchronized (sActivityStack) {
             int i = sActivityStack.size() - 1;
             if (i >= 0) {
-                SoftReference<Activity> activityRef = sActivityStack.get(i);
-                Activity activity = activityRef.get();
+                SoftReference<AppCompatActivity> activityRef = sActivityStack.get(i);
+                AppCompatActivity activity = activityRef.get();
                 if (activity != null && !activity.isFinishing()) {
                     activity.finish();
                     sActivityStack.remove(activityRef);
@@ -84,7 +85,7 @@ public class InternalActivityStack {
      *
      * @param activity actvity instance which should not be finished
      */
-    public static void finishAllActivitiesExcept(Activity activity) {
+    public static void finishAllActivitiesExcept(AppCompatActivity activity) {
         synchronized (sActivityStack) {
 
             int i = sActivityStack.size() - 1;
@@ -92,8 +93,8 @@ public class InternalActivityStack {
                 if (i < 0) {
                     break;
                 }
-                SoftReference<Activity> activityRef = sActivityStack.get(i);
-                Activity activityInSoftRef = activityRef.get();
+                SoftReference<AppCompatActivity> activityRef = sActivityStack.get(i);
+                AppCompatActivity activityInSoftRef = activityRef.get();
                 if (activityInSoftRef != null && !activityInSoftRef.isFinishing() && activityInSoftRef != activity) {
                     activityInSoftRef.finish();
                     sActivityStack.remove(activityRef);
@@ -114,8 +115,8 @@ public class InternalActivityStack {
                 if (i < 0) {
                     break;
                 }
-                SoftReference<Activity> activityRef = sActivityStack.get(i);
-                Activity activityInSoftRef = activityRef.get();
+                SoftReference<AppCompatActivity> activityRef = sActivityStack.get(i);
+                AppCompatActivity activityInSoftRef = activityRef.get();
                 if (activityInSoftRef != null && !activityInSoftRef.isFinishing()) {
                     if (activityInSoftRef instanceof BaseActivity) {
                         if (!anyActivityInForeground) {
@@ -134,8 +135,8 @@ public class InternalActivityStack {
     public static boolean isAnyActivityInForeground() {
         boolean anyActivityInForeground = false;
         synchronized (sActivityStack) {
-            for (SoftReference<Activity> activityRef : sActivityStack) {
-                Activity activityInSoftRef = activityRef.get();
+            for (SoftReference<AppCompatActivity> activityRef : sActivityStack) {
+                AppCompatActivity activityInSoftRef = activityRef.get();
                 if (activityInSoftRef instanceof BaseActivity) {
                     if (!anyActivityInForeground) {
                         anyActivityInForeground = ((BaseActivity) activityInSoftRef).isInForeground();
@@ -144,5 +145,12 @@ public class InternalActivityStack {
             }
         }
         return anyActivityInForeground;
+    }
+
+    public static FragmentActivity getActivityAtTop() {
+        if (sActivityStack.size() > 0) {
+            return sActivityStack.get(sActivityStack.size() - 1).get();
+        }
+        return null;
     }
 }

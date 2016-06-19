@@ -41,4 +41,11 @@
     <string name="not_delivered">Not delivered yet</string>
     <string name="price">₹ %1$s</string>
     <string name="adjust_per_unit_price">Adjust price for 1 %1$s</string>
+    <string name="oops_something_wrong">Oops… Something went wrong. You should not see this message</string>
+    <string name="error_order_editor">Please make sure to select doctor, exected delivery date and at least one medicine</string>
+    <string name="add_medicine">Add medicine</string>
+    <string name="note_hint">Any request for this medicine?</string>
+    <string name="search_here">Search medicine here…</string>
+    <string name="select_delivery_date">Choose delivery date</string>
+    <string name="total">Total: ₹ %1$s</string>
 </resources>

@@ -66,6 +66,8 @@ public class OrderItem extends RealmObject implements Parcelable {
         this.note = note;
     }
 
+
+
     @Override
     public int describeContents() {
         return 0;

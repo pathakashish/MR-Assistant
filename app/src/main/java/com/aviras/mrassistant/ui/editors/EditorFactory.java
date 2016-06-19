@@ -6,6 +6,8 @@ import android.support.annotation.StringRes;
 import android.support.v7.widget.RecyclerView;
 
 /**
+ * Factory of decorations
+ * <p/>
  * Created by ashish on 8/6/16.
  */
 public class EditorFactory {
@@ -36,9 +38,10 @@ public class EditorFactory {
     public static ListEditor newListEditor(int id,
                                            @Nullable CharSequence name,
                                            ListEditor.ListEditorAdapter adapter,
-                                           RecyclerView.LayoutManager layoutManager) {
+                                           RecyclerView.LayoutManager layoutManager,
+                                           RecyclerView.ItemDecoration itemDecoration) {
         ListEditor editor = new ListEditor(id, VIEW_TYPE_LIST_EDITOR, name, adapter,
-                layoutManager, true);
+                layoutManager, itemDecoration, true);
         return editor;
     }
 }
