@@ -51,6 +51,21 @@ public class Order extends RealmObject implements Parcelable {
         specialRequest = ParcelableUtil.readString(in);
     }
 
+    public Order(Order order) {
+        if(null == order) {
+            return;
+        }
+        id = order.getId();
+        doctor = new Doctor(order.getDoctor());
+        createdDate = order.getCreatedDate();
+        expectedDeliveryDate = order.getExpectedDeliveryDate();
+        actualDeliveryDate = order.getActualDeliveryDate();
+        for (OrderItem item : order.getItems()) {
+            items.add(new OrderItem(item));
+        }
+        specialRequest = order.getSpecialRequest();
+    }
+
     public int getId() {
         return id;
     }

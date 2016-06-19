@@ -39,6 +39,17 @@ public class Doctor extends RealmObject implements Parcelable {
         notes = ParcelableUtil.readString(in);
     }
 
+    public Doctor(Doctor doctor) {
+        if(null == doctor) {
+            return;
+        }
+        id = doctor.getId();
+        name = doctor.getName();
+        contactNumber = doctor.getContactNumber();
+        address = doctor.getAddress();
+        notes = doctor.getNotes();
+    }
+
     public int getId() {
         return id;
     }

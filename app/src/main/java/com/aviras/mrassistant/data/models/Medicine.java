@@ -44,6 +44,18 @@ public class Medicine extends RealmObject implements Parcelable {
         }
     }
 
+    public Medicine(Medicine medicine) {
+        if(null == medicine) {
+            return;
+        }
+        id = medicine.getId();
+        name = medicine.getName();
+        description = medicine.getDescription();
+        for (SupportedUnit item : medicine.getSupportedUnits()) {
+            supportedUnits.add(new SupportedUnit(item));
+        }
+    }
+
     public int getId() {
         return id;
     }

@@ -30,6 +30,14 @@ public class Unit extends RealmObject implements Parcelable {
         name = ParcelableUtil.readString(in);
     }
 
+    protected Unit(Unit unit) {
+        if (null == unit) {
+            return;
+        }
+        id = unit.getId();
+        name = unit.getName();
+    }
+
     public int getId() {
         return id;
     }

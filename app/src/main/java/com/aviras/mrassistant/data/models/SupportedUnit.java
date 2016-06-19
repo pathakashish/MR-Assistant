@@ -31,7 +31,10 @@ public class SupportedUnit extends RealmObject implements Parcelable {
     }
 
     public SupportedUnit(SupportedUnit supportedUnit) {
-        this.unit = supportedUnit.getUnit();
+        if(null == supportedUnit) {
+            return;
+        }
+        this.unit = new Unit(supportedUnit.getUnit());
         this.unitPrice = supportedUnit.getUnitPrice();
         this.isDefault = supportedUnit.isDefault();
     }

@@ -34,6 +34,16 @@ public class OrderItem extends RealmObject implements Parcelable {
         note = ParcelableUtil.readString(in);
     }
 
+    public OrderItem(OrderItem item) {
+        if(null == item) {
+            return;
+        }
+        medicine = new Medicine(item.getMedicine());
+        unit = new SupportedUnit(item.getUnit());
+        quantity = item.getQuantity();
+        note = item.getNote();
+    }
+
     public Medicine getMedicine() {
         return medicine;
     }
@@ -65,7 +75,6 @@ public class OrderItem extends RealmObject implements Parcelable {
     public void setNote(String note) {
         this.note = note;
     }
-
 
 
     @Override

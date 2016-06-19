@@ -55,6 +55,7 @@ public class OrdersEditorAdapter extends ListEditor.ListEditorAdapter<OrdersEdit
     private static final int TYPE_ORDER_ITEM = 5687987;
     private static final int TYPE_SUMMARY = 45387987;
     private static final int TYPE_ADD_MEDICINE = 56454;
+    private static final String LOG_TAG = OrdersEditorAdapter.class.getSimpleName();
     static DecimalFormat decimalFormatter = new DecimalFormat("#.##");
     static SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault());
 
@@ -70,7 +71,13 @@ public class OrdersEditorAdapter extends ListEditor.ListEditorAdapter<OrdersEdit
             order = new Order();
             order.setCreatedDate(System.currentTimeMillis());
         }
+//        Parcel parcel = Parcel.obtain();
+//        order.writeToParcel(parcel, 0);
+//        parcel.setDataPosition(0);
+//        mOrder = Order.CREATOR.createFromParcel(parcel);
+//        parcel.recycle();
         mOrder = new Order(order);
+        Log.v(LOG_TAG, "mOrder: " + mOrder);
     }
 
     private RealmList<Doctor> getDoctors() {
