@@ -35,7 +35,7 @@
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textColor="@color/colorAccent" />
+                android:textColor="@color/deepPurple" />
         </LinearLayout>
 
         <include

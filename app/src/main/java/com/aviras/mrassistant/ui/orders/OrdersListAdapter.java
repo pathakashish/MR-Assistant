@@ -95,8 +95,8 @@ public class OrdersListAdapter extends ListAdapter<OrdersListAdapter.ViewHolder,
             datesInfoTextView = (AppCompatTextView) itemView.findViewById(R.id.dates_info_textview);
             datesInfoTextView.setLines(3);
             datesInfoTextView.setMaxLines(3);
-            totalTextView = (AppCompatTextView) itemView.findViewById(R.id.total_textvview);
-            totalTextView.setTextColor(ContextCompat.getColor(itemView.getContext(), R.color.colorAccent));
+            totalTextView = (AppCompatTextView) itemView.findViewById(R.id.total_textview);
+            totalTextView.setOnClickListener(this);
             doneButton = (AppCompatImageButton) itemView.findViewById(R.id.delivered_button);
             doneButton.setOnClickListener(this);
             deleteButton = (AppCompatImageButton) itemView.findViewById(R.id.delete_button);
@@ -161,6 +161,9 @@ public class OrdersListAdapter extends ListAdapter<OrdersListAdapter.ViewHolder,
         public void onClick(View v) {
             int id = v.getId();
             switch (id) {
+                case R.id.total_textview:
+                    createHumanReadableOrderAndShare();
+                    break;
                 case R.id.delete_button:
                     OrdersList.sharedInstance().delete(v.getContext(), order);
                     break;
@@ -176,6 +179,10 @@ public class OrdersListAdapter extends ListAdapter<OrdersListAdapter.ViewHolder,
                     v.getContext().startActivity(intent);
                     break;
             }
+        }
+
+        private void createHumanReadableOrderAndShare() {
+
         }
     }
 

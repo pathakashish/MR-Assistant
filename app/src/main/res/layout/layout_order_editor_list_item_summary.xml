@@ -12,7 +12,7 @@
         android:gravity="end"
         android:maxLines="1"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="@color/colorAccent" />
+        android:textColor="@color/deepPurple" />
 
     <android.support.v7.widget.AppCompatButton
         android:id="@+id/add_doctor_button"

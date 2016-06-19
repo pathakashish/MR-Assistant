@@ -9,4 +9,5 @@
     <color name="colorDivider">#B6B6B6</color>
     <color name="colorSelectedItem">#CDDC39</color>
     <color name="colorUnselectedItem">#ffffff</color>
+    <color name="deepPurple">#673AB7</color>
 </resources>
