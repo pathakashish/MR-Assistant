@@ -49,4 +49,5 @@
     <string name="select_delivery_date">Choose delivery date</string>
     <string name="total">Total: ₹ %1$s</string>
     <string name="add_doctor">Add doctor</string>
+    <string name="send_oder">Send order to</string>
 </resources>

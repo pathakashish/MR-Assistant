@@ -150,11 +150,16 @@ public class OrdersListAdapter extends ListAdapter<OrdersListAdapter.ViewHolder,
                 doneButton.setVisibility(View.GONE);
                 deleteButton.setVisibility(View.VISIBLE);
             }
+            float totalPrice = getTotalPrice();
+            totalTextView.setText(itemView.getContext().getString(R.string.price, decimalFormat.format(totalPrice)));
+        }
+
+        private float getTotalPrice() {
             float totalPrice = 0.0f;
             for (OrderItem item : order.getItems()) {
                 totalPrice += (item.getQuantity() * item.getUnit().getUnitPrice());
             }
-            totalTextView.setText(itemView.getContext().getString(R.string.price, decimalFormat.format(totalPrice)));
+            return totalPrice;
         }
 
         @Override
@@ -182,7 +187,41 @@ public class OrdersListAdapter extends ListAdapter<OrdersListAdapter.ViewHolder,
         }
 
         private void createHumanReadableOrderAndShare() {
+            StringBuilder builder = new StringBuilder();
+            builder.append("\nDoctor's name: ");
+            builder.append(order.getDoctor().getName());
+            builder.append("\nDoctor's address: ");
+            builder.append(order.getDoctor().getAddress());
+            builder.append("\nNote about doctor: ");
+            builder.append(order.getDoctor().getNotes());
+            builder.append("\nOrder placed on: ");
+            builder.append(dateFormat.format(order.getCreatedDate()));
+            builder.append("\nExpected delivery date: ");
+            builder.append(dateFormat.format(order.getExpectedDeliveryDate()));
+            builder.append("\nDelivered on: ");
+            builder.append(0 == order.getActualDeliveryDate() ? "Not delivered yet" : dateFormat.format(order.getActualDeliveryDate()));
+            builder.append("\n\nOrder details:\n");
 
+            for (OrderItem item : order.getItems()) {
+                builder.append("\n");
+                builder.append(String.format("%-24s", item.getMedicine().getName()));
+                builder.append(String.format("%6s", decimalFormat.format(item.getQuantity())));
+                builder.append(" ");
+                builder.append(String.format("%-12s", item.getUnit().getUnit().getName()));
+                builder.append(" - ");
+                builder.append(decimalFormat.format(item.getQuantity() * item.getUnit().getUnitPrice()));
+                if (!TextUtils.isEmpty(item.getNote())) {
+                    builder.append(item.getNote());
+                }
+            }
+
+            builder.append("\n\nTotal: ₹ ");
+            builder.append(decimalFormat.format(getTotalPrice()));
+            Intent intent = new Intent(Intent.ACTION_SEND);
+            intent.putExtra(Intent.EXTRA_TEXT, builder.toString());
+            intent.putExtra(Intent.EXTRA_SUBJECT, "Order from - " + order.getDoctor().getName() + " - Total ₹ " + getTotalPrice());
+            intent.setType("text/plain");
+            itemView.getContext().startActivity(Intent.createChooser(intent, itemView.getContext().getString(R.string.send_oder)));
         }
     }
 
