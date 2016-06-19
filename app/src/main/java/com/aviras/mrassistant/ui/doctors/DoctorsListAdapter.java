@@ -106,13 +106,13 @@ public class DoctorsListAdapter extends ListAdapter<DoctorsListAdapter.ViewHolde
                 Spannable spannedName = new SpannableString(name);
                 Spannable spannedDescription = new SpannableString(description);
                 for (CharSequence query : ftsQueries) {
-                    int nameSpanStartIndex = name.indexOf(query.toString());
+                    int nameSpanStartIndex = name.toLowerCase().indexOf(query.toString().toLowerCase());
                     if (nameSpanStartIndex >= 0) {
                         int nameSpanEndIndex = Math.min(nameSpanStartIndex + query.length(), nameSpanStartIndex + (name.length() - nameSpanStartIndex));
                         spannedName.setSpan(mColorAccent, nameSpanStartIndex, nameSpanEndIndex, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                     }
 
-                    int descriptionSpanStartIndex = description.indexOf(query.toString());
+                    int descriptionSpanStartIndex = description.toLowerCase().indexOf(query.toString().toLowerCase());
                     if (descriptionSpanStartIndex >= 0) {
                         int descriptionSpanEndIndex = Math.min(descriptionSpanStartIndex + query.length(), descriptionSpanStartIndex + (description.length() - descriptionSpanStartIndex));
                         spannedDescription.setSpan(mColorAccent, descriptionSpanStartIndex, descriptionSpanEndIndex, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);

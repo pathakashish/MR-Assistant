@@ -88,7 +88,7 @@ public class UnitsListAdapter extends ListAdapter<UnitsListAdapter.ViewHolder, U
             } else {
                 Spannable spannedName = new SpannableString(name);
                 for (CharSequence query : ftsQueries) {
-                    int nameSpanStartIndex = name.indexOf(query.toString());
+                    int nameSpanStartIndex = name.toLowerCase().indexOf(query.toString().toLowerCase());
                     if (nameSpanStartIndex >= 0) {
                         int nameSpanEndIndex = Math.min(nameSpanStartIndex + query.length(), nameSpanStartIndex + (name.length() - nameSpanStartIndex));
                         spannedName.setSpan(mColorAccent, nameSpanStartIndex, nameSpanEndIndex, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
