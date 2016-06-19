@@ -224,7 +224,7 @@ public class OrdersEditorAdapter extends ListEditor.ListEditorAdapter<OrdersEdit
 
     @Override
     public int getItemViewType(int position) {
-        if (null == mItems || mItems.isEmpty()) {
+        if (TextUtils.isEmpty(mSearchText) && (null == mItems || mItems.isEmpty())) {
             return TYPE_ADD_MEDICINE;
         } else {
             if (0 == position) {
