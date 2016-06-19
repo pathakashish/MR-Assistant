@@ -29,15 +29,15 @@
     <string name="title_activity_units">Units</string>
     <string name="title_activity_medicines">Medicines</string>
     <string name="title_activity_doctors">Doctors</string>
-    <string name="empty_message_units">Click \'Add\' button below to add unit</string>
-    <string name="empty_message_doctors">Click \'Add\' button below to add doctor</string>
-    <string name="empty_message_medicines">Click \'Add\' button below to add medicine</string>
+    <string name="empty_message_units">Click \'+\' butn below to add unit</string>
+    <string name="empty_message_doctors">Click \'+\' button below to add doctor</string>
+    <string name="empty_message_medicines">Click \'+\' button below to add medicine</string>
     <string name="search">Type here to search</string>
     <string name="default_unit">Default</string>
     <string name="note_order">Note order</string>
     <string name="title_activity_orders">Order history</string>
-    <string name="empty_message_orders">Click \'Add\' button below to add order</string>
-    <string name="order_description">Taken: %1$s\nExpected delivery: %2$s\nDelivery date: %3$s</string>
+    <string name="empty_message_orders">Click \'+\' button below to add order</string>
+    <string name="order_description">Taken: %1$s\nExpected delivery: %2$s\nActual delivery date: %3$s</string>
     <string name="not_delivered">Not delivered yet</string>
     <string name="price"><h3>₹</h3> %1$s</string>
 </resources>
