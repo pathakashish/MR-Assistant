@@ -53,7 +53,7 @@ public class UnitsListAdapter extends ListAdapter<UnitsListAdapter.ViewHolder, U
             return;
         }
         holder.unit = mItems.get(position);
-        holder.updateView(holder, position, mFtsQueries);
+        holder.updateView(mFtsQueries);
     }
 
     public abstract static class ViewHolder extends RecyclerView.ViewHolder {
@@ -63,7 +63,7 @@ public class UnitsListAdapter extends ListAdapter<UnitsListAdapter.ViewHolder, U
             super(itemView);
         }
 
-        abstract void updateView(ViewHolder holder, int position, List<CharSequence> ftsQueries);
+        abstract void updateView(List<CharSequence> ftsQueries);
     }
 
     public static class ContentsViewHolder extends ViewHolder implements View.OnClickListener {
@@ -81,7 +81,7 @@ public class UnitsListAdapter extends ListAdapter<UnitsListAdapter.ViewHolder, U
         }
 
         @Override
-        void updateView(ViewHolder holder, int position, List<CharSequence> ftsQueries) {
+        void updateView(List<CharSequence> ftsQueries) {
             String name = unit.getName();
             if (null == ftsQueries || ftsQueries.isEmpty()) {
                 nameTextView.setText(name);
@@ -124,7 +124,7 @@ public class UnitsListAdapter extends ListAdapter<UnitsListAdapter.ViewHolder, U
         }
 
         @Override
-        void updateView(ViewHolder holder, int position, List<CharSequence> ftsQueries) {
+        void updateView(List<CharSequence> ftsQueries) {
 
         }
     }

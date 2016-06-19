@@ -54,7 +54,7 @@ public class DoctorsListAdapter extends ListAdapter<DoctorsListAdapter.ViewHolde
             return;
         }
         holder.doctor = mItems.get(position);
-        holder.updateView(holder, position, mFtsQueries);
+        holder.updateView(mFtsQueries);
     }
 
     public static abstract class ViewHolder extends RecyclerView.ViewHolder {
@@ -65,7 +65,7 @@ public class DoctorsListAdapter extends ListAdapter<DoctorsListAdapter.ViewHolde
             super(itemView);
         }
 
-        abstract void updateView(ViewHolder holder, int position, List<CharSequence> ftsQueries);
+        abstract void updateView(List<CharSequence> ftsQueries);
     }
 
     public static class ContentsViewHolder extends ViewHolder implements View.OnClickListener {
@@ -86,7 +86,7 @@ public class DoctorsListAdapter extends ListAdapter<DoctorsListAdapter.ViewHolde
         }
 
         @Override
-        void updateView(ViewHolder holder, int position, List<CharSequence> ftsQueries) {
+        void updateView(List<CharSequence> ftsQueries) {
             String name = doctor.getName();
             String description;
             if (!TextUtils.isEmpty(doctor.getAddress())) {
@@ -154,7 +154,7 @@ public class DoctorsListAdapter extends ListAdapter<DoctorsListAdapter.ViewHolde
         }
 
         @Override
-        void updateView(ViewHolder holder, int position, List<CharSequence> ftsQueries) {
+        void updateView(List<CharSequence> ftsQueries) {
 
         }
     }
