@@ -28,8 +28,8 @@ public class OrderItem extends RealmObject implements Parcelable {
     }
 
     protected OrderItem(Parcel in) {
-        medicine = ParcelableUtil.readParcelable(in);
-        unit = ParcelableUtil.readParcelable(in);
+        medicine = ParcelableUtil.readParcelable(in, Medicine.class.getClassLoader());
+        unit = ParcelableUtil.readParcelable(in, Unit.class.getClassLoader());
         quantity = ParcelableUtil.readFloat(in);
         note = ParcelableUtil.readString(in);
     }

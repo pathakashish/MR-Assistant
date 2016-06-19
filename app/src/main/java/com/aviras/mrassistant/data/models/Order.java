@@ -38,11 +38,11 @@ public class Order extends RealmObject implements Parcelable {
 
     public Order(Parcel in) {
         id = ParcelableUtil.readInt(in);
-        doctor = ParcelableUtil.readParcelable(in);
+        doctor = ParcelableUtil.readParcelable(in, Doctor.class.getClassLoader());
         createdDate = ParcelableUtil.readLong(in);
         expectedDeliveryDate = ParcelableUtil.readLong(in);
         actualDeliveryDate = ParcelableUtil.readLong(in);
-        List<Parcelable> listFromParcel = ParcelableUtil.readParcelableList(in);
+        List<Parcelable> listFromParcel = ParcelableUtil.readParcelableList(in, OrderItem.class.getClassLoader());
         if (null != listFromParcel) {
             for (Parcelable item : listFromParcel) {
                 items.add((OrderItem) item);

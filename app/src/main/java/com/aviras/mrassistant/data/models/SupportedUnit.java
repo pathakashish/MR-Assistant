@@ -25,7 +25,7 @@ public class SupportedUnit extends RealmObject implements Parcelable {
     }
 
     protected SupportedUnit(Parcel in) {
-        unit = ParcelableUtil.readParcelable(in);
+        unit = ParcelableUtil.readParcelable(in, Unit.class.getClassLoader());
         unitPrice = ParcelableUtil.readFloat(in);
         isDefault = ParcelableUtil.readBoolean(in);
     }

@@ -38,9 +38,9 @@ public class ParcelableUtil {
         }
     }
 
-    public static <T extends Parcelable> T readParcelable(Parcel source) {
+    public static <T extends Parcelable> T readParcelable(Parcel source, ClassLoader classLoader) {
         if (source.readByte() == 1) {
-            return source.readParcelable(null);
+            return source.readParcelable(classLoader);
         }
         return null;
     }
@@ -188,15 +188,14 @@ public class ParcelableUtil {
     }
 
     @SuppressWarnings("unchecked")
-    public static <T extends Parcelable> List<T> readParcelableList(
-            Parcel source) {
+    public static <T extends Parcelable> List<T> readParcelableList(Parcel source, ClassLoader classLoader) {
         int size = source.readInt();
         if (size == -1) {
             return null;
         }
         ArrayList<T> list = new ArrayList<T>();
         for (int i = 0; i < size; i++) {
-            list.add((T) source.readParcelable(null));
+            list.add((T) source.readParcelable(classLoader));
         }
         return list;
     }
