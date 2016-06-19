@@ -35,4 +35,5 @@
     <string name="search">Type here to search</string>
     <string name="default_unit">Default</string>
     <string name="note_order">Note order</string>
+    <string name="title_activity_orders">Order history</string>
 </resources>

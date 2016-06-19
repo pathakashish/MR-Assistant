@@ -13,6 +13,7 @@ public interface Presenter {
     String DOCTOR = "doctor";
     String MEDICINE = "medicine";
     String UNIT = "unit";
+    String ORDER = "order";
 
     /**
      * Provide the title for the {@link EditorFragment}
