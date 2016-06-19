@@ -1,9 +1,6 @@
 <resources>
     <string name="app_name">MR Assistant</string>
     <string name="message_welcome_to_mrassistant">Welcome to MR Assistant</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="name">Name</string>
     <string name="doctors_name_here">Doctor\'s name here</string>
     <string name="mob_phone_etc">Mobile or Phone</string>
@@ -32,9 +29,10 @@
     <string name="title_activity_units">Units</string>
     <string name="title_activity_medicines">Medicines</string>
     <string name="title_activity_doctors">Doctors</string>
-    <string name="empty_message_units">There are no units to display. Click on Add button below to add unit.</string>
-    <string name="empty_message_doctors">There are no doctors to display. Click Add button below to add new doctor</string>
-    <string name="empty_message_medicines">There are no medicines to display. Please click Add button below to add medicine</string>
+    <string name="empty_message_units">Click \'Add\' button below to add unit</string>
+    <string name="empty_message_doctors">Click \'Add\' button below to add doctor</string>
+    <string name="empty_message_medicines">Click \'Add\' button below to add medicine</string>
     <string name="search">Type here to search</string>
     <string name="default_unit">Default</string>
+    <string name="note_order">Note order</string>
 </resources>
