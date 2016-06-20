@@ -211,6 +211,7 @@ public class OrdersListAdapter extends ListAdapter<OrdersListAdapter.ViewHolder,
                 builder.append(" - ");
                 builder.append(decimalFormat.format(item.getQuantity() * item.getUnit().getUnitPrice()));
                 if (!TextUtils.isEmpty(item.getNote())) {
+                    builder.append(" - ");
                     builder.append(item.getNote());
                 }
             }
