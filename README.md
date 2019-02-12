@@ -7,3 +7,4 @@ App for Medical Representatives to take orders in fast and efficient way.
 3. Let medical representatives search through list of medicines using full text search(FTS).
 4. Let medical representatives create and manage order from the doctors.
 5. Let medical representatives manage list of completed and pending orders.
+6. Move to gitlab.
